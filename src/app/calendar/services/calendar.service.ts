@@ -1,11 +1,23 @@
 import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
+  events = of({
+    events: [
+      {
+        dateStart: new Date(),
+        dateEnd: new Date(),
+        title: 'Besprechnung mit Urs',
+        description: 'Wirklich wichtig',
+        priority: 3
+      }
+    ]
+  });
   constructor() {}
 
   /**
@@ -35,6 +47,17 @@ export class CalendarService {
         .add(monthDiff, 'months')
         .month()
     };
+  }
+
+  /**
+   * Returns first day of month
+   * @param monthDiff Difference from current month
+   */
+  getMonthStart(monthDiff: number): number {
+    return moment()
+      .add(monthDiff, 'months')
+      .startOf('month')
+      .day();
   }
 
   /**

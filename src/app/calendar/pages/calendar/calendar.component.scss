@@ -1,8 +1,11 @@
 @import '../../../global.scss';
 
 .calendar {
-  &--item {
-    background-color: #008b93;
+  &--header {
+    border-bottom: 1px solid #77777711;
+  }
+  &--title {
+    color: #777777;
   }
 }
 

@@ -1,43 +1,48 @@
 <div
-  class="flex flex-row flex-justify-center margin-top-16 margin-bottom-16 width-100"
+  class="calendar--header flex flex-row flex-justify-between flex-align-center margin-top-16 padding-bottom-16 width-100"
 >
-  <button (click)="prevMonth()">prev</button>
-  <div class="margin-left-8 margin-right-8">
+  <div class="margin-left-16">
     {{ yearMonth.year }} - {{ yearMonth.month + 1 }}
   </div>
-  <button (click)="nextMonth()">next</button>
+  <div class="flex flex-align-center margin-right-16">
+    <mat-icon (click)="prevMonth()">keyboard_arrow_left</mat-icon>
+    <mat-icon (click)="nextMonth()">keyboard_arrow_right</mat-icon>
+  </div>
 </div>
-<mat-grid-list cols="7" rowHeight="75px">
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Mo</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Di</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Mi</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Do</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Fr</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Sa</mat-grid-tile
-  >
-  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >So</mat-grid-tile
-  >
-  <mat-grid-tile
-    *ngFor="let day of days; let i = index"
-    colspan="1"
-    rowspan="1"
-    class="calendar--item-content"
-  >
-    <ng-container *ngIf="day">{{ i + 1 - days.indexOf(true) }}</ng-container>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="padding-16">
+  <mat-grid-list cols="7" rowHeight="75px">
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Mo</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Di</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Mi</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Do</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Fr</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Sa</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >So</mat-grid-tile
+    >
+    <mat-grid-tile
+      *ngFor="let day of days; let i = index"
+      colspan="1"
+      rowspan="1"
+      class="calendar--item-content"
+    >
+      <ng-container *ngIf="day">{{ i + 1 - days.indexOf(true) }}</ng-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
 <!-- {{ format }} -->
 
 <!-- <mat-grid-tile

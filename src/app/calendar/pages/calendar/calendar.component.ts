@@ -12,6 +12,7 @@ export class CalendarComponent implements OnInit {
   currentMonth = 0;
   days: boolean[] = this.calendarService.getDays(this.currentMonth);
   format: string;
+  start: number = this.calendarService.getMonthStart(this.currentMonth);
   yearMonth: {
     year: number;
     month: number;
