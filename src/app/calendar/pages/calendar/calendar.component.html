@@ -33,17 +33,29 @@
       >So</mat-grid-tile
     >
     <mat-grid-tile
-      *ngFor="let day of days; let i = index"
+      *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar--item-content"
+      class="calendar--content-other"
     >
-      <ng-container *ngIf="day">{{ i + 1 - days.indexOf(true) }}</ng-container>
+      {{ prevMonthDay }}
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let monthDay of monthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+    >
+      {{ monthDay }}
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let nextMonthDay of nextMonthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+      class="calendar--content-other"
+    >
+      {{ nextMonthDay }}
     </mat-grid-tile>
   </mat-grid-list>
 </div>
 
 <!-- {{ format }} -->
-
-<!-- <mat-grid-tile
-    *ngFor="let item of dashboardItems; let i = index" -->

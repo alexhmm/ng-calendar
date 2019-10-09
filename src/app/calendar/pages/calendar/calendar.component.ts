@@ -10,35 +10,48 @@ import { CalendarService } from '../../services/calendar.service';
 })
 export class CalendarComponent implements OnInit {
   currentMonth = 0;
-  days: boolean[] = this.calendarService.getDays(this.currentMonth);
   format: string;
-  start: number = this.calendarService.getMonthStart(this.currentMonth);
+  monthDays: number[];
+  nextMonthDays: number[];
+  prevMonthDays: number[];
   yearMonth: {
     year: number;
     month: number;
-  } = this.calendarService.getYearMonth(this.currentMonth);
+  };
 
   constructor(private calendarService: CalendarService) {}
 
   ngOnInit() {
     this.format = moment().format('MMMM Do YYYY, h:mm:ss a');
+    this.getMonthData();
+  }
+
+  getMonthData(): void {
+    this.prevMonthDays = this.calendarService.getPrevMonthDays(
+      this.currentMonth
+    );
+    this.monthDays = this.calendarService.getSelectedMonthDays(
+      this.currentMonth
+    );
+    this.nextMonthDays = this.calendarService.getNextMonthDays(
+      this.currentMonth
+    );
+    this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
   }
 
   /**
    * Click handler for next month
    */
-  nextMonth() {
+  nextMonth(): void {
     this.currentMonth++;
-    this.days = this.calendarService.getDays(this.currentMonth);
-    this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
+    this.getMonthData();
   }
 
   /**
    * Click handler for previous month
    */
-  prevMonth() {
+  prevMonth(): void {
     this.currentMonth--;
-    this.days = this.calendarService.getDays(this.currentMonth);
-    this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
+    this.getMonthData();
   }
 }
