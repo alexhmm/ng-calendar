@@ -1,24 +1,33 @@
+<div
+  class="flex flex-row flex-justify-center margin-top-16 margin-bottom-16 width-100"
+>
+  <button (click)="prevMonth()">prev</button>
+  <div class="margin-left-8 margin-right-8">
+    {{ yearMonth.year }} - {{ yearMonth.month + 1 }}
+  </div>
+  <button (click)="nextMonth()">next</button>
+</div>
 <mat-grid-list cols="7" rowHeight="75px">
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Mon</mat-grid-tile
+    >Mo</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Die</mat-grid-tile
+    >Di</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Mit</mat-grid-tile
+    >Mi</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Don</mat-grid-tile
+    >Do</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Fre</mat-grid-tile
+    >Fr</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Sam</mat-grid-tile
+    >Sa</mat-grid-tile
   >
   <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
-    >Son</mat-grid-tile
+    >So</mat-grid-tile
   >
   <mat-grid-tile
     *ngFor="let day of days; let i = index"
@@ -29,7 +38,7 @@
     <ng-container *ngIf="day">{{ i + 1 - days.indexOf(true) }}</ng-container>
   </mat-grid-tile>
 </mat-grid-list>
-{{ format }}
+<!-- {{ format }} -->
 
 <!-- <mat-grid-tile
     *ngFor="let item of dashboardItems; let i = index" -->

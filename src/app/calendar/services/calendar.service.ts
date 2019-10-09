@@ -9,46 +9,72 @@ export class CalendarService {
   constructor() {}
 
   /**
-   * Returns current month number
+   * Returns current month
    */
   getCurrentMonth(): number {
     return moment().month();
   }
 
-  getMonthData(month: number): { length: number; start: number } {
+  /**
+   * Returns current year
+   */
+  getCurrentYear(): number {
+    return moment().year();
+  }
+
+  /**
+   * Returns year month data
+   * @param monthDiff Difference from current month
+   */
+  getYearMonth(monthDiff: number): { year: number; month: number } {
     return {
-      length: moment().daysInMonth(),
-      start: moment()
-        .startOf('month')
-        .day()
+      year: moment()
+        .add(monthDiff, 'months')
+        .year(),
+      month: moment()
+        .add(monthDiff, 'months')
+        .month()
     };
   }
 
-  getDays(month: number): any[] {
-    const days = [];
-    const length = moment().daysInMonth();
-    let start = moment()
-      .startOf('month')
-      .day();
-    // If month start is on sunday, change index number
+  /**
+   * Returns day array with calculated start
+   * @param monthDiff Difference from current month
+   */
+  getDays(monthDiff: number): boolean[] {
+    const days: boolean[] = [];
+    let length: number;
+    let start: number;
+    if (monthDiff !== 0) {
+      // Calculate days and start of any month
+      length = moment()
+        .add(monthDiff, 'months')
+        .daysInMonth();
+      start = moment()
+        .add(monthDiff, 'months')
+        .startOf('month')
+        .day();
+    } else {
+      // Calculate days and start of current month
+      length = moment().daysInMonth();
+      start = moment()
+        .startOf('month')
+        .day();
+    }
+    // Set monday as first calendar day
     if (start > 0 && start < 6) {
       start = start - 1;
     } else {
       start = 6;
     }
-    // if (start === 0) {
-    //   start = 7;
-    // }
-    console.log('start', start);
+    // Push days from last month
     for (let i = 0; i < start; i++) {
       days.push(false);
     }
-    console.log('days before start', days.length, days);
-    // Push all dates
+    // Push all true days
     for (let i = start; i < start + length; i++) {
       days.push(true);
     }
-    console.log('days after start', days.length, days);
     return days;
   }
 }

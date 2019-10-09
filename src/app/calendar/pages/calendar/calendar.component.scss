@@ -1,5 +1,11 @@
+@import '../../../global.scss';
+
 .calendar {
   &--item {
     background-color: #008b93;
   }
+}
+
+figure {
+  display: block !important;
 }
