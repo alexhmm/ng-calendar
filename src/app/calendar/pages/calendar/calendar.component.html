@@ -1,0 +1,35 @@
+<mat-grid-list cols="7" rowHeight="75px">
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Mon</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Die</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Mit</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Don</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Fre</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Sam</mat-grid-tile
+  >
+  <mat-grid-tile colspan="1" rowspan="1" class="calendar--item"
+    >Son</mat-grid-tile
+  >
+  <mat-grid-tile
+    *ngFor="let day of days; let i = index"
+    colspan="1"
+    rowspan="1"
+    class="calendar--item-content"
+  >
+    <ng-container *ngIf="day">{{ i + 1 - days.indexOf(true) }}</ng-container>
+  </mat-grid-tile>
+</mat-grid-list>
+{{ format }}
+
+<!-- <mat-grid-tile
+    *ngFor="let item of dashboardItems; let i = index" -->
