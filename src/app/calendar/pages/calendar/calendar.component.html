@@ -1,9 +1,7 @@
 <div
   class="calendar--header flex flex-row flex-justify-between flex-align-center margin-top-16 padding-bottom-16 width-100"
 >
-  <div class="margin-left-16">
-    {{ yearMonth.year }} - {{ yearMonth.month + 1 }}
-  </div>
+  <div class="margin-left-16">{{ monthText }} {{ yearMonth.year }}</div>
   <div class="flex flex-align-center margin-right-16">
     <mat-icon (click)="prevMonth()">keyboard_arrow_left</mat-icon>
     <mat-icon (click)="nextMonth()">keyboard_arrow_right</mat-icon>

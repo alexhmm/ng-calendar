@@ -12,6 +12,7 @@ export class CalendarComponent implements OnInit {
   currentMonth = 0;
   format: string;
   monthDays: number[];
+  monthText: string;
   nextMonthDays: number[];
   prevMonthDays: number[];
   yearMonth: {
@@ -37,6 +38,7 @@ export class CalendarComponent implements OnInit {
       this.currentMonth
     );
     this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
+    this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
   }
 
   /**

@@ -33,22 +33,6 @@ export class CalendarService {
   getCurrentYear(): number {
     return moment().year();
   }
-
-  /**
-   * Returns year month data
-   * @param monthDiff Difference from current month
-   */
-  getYearMonth(monthDiff: number): { year: number; month: number } {
-    return {
-      year: moment()
-        .add(monthDiff, 'months')
-        .year(),
-      month: moment()
-        .add(monthDiff, 'months')
-        .month()
-    };
-  }
-
   /**
    * Returns days of month
    * @param monthDiff Difference from current month
@@ -75,6 +59,41 @@ export class CalendarService {
       start = 6;
     }
     return start;
+  }
+
+  /**
+   * Returns month name
+   * @param month Month number
+   */
+  getMonthText(month: number): string {
+    switch (month) {
+      case 0:
+        return 'Januar';
+      case 1:
+        return 'Februar';
+      case 2:
+        return 'März';
+      case 3:
+        return 'April';
+      case 4:
+        return 'Mai';
+      case 5:
+        return 'Juni';
+      case 6:
+        return 'Juli';
+      case 7:
+        return 'August';
+      case 8:
+        return 'September';
+      case 9:
+        return 'Oktober';
+      case 10:
+        return 'November';
+      case 11:
+        return 'Dezember';
+      default:
+        return '';
+    }
   }
 
   /**
@@ -117,5 +136,20 @@ export class CalendarService {
       prevMonthDays.push(prevMonthLength - monthStart + i + 1);
     }
     return prevMonthDays;
+  }
+
+  /**
+   * Returns year month data
+   * @param monthDiff Difference from current month
+   */
+  getYearMonth(monthDiff: number): { year: number; month: number } {
+    return {
+      year: moment()
+        .add(monthDiff, 'months')
+        .year(),
+      month: moment()
+        .add(monthDiff, 'months')
+        .month()
+    };
   }
 }
