@@ -38,7 +38,7 @@
       *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar--content-other"
+      class="calendar--tile-other"
     >
       {{ prevMonthDay }}
     </mat-grid-tile>
@@ -57,13 +57,22 @@
         class="calendar--tile flex flex-justify-center flex-align-center width-100"
       >
         {{ monthDay }}
+        <div
+          [ngClass]="{
+            'calendar--tile-overlay--active':
+              monthDay === date && activeAppointmentDays.indexOf(monthDay) > -1,
+            'calendar--tile-overlay--other':
+              monthDay !== date && activeAppointmentDays.indexOf(monthDay) > -1
+          }"
+          class="calendar--tile-overlay"
+        ></div>
       </div>
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let nextMonthDay of nextMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar--content-other"
+      class="calendar--tile-other"
     >
       {{ nextMonthDay }}
     </mat-grid-tile>

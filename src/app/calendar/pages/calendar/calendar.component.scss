@@ -1,11 +1,6 @@
 @import '../../../global.scss';
 
 .calendar {
-  &--content {
-    &-other {
-      color: #00000050;
-    }
-  }
   &--header {
     border-bottom: 1px solid #0000000a;
     mat-icon {
@@ -24,6 +19,23 @@
       background-color: $color-primary;
       border-radius: 12px;
     }
+    &-other {
+      color: #00000050;
+    }
+    &-overlay {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      top: 6px;
+      right: 6px;
+      border-radius: 4px;
+      &--active {
+        background-color: white;
+      }
+      &--other {
+        background-color: $color-primary;
+      }
+    }
   }
   &--title {
     color: #777777;
@@ -37,6 +49,10 @@
       height: 64px;
       &-active {
         border-radius: 16px;
+      }
+      &-overlay {
+        top: 12px;
+        right: 12px;
       }
     }
   }

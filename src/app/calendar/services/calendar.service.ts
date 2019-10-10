@@ -21,6 +21,94 @@ export class CalendarService {
   constructor() {}
 
   /**
+   * TEST: Returns fake appointments
+   */
+  getAppointments(): { appointments: any[] } {
+    return {
+      appointments: [
+        {
+          id: 'isu12',
+          dateStart: new Date('October 10, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 10, 2019 09:30:00').toISOString(),
+          desc: 'Im Konfi. Alle möglichen Dinge.',
+          place: 'Konferenzraum unten',
+          title: 'Besprechnung'
+        },
+        {
+          id: '1241f',
+          dateStart: new Date('October 17, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 17, 2019 10:45:00').toISOString(),
+          desc: 'Im Konfi. Alle möglichen Dinge.',
+          place: 'Konferenzraum unten',
+          title: 'Besprechnung'
+        },
+        {
+          id: 'fsfqf',
+          dateStart: new Date('October 19, 2019 10:30:00').toISOString(),
+          dateEnd: new Date('October 20, 2019 11:00:00').toISOString(),
+          desc: 'Grooming Frooming Fäncy Begroooofe',
+          place: 'Alfresco Büro',
+          title: 'Grooming'
+        },
+        {
+          id: '1t512',
+          dateStart: new Date('November 25, 2019 11:00:00').toISOString(),
+          dateEnd: new Date('November 25, 2019 11:30:00').toISOString(),
+          desc: 'Alfreso Review',
+          place: 'Alfresco Office English Baygriff',
+          title: 'Review'
+        }
+      ]
+    };
+  }
+
+  /**
+   * Returns active month days with appointments
+   * @param appointments All appointments
+   * @param activeYear Actiive year
+   * @param activeMonth Active month
+   */
+  getActiveAppointments(appointments, activeYear, activeMonth): any[] {
+    const activeAppointments = [];
+    for (const appointment of appointments) {
+      if (
+        moment(appointment.dateStart).year() === activeYear &&
+        moment(appointment.dateStart).month() === activeMonth
+      ) {
+        activeAppointments.push({
+          id: appointment.id,
+          day: moment(appointment.dateStart).date(),
+          month: moment(appointment.date).month(),
+          year: moment(appointment.date).year(),
+          desc: appointment.desc,
+          place: appointment.place,
+          title: appointment.title
+        });
+      }
+    }
+    return activeAppointments;
+  }
+
+  /**
+   * Returns active month day numbers with appointments
+   * @param appointments All appointments
+   * @param activeYear Actiive year
+   * @param activeMonth Active month
+   */
+  getActiveAppointmentDays(appointments, activeYear, activeMonth): number[] {
+    const activeAppointmentDays: number[] = [];
+    for (const appointment of appointments) {
+      if (
+        moment(appointment.dateStart).year() === activeYear &&
+        moment(appointment.dateStart).month() === activeMonth
+      ) {
+        activeAppointmentDays.push(moment(appointment.dateStart).date());
+      }
+    }
+    return activeAppointmentDays;
+  }
+
+  /**
    * Returns current month
    */
   getCurrentMonth(): number {
@@ -33,6 +121,7 @@ export class CalendarService {
   getCurrentYear(): number {
     return moment().year();
   }
+
   /**
    * Returns days of month
    * @param monthDiff Difference from current month

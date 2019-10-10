@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 import { CalendarService } from '../../services/calendar.service';
+import { of } from 'rxjs';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-calendar',
@@ -9,6 +11,9 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  appointments: { appointments: any[] };
+  appointments$ = of(this.calendarService.getAppointments());
+  activeAppointmentDays: number[] = [];
   currentMonth = 0;
   currentMonthNumber = this.calendarService.getCurrentMonth();
   currentYearNumber = this.calendarService.getCurrentYear();
@@ -28,7 +33,10 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.format = moment().format('YYYY-MM-DD');
     this.date = moment().date();
-    this.getMonthData();
+    this.appointments$.subscribe(appointments => {
+      this.appointments = appointments;
+      this.getMonthData();
+    });
   }
 
   getMonthData(): void {
@@ -43,6 +51,11 @@ export class CalendarComponent implements OnInit {
     );
     this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
     this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
+    this.activeAppointmentDays = this.calendarService.getActiveAppointmentDays(
+      this.appointments.appointments,
+      this.currentYearNumber,
+      this.currentMonthNumber + this.currentMonth
+    );
   }
 
   /**
