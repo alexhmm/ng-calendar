@@ -8,12 +8,36 @@
   }
   &--header {
     border-bottom: 1px solid #0000000a;
+    mat-icon {
+      &:hover {
+        color: $color-primary;
+        cursor: pointer;
+      }
+    }
+  }
+  &--tile {
+    position: relative;
+    width: 32px;
+    height: 40px;
+    &-active {
+      color: white;
+      background-color: $color-primary;
+      border-radius: 12px;
+    }
   }
   &--title {
     color: #777777;
   }
 }
 
-figure {
-  display: block !important;
+@media (min-width: $sm) {
+  .calendar {
+    &--tile {
+      width: 48px;
+      height: 64px;
+      &-active {
+        border-radius: 16px;
+      }
+    }
+  }
 }

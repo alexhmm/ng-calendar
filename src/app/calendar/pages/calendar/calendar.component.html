@@ -1,9 +1,13 @@
 <div
   class="calendar--header flex flex-row flex-justify-between flex-align-center margin-top-16 padding-bottom-16 width-100"
 >
-  <div class="margin-left-16">{{ monthText }} {{ yearMonth.year }}</div>
+  <div class="margin-left-16">
+    <b>{{ monthText }}</b> {{ yearMonth.year }}
+  </div>
   <div class="flex flex-align-center margin-right-16">
-    <mat-icon (click)="prevMonth()">keyboard_arrow_left</mat-icon>
+    <mat-icon (click)="prevMonth()" class="margin-right-8"
+      >keyboard_arrow_left</mat-icon
+    >
     <mat-icon (click)="nextMonth()">keyboard_arrow_right</mat-icon>
   </div>
 </div>
@@ -43,7 +47,17 @@
       colspan="1"
       rowspan="1"
     >
-      {{ monthDay }}
+      <div
+        [ngClass]="{
+          'calendar--tile-active':
+            monthDay === date &&
+            currentYearNumber === yearMonth.year &&
+            currentMonthNumber === yearMonth.month
+        }"
+        class="calendar--tile flex flex-justify-center flex-align-center width-100"
+      >
+        {{ monthDay }}
+      </div>
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let nextMonthDay of nextMonthDays; let i = index"
@@ -55,5 +69,3 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
-
-<!-- {{ format }} -->

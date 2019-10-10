@@ -10,6 +10,9 @@ import { CalendarService } from '../../services/calendar.service';
 })
 export class CalendarComponent implements OnInit {
   currentMonth = 0;
+  currentMonthNumber = this.calendarService.getCurrentMonth();
+  currentYearNumber = this.calendarService.getCurrentYear();
+  date: number;
   format: string;
   monthDays: number[];
   monthText: string;
@@ -23,7 +26,8 @@ export class CalendarComponent implements OnInit {
   constructor(private calendarService: CalendarService) {}
 
   ngOnInit() {
-    this.format = moment().format('MMMM Do YYYY, h:mm:ss a');
+    this.format = moment().format('YYYY-MM-DD');
+    this.date = moment().date();
     this.getMonthData();
   }
 
