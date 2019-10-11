@@ -1,23 +1,14 @@
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
-import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  events = of({
-    events: [
-      {
-        dateStart: new Date(),
-        dateEnd: new Date(),
-        title: 'Besprechnung mit Urs',
-        description: 'Wirklich wichtig',
-        priority: 3
-      }
-    ]
-  });
+  activeMonthSrc = new BehaviorSubject(0);
+  activeMonth = this.activeMonthSrc.asObservable();
+
   constructor() {}
 
   /**
@@ -267,5 +258,13 @@ export class CalendarService {
         .add(monthDiff, 'months')
         .month()
     };
+  }
+
+  /**
+   * Set active month
+   * @param activeMonth Active month
+   */
+  setActiveMonth(activeMonth: number): void {
+    this.activeMonthSrc.next(activeMonth);
   }
 }

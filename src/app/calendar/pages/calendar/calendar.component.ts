@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { CalendarService } from '../../services/calendar.service';
 import { of } from 'rxjs';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-calendar',
@@ -13,16 +12,13 @@ import { TouchSequence } from 'selenium-webdriver';
 export class CalendarComponent implements OnInit {
   appointments: { appointments: any[] };
   appointments$ = of(this.calendarService.getAppointments());
-  activeAppointmentDays: number[] = [];
-  activeMonth = 0;
+  activeMonth: number;
   currentMonth = this.calendarService.getCurrentMonth();
   currentYear = this.calendarService.getCurrentYear();
   date: number;
   format: string;
-  monthDays: number[];
   monthText: string;
-  nextMonthDays: number[];
-  prevMonthDays: number[];
+  stateView = 'agenda';
   yearMonth: {
     year: number;
     month: number;
@@ -33,6 +29,10 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.format = moment().format('YYYY-MM-DD');
     this.date = moment().date();
+    this.calendarService.activeMonth.subscribe(activeMonth => {
+      this.activeMonth = activeMonth;
+      this.getMonthData();
+    });
     this.appointments$.subscribe(appointments => {
       this.appointments = appointments;
       this.getMonthData();
@@ -40,37 +40,29 @@ export class CalendarComponent implements OnInit {
   }
 
   getMonthData(): void {
-    this.prevMonthDays = this.calendarService.getPrevMonthDays(
-      this.activeMonth
-    );
-    this.monthDays = this.calendarService.getSelectedMonthDays(
-      this.activeMonth
-    );
-    this.nextMonthDays = this.calendarService.getNextMonthDays(
-      this.activeMonth
-    );
     this.yearMonth = this.calendarService.getYearMonth(this.activeMonth);
     this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
-    this.activeAppointmentDays = this.calendarService.getActiveAppointmentDays(
-      this.appointments.appointments,
-      this.yearMonth.year,
-      this.yearMonth.month
-    );
   }
 
   /**
    * Click handler for next month
    */
   nextMonth(): void {
-    this.activeMonth++;
-    this.getMonthData();
+    this.calendarService.setActiveMonth(this.activeMonth + 1);
   }
 
   /**
    * Click handler for previous month
    */
   prevMonth(): void {
-    this.activeMonth--;
-    this.getMonthData();
+    this.calendarService.setActiveMonth(this.activeMonth - 1);
+  }
+
+  showCalendarAgenda(): void {
+    this.stateView = 'agenda';
+  }
+
+  showCalendarList(): void {
+    this.stateView = 'list';
   }
 }

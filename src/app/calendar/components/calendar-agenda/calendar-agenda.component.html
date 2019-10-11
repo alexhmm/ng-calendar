@@ -1,0 +1,67 @@
+<div class="padding-16">
+  <mat-grid-list cols="7" rowHeight="75px">
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Mo</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Di</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Mi</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Do</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Fr</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >Sa</mat-grid-tile
+    >
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+      >So</mat-grid-tile
+    >
+    <mat-grid-tile
+      *ngFor="let prevMonthDay of prevMonthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+      class="calendar--tile-other"
+    >
+      {{ prevMonthDay }}
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let monthDay of monthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+    >
+      <div
+        [ngClass]="{
+          'calendar--tile-active':
+            monthDay === date &&
+            currentYear === yearMonth.year &&
+            currentMonth === yearMonth.month
+        }"
+        class="calendar--tile flex flex-justify-center flex-align-center width-100"
+      >
+        {{ monthDay }}
+        <div
+          [ngClass]="{
+            'calendar--tile-overlay--active':
+              monthDay === date && activeAppointmentDays.indexOf(monthDay) > -1,
+            'calendar--tile-overlay--other':
+              monthDay !== date && activeAppointmentDays.indexOf(monthDay) > -1
+          }"
+          class="calendar--tile-overlay"
+        ></div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let nextMonthDay of nextMonthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+      class="calendar--tile-other"
+    >
+      {{ nextMonthDay }}
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
