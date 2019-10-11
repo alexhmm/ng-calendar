@@ -4,7 +4,7 @@
   <div class="margin-left-16">
     <b>{{ monthText }}</b> {{ yearMonth.year }}
   </div>
-  <div class="flex flex-align-center margin-right-16">
+  <div class="flex flex-align-center icon-primary margin-right-16">
     <mat-icon (click)="prevMonth()" class="margin-right-8"
       >keyboard_arrow_left</mat-icon
     >
@@ -51,8 +51,8 @@
         [ngClass]="{
           'calendar--tile-active':
             monthDay === date &&
-            currentYearNumber === yearMonth.year &&
-            currentMonthNumber === yearMonth.month
+            currentYear === yearMonth.year &&
+            currentMonth === yearMonth.month
         }"
         class="calendar--tile flex flex-justify-center flex-align-center width-100"
       >

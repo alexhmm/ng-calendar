@@ -14,7 +14,9 @@ export class CalendarComponent implements OnInit {
   appointments: { appointments: any[] };
   appointments$ = of(this.calendarService.getAppointments());
   activeAppointmentDays: number[] = [];
-  currentMonth = 0;
+  activeMonth = 0;
+  currentMonth = this.calendarService.getCurrentMonth();
+  currentYear = this.calendarService.getCurrentYear();
   date: number;
   format: string;
   monthDays: number[];
@@ -39,15 +41,15 @@ export class CalendarComponent implements OnInit {
 
   getMonthData(): void {
     this.prevMonthDays = this.calendarService.getPrevMonthDays(
-      this.currentMonth
+      this.activeMonth
     );
     this.monthDays = this.calendarService.getSelectedMonthDays(
-      this.currentMonth
+      this.activeMonth
     );
     this.nextMonthDays = this.calendarService.getNextMonthDays(
-      this.currentMonth
+      this.activeMonth
     );
-    this.yearMonth = this.calendarService.getYearMonth(this.currentMonth);
+    this.yearMonth = this.calendarService.getYearMonth(this.activeMonth);
     this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
     this.activeAppointmentDays = this.calendarService.getActiveAppointmentDays(
       this.appointments.appointments,
@@ -60,7 +62,7 @@ export class CalendarComponent implements OnInit {
    * Click handler for next month
    */
   nextMonth(): void {
-    this.currentMonth++;
+    this.activeMonth++;
     this.getMonthData();
   }
 
@@ -68,7 +70,7 @@ export class CalendarComponent implements OnInit {
    * Click handler for previous month
    */
   prevMonth(): void {
-    this.currentMonth--;
+    this.activeMonth--;
     this.getMonthData();
   }
 }

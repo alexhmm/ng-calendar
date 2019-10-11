@@ -3,12 +3,6 @@
 .calendar {
   &--header {
     border-bottom: 1px solid #0000000a;
-    mat-icon {
-      &:hover {
-        color: $color-primary;
-        cursor: pointer;
-      }
-    }
   }
   &--tile {
     position: relative;

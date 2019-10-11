@@ -1,12 +1,12 @@
 /* MIXINS */
 
-@mixin dms-icon-size($size) {
+@mixin icon-size($size) {
   font-size: $size;
   height: $size;
   width: $size;
 }
 
-@mixin dms-transition($element, $time, $animation) {
+@mixin transition($element, $time, $animation) {
   transition: $element $time $animation;
   -moz-transition: $element $time $animation;
   -webkit-transition: $element $time $animation;
@@ -102,6 +102,18 @@ $color-primary: #008693;
   &-weight {
     &-600 {
       font-weight: 600;
+    }
+  }
+}
+
+/* ICON */
+
+.icon-primary {
+  mat-icon {
+    @include transition(color, 0.25s, ease-in-out);
+    cursor: pointer;
+    &:hover {
+      color: $color-primary;
     }
   }
 }
