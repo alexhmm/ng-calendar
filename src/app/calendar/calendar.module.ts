@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CalendarService } from './services/calendar.service';
 import { CalendarAgendaComponent } from './components/calendar-agenda/calendar-agenda.component';
 import { CalendarListComponent } from './components/calendar-list/calendar-list.component';
+import { CalendarListItemComponent } from './components/calendar-list-item/calendar-list-item.component';
 
 export const ROUTES: Routes = [
   {
@@ -15,7 +16,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [CalendarComponent, CalendarAgendaComponent, CalendarListComponent],
+  declarations: [CalendarComponent, CalendarAgendaComponent, CalendarListComponent, CalendarListItemComponent],
   imports: [CommonModule, MaterialModule, RouterModule.forChild(ROUTES)],
   providers: [CalendarService]
 })

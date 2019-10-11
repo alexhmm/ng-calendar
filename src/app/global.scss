@@ -41,6 +41,12 @@ $xl: 1200px;
 
 $color-primary: #008693;
 
+/* DISPLAY */
+
+.display-block {
+  display: block;
+}
+
 /* FLEX */
 
 .flex {
@@ -86,6 +92,9 @@ $color-primary: #008693;
 
 .font {
   &-size {
+    &-12 {
+      font-size: 12px;
+    }
     &-14 {
       font-size: 14px;
     }

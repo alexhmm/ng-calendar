@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+import { Appointment } from '../../models/appointment';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
@@ -7,20 +9,20 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./calendar-agenda.component.scss']
 })
 export class CalendarAgendaComponent implements OnInit {
-  @Input() appointments: any[];
+  @Input() appointments: Appointment[];
   @Input() currentMonth: number;
   @Input() currentYear: number;
   @Input() date: number;
-  @Input() yearMonth: {
-    year: number;
-    month: number;
-  };
 
   activeMonth: number;
   activeAppointmentDays: number[] = [];
   monthDays: number[];
   nextMonthDays: number[];
   prevMonthDays: number[];
+  yearMonth: {
+    year: number;
+    month: number;
+  };
 
   constructor(private calendarService: CalendarService) {}
 

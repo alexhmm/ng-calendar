@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 
+import { Appointment } from '../models/appointment';
+import { AppointmentView } from '../models/appointment-view';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +17,7 @@ export class CalendarService {
   /**
    * TEST: Returns fake appointments
    */
-  getAppointments(): { appointments: any[] } {
+  getAppointments(): { appointments: Appointment[] } {
     return {
       appointments: [
         {
@@ -67,8 +70,8 @@ export class CalendarService {
         },
         {
           id: '1t512',
-          dateStart: new Date('November 25, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('November 25, 2019 11:30:00').toISOString(),
+          dateStart: new Date('November 11, 2019 11:00:00').toISOString(),
+          dateEnd: new Date('November 11, 2019 11:30:00').toISOString(),
           desc: 'Alfreso Review',
           place: 'Alfresco Office English Baygriff',
           title: 'Review'
@@ -83,7 +86,11 @@ export class CalendarService {
    * @param activeYear Actiive year
    * @param activeMonth Active month
    */
-  getActiveAppointments(appointments, activeYear, activeMonth): any[] {
+  getActiveAppointments(
+    appointments,
+    activeYear,
+    activeMonth
+  ): AppointmentView[] {
     const activeAppointments = [];
     for (const appointment of appointments) {
       if (
@@ -92,6 +99,8 @@ export class CalendarService {
       ) {
         activeAppointments.push({
           id: appointment.id,
+          dateStart: appointment.dateStart,
+          dateEnd: appointment.dateEnd,
           day: moment(appointment.dateStart).date(),
           month: moment(appointment.date).month(),
           year: moment(appointment.date).year(),

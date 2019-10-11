@@ -1,1 +1,13 @@
-<p>calendar-list works!</p>
+<div class="margin-8">
+  <div *ngFor="let appointment of activeAppointments; let i = index">
+    <app-calendar-list-item
+      [appointment]="appointment"
+      [currentMonth]="currentMonth"
+      [currentYear]="currentYear"
+      [date]="date"
+      [yearMonth]="yearMonth"
+      [ngClass]="{ 'margin-bottom-16': i < activeAppointments.length }"
+      class="display-block"
+    ></app-calendar-list-item>
+  </div>
+</div>

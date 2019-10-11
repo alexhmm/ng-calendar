@@ -27,6 +27,12 @@
   [currentMonth]="currentMonth"
   [currentYear]="currentYear"
   [date]="date"
-  [yearMonth]="yearMonth"
 ></app-calendar-agenda>
-<app-calendar-list *ngIf="stateView === 'list'"> </app-calendar-list>
+<app-calendar-list
+  *ngIf="stateView === 'list'"
+  [appointments]="appointments.appointments"
+  [currentMonth]="currentMonth"
+  [currentYear]="currentYear"
+  [date]="date"
+>
+</app-calendar-list>
