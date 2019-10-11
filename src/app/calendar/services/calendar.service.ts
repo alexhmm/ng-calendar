@@ -27,6 +27,14 @@ export class CalendarService {
     return {
       appointments: [
         {
+          id: 'isu11',
+          dateStart: new Date('December 2, 2018 09:00:00').toISOString(),
+          dateEnd: new Date('December 2, 2018 09:30:00').toISOString(),
+          desc: 'Im Konfi. Alle möglichen Dinge.',
+          place: 'Konferenzraum unten',
+          title: 'Besprechnung'
+        },
+        {
           id: 'isu12',
           dateStart: new Date('October 10, 2019 09:00:00').toISOString(),
           dateEnd: new Date('October 10, 2019 09:30:00').toISOString(),
@@ -35,12 +43,28 @@ export class CalendarService {
           title: 'Besprechnung'
         },
         {
+          id: '121lf',
+          dateStart: new Date('October 11, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 11, 2019 09:30:00').toISOString(),
+          desc: 'Wichtiger Termin',
+          place: 'Konferenzraum unten',
+          title: 'Termin'
+        },
+        {
           id: '1241f',
+          dateStart: new Date('October 17, 2019 08:00:00').toISOString(),
+          dateEnd: new Date('October 17, 2019 9:00:00').toISOString(),
+          desc: 'Vorgespräch',
+          place: 'Konferenzraum oben',
+          title: 'Besprechnung oben'
+        },
+        {
+          id: '1241g',
           dateStart: new Date('October 17, 2019 09:00:00').toISOString(),
           dateEnd: new Date('October 17, 2019 10:45:00').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
-          title: 'Besprechnung'
+          title: 'Besprechnung unten'
         },
         {
           id: 'fsfqf',
@@ -102,7 +126,10 @@ export class CalendarService {
         moment(appointment.dateStart).year() === activeYear &&
         moment(appointment.dateStart).month() === activeMonth
       ) {
-        activeAppointmentDays.push(moment(appointment.dateStart).date());
+        const date = moment(appointment.dateStart).date();
+        if (activeAppointmentDays.indexOf(date) < 0) {
+          activeAppointmentDays.push(date);
+        }
       }
     }
     return activeAppointmentDays;

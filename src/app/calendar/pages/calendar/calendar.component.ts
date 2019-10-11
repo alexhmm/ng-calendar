@@ -15,8 +15,6 @@ export class CalendarComponent implements OnInit {
   appointments$ = of(this.calendarService.getAppointments());
   activeAppointmentDays: number[] = [];
   currentMonth = 0;
-  currentMonthNumber = this.calendarService.getCurrentMonth();
-  currentYearNumber = this.calendarService.getCurrentYear();
   date: number;
   format: string;
   monthDays: number[];
@@ -53,8 +51,8 @@ export class CalendarComponent implements OnInit {
     this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
     this.activeAppointmentDays = this.calendarService.getActiveAppointmentDays(
       this.appointments.appointments,
-      this.currentYearNumber,
-      this.currentMonthNumber + this.currentMonth
+      this.yearMonth.year,
+      this.yearMonth.month
     );
   }
 
