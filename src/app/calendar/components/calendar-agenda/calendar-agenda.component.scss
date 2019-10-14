@@ -1,9 +1,14 @@
 @import '../../../global.scss';
 
+::ng-deep .mat-grid-tile .mag-figure .calendar-agenda--title {
+  display: flex !important;
+  align-items: center !important;
+}
+
 ::ng-deep .mat-grid-tile .mat-figure {
   display: flex;
   flex-direction: column;
-  align-content: flex-start;
+  justify-content: flex-start !important;
   text-overflow: clip;
 }
 
@@ -42,6 +47,9 @@
       // background-color: $color-primary;
       // border-radius: 12px;
     }
+    &-preview {
+      visibility: hidden;
+    }
     &-other {
       color: #00000050;
     }
@@ -49,13 +57,15 @@
       position: absolute;
       width: 4px;
       height: 4px;
-      top: 6px;
-      right: 6px;
+      top: 4px;
+      right: 4px;
       border-radius: 4px;
       background-color: $color-primary;
     }
   }
   &--title {
+    width: 32px;
+    height: 40px;
     color: #777777;
   }
 }
@@ -66,14 +76,17 @@
       width: 480px;
     }
     &--tile {
-      width: 40px;
-      height: 48px;
+      // width: 40px;
+      // height: 48px;
       &-active {
         border-radius: 16px;
       }
+      &-preview {
+        visibility: visible;
+      }
       &-overlay {
-        top: 8px;
-        right: 8px;
+        // top: 8px;
+        // right: 8px;
       }
     }
   }

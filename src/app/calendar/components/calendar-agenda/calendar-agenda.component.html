@@ -1,33 +1,64 @@
 <div class="padding-16">
   <mat-grid-list cols="7" rowHeight="75px">
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Mo</mat-grid-tile
+    <mat-grid-tile colspan="1" rowspan="1"
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Mo
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Di</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Di
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Mi</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Mi
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Do</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Do
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Fr</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Fr
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >Sa</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        Sa
+      </div></mat-grid-tile
     >
     <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      >So</mat-grid-tile
+      ><div
+        class="calendar-agenda--title flex flex-justify-center flex-align-center"
+      >
+        So
+      </div></mat-grid-tile
     >
     <mat-grid-tile
       *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar-agenda--tile-other"
     >
-      {{ prevMonthDay }}
+      <div
+        class="calendar-agenda--tile calendar-agenda--tile-other flex flex-justify-center flex-align-center"
+      >
+        {{ prevMonthDay }}
+      </div>
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let monthDay of monthDays; let i = index"
@@ -52,12 +83,30 @@
           }"
         ></div>
       </div>
+      <ng-container *ngIf="findIndex(monthDay) > -1">
+        <ng-container
+          *ngFor="
+            let title of activeAppointmentPreviews[findIndex(monthDay)]
+              .appointments;
+            let i = index
+          "
+        >
+          <div
+            *ngIf="i < 2"
+            class="calendar-agenda--tile-preview font-size-12 text-overflow-ellipsis"
+          >
+            {{ title }}
+          </div>
+        </ng-container>
+      </ng-container>
+
       <!-- <div
         *ngIf="
           monthDay === date &&
           currentYear === yearMonth.year &&
           currentMonth === yearMonth.month
         "
+        class="font-size-12"
       >
         test 1
       </div>
@@ -67,8 +116,29 @@
           currentYear === yearMonth.year &&
           currentMonth === yearMonth.month
         "
+        class="font-size-12"
       >
         test 2
+      </div> -->
+      <!-- <div
+        *ngIf="
+          monthDay === date &&
+          currentYear === yearMonth.year &&
+          currentMonth === yearMonth.month
+        "
+        class="font-size-12"
+      >
+        test 3
+      </div> -->
+      <!-- <div
+        *ngIf="
+          monthDay === date &&
+          currentYear === yearMonth.year &&
+          currentMonth === yearMonth.month
+        "
+        class="font-size-12"
+      >
+        test 4
       </div> -->
     </mat-grid-tile>
     <mat-grid-tile

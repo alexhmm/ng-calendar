@@ -331,6 +331,18 @@ $color-tertiary: #9146ff;
   }
 }
 
+/* TEXT */
+
+.text {
+  &-overflow {
+    &-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
 /* WIDTH */
 
 .width {

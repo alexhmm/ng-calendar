@@ -135,6 +135,51 @@ export class CalendarService {
     return activeAppointmentDays;
   }
 
+  /**
+   * Returns Active appointment titls for agenda preview
+   * @param appointments Appointment list
+   * @param activeYear Active year
+   * @param activeMonth Active month
+   */
+  getActiveAppointmentPreviews(
+    appointments: AppointmentView[],
+    activeYear,
+    activeMonth
+  ): { day: number; appointments: string[] }[] {
+    const activeAppointmentPreviews: {
+      day: number;
+      appointments: string[];
+    }[] = [];
+    for (const appointment of appointments) {
+      if (
+        moment(appointment.dateStart).year() === activeYear &&
+        moment(appointment.dateStart).month() === activeMonth
+      ) {
+        // Check if day is already added to array
+
+        if (
+          activeAppointmentPreviews.findIndex(
+            app => app.day === moment(appointment.dateStart).date()
+          ) < 0
+        ) {
+          const apps = [];
+          apps.push(appointment.title);
+          activeAppointmentPreviews.push({
+            day: moment(appointment.dateStart).date(),
+            appointments: [...apps]
+          });
+          // Push another title into same day
+        } else {
+          const index = activeAppointmentPreviews.findIndex(
+            app => app.day === moment(appointment.dateStart).date()
+          );
+          activeAppointmentPreviews[index].appointments.push(appointment.title);
+        }
+      }
+    }
+    return activeAppointmentPreviews;
+  }
+
   getActiveDayAppointmentsByISOString(
     appointments: AppointmentView[],
     date: string

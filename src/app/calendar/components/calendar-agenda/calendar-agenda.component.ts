@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Appointment } from '../../models/appointment';
+import { AppointmentView } from '../../models/appointment-view';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./calendar-agenda.component.scss']
 })
 export class CalendarAgendaComponent implements OnInit {
-  @Input() appointments: Appointment[];
+  @Input() appointments: AppointmentView[];
   @Input() currentMonth: number;
   @Input() currentYear: number;
   @Input() date: number;
@@ -17,6 +17,7 @@ export class CalendarAgendaComponent implements OnInit {
   activeDate: string;
   activeMonth: number;
   activeAppointmentDays: number[] = [];
+  activeAppointmentPreviews: { day: number; appointments: string[] }[] = [];
   monthDays: number[];
   nextMonthDays: number[];
   prevMonthDays: number[];
@@ -49,6 +50,18 @@ export class CalendarAgendaComponent implements OnInit {
       this.appointments,
       this.yearMonth.year,
       this.yearMonth.month
+    );
+    this.activeAppointmentPreviews = this.calendarService.getActiveAppointmentPreviews(
+      this.appointments,
+      this.yearMonth.year,
+      this.yearMonth.month
+    );
+    console.log('activeAppointmentPreviews', this.activeAppointmentPreviews);
+  }
+
+  findIndex(day: number): number {
+    return this.activeAppointmentPreviews.findIndex(
+      appointment => appointment.day === day
     );
   }
 
