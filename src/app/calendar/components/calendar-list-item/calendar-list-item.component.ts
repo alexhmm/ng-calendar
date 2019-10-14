@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import * as moment from 'moment';
 
 import { AppointmentView } from '../../models/appointment-view';

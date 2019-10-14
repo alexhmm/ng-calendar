@@ -30,8 +30,8 @@ export class CalendarService {
         },
         {
           id: 'isu12',
-          dateStart: new Date('October 10, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 10, 2019 09:30:00').toISOString(),
+          dateStart: new Date('October 14, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 14, 2019 09:30:00').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
@@ -133,6 +133,52 @@ export class CalendarService {
       }
     }
     return activeAppointmentDays;
+  }
+
+  getActiveDayAppointmentsByISOString(
+    appointments: AppointmentView[],
+    date: string
+  ): AppointmentView[] {
+    const activeDayAppointments = [];
+    for (const appointment of appointments) {
+      if (
+        appointment.dateStart.includes(date) ||
+        appointment.dateEnd.includes(date)
+      ) {
+        activeDayAppointments.push({
+          id: appointment.id,
+          dateStart: appointment.dateStart,
+          dateEnd: appointment.dateEnd,
+          // day: moment(appointment.dateStart).date(),
+          // month: moment(appointment.dateStart).month(),
+          // year: moment(appointment.dateStart).year(),
+          desc: appointment.desc,
+          place: appointment.place,
+          title: appointment.title
+        });
+      }
+    }
+    return activeDayAppointments;
+  }
+
+  /**
+   * Returns ISO string by given Date
+   * @param year Year
+   * @param month Month
+   * @param day Day
+   */
+  getISOStringByDate(
+    year: number,
+    month: number | string,
+    day: number | string
+  ): string {
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (day < 10) {
+      day = '0' + day;
+    }
+    return moment(year + '-' + month + '-' + day).toISOString(true);
   }
 
   /**

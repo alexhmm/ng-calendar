@@ -1,31 +1,31 @@
 <div class="padding-16">
   <mat-grid-list cols="7" rowHeight="75px">
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Mo</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Di</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Mi</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Do</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Fr</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >Sa</mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar--title"
+    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
       >So</mat-grid-tile
     >
     <mat-grid-tile
       *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar--tile-other"
+      class="calendar-agenda--tile-other"
     >
       {{ prevMonthDay }}
     </mat-grid-tile>
@@ -36,32 +36,56 @@
     >
       <div
         [ngClass]="{
-          'calendar--tile-active':
+          'calendar-agenda--tile-active':
             monthDay === date &&
             currentYear === yearMonth.year &&
             currentMonth === yearMonth.month
         }"
-        class="calendar--tile flex flex-justify-center flex-align-center width-100"
+        (click)="openCalendarDay(i)"
+        class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary width-100"
       >
         {{ monthDay }}
         <div
           [ngClass]="{
-            'calendar--tile-overlay--active':
-              monthDay === date && activeAppointmentDays.indexOf(monthDay) > -1,
-            'calendar--tile-overlay--other':
-              monthDay !== date && activeAppointmentDays.indexOf(monthDay) > -1
+            'calendar-agenda--tile-overlay':
+              activeAppointmentDays.indexOf(monthDay) > -1
           }"
-          class="calendar--tile-overlay"
         ></div>
       </div>
+      <!-- <div
+        *ngIf="
+          monthDay === date &&
+          currentYear === yearMonth.year &&
+          currentMonth === yearMonth.month
+        "
+      >
+        test 1
+      </div>
+      <div
+        *ngIf="
+          monthDay === date &&
+          currentYear === yearMonth.year &&
+          currentMonth === yearMonth.month
+        "
+      >
+        test 2
+      </div> -->
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let nextMonthDay of nextMonthDays; let i = index"
       colspan="1"
       rowspan="1"
-      class="calendar--tile-other"
+      class="calendar-agenda--tile-other"
     >
       {{ nextMonthDay }}
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<app-calendar-day
+  *ngIf="activeDate"
+  [activeDate]="activeDate"
+  [appointments]="appointments"
+  (closeCalendarDay)="onCloseCalendarDay($event)"
+  class="calendar-agenda--day border-radius-16 z-index-10"
+></app-calendar-day>

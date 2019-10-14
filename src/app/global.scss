@@ -37,9 +37,28 @@ $md: 768px;
 $lg: 960px;
 $xl: 1200px;
 
+/* BORDER */
+
+.border {
+  &-radius {
+    &-8 {
+      border-radius: 8px;
+    }
+    &-16 {
+      border-radius: 16px;
+    }
+  }
+}
+
 /* COLOR */
 
-$color-primary: #008693;
+$color-primary: #00c8af;
+$color-secondary: #ffca5f;
+$color-tertiary: #9146ff;
+
+.color-primary {
+  color: $color-primary;
+}
 
 /* DISPLAY */
 
@@ -95,6 +114,9 @@ $color-primary: #008693;
     &-12 {
       font-size: 12px;
     }
+    &-13 {
+      font-size: 13px;
+    }
     &-14 {
       font-size: 14px;
     }
@@ -112,6 +134,16 @@ $color-primary: #008693;
     &-600 {
       font-weight: 600;
     }
+  }
+}
+
+/* HOVER */
+
+.hover-primary {
+  @include transition(color, 0.25s, ease-in-out);
+  cursor: pointer;
+  &:hover {
+    color: $color-primary;
   }
 }
 

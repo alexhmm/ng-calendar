@@ -1,0 +1,38 @@
+<div class="flex flex-column">
+  <div class="flex flex-row">
+    <!-- <div class="flex flex-column margin-right-8">
+      <div
+        class="calendar-day-item--day flex flex-justify-center font-size-18 margin-bottom-8"
+      >
+        <b>{{ appointment.day }}</b>
+      </div>
+      <div class="flex flex-justify-center font-size-14 margin-bottom-8">
+        {{ day }}
+      </div>
+      <div
+        *ngIf="appointment.day === date"
+        class="calendar-day-item--day-active"
+      ></div>
+    </div> -->
+
+    <div class="calendar-day-item--content flex flex-column">
+      <div class="font-size-14 margin-y-4">
+        <b>{{ appointment.title }}</b>
+      </div>
+      <div class="font-size-13 margin-bottom-8">
+        {{ timeStart }} - {{ timeEnd }}
+      </div>
+
+      <div class="flex flex-align-center font-size-14 margin-bottom-16">
+        {{ appointment.desc }}
+      </div>
+      <div class="flex flex-row flex-wrap">
+        <div
+          class="calendar-day-item--tag border-radius-8 flex flex-align-center font-size-13 padding-8"
+        >
+          {{ appointment.place }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

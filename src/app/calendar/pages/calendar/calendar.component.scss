@@ -2,52 +2,6 @@
 
 .calendar {
   &--header {
-    border-bottom: 1px solid #0000000a;
-  }
-  &--tile {
-    position: relative;
-    width: 32px;
-    height: 40px;
-    &-active {
-      color: white;
-      background-color: $color-primary;
-      border-radius: 12px;
-    }
-    &-other {
-      color: #00000050;
-    }
-    &-overlay {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      top: 6px;
-      right: 6px;
-      border-radius: 4px;
-      &--active {
-        background-color: white;
-      }
-      &--other {
-        background-color: $color-primary;
-      }
-    }
-  }
-  &--title {
-    color: #777777;
-  }
-}
-
-@media (min-width: $sm) {
-  .calendar {
-    &--tile {
-      width: 40px;
-      height: 48px;
-      &-active {
-        border-radius: 16px;
-      }
-      &-overlay {
-        top: 8px;
-        right: 8px;
-      }
-    }
+    border-bottom: 1px solid $color-primary;
   }
 }

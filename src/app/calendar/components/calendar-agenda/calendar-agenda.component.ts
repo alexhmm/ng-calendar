@@ -14,6 +14,7 @@ export class CalendarAgendaComponent implements OnInit {
   @Input() currentYear: number;
   @Input() date: number;
 
+  activeDate: string;
   activeMonth: number;
   activeAppointmentDays: number[] = [];
   monthDays: number[];
@@ -49,5 +50,17 @@ export class CalendarAgendaComponent implements OnInit {
       this.yearMonth.year,
       this.yearMonth.month
     );
+  }
+
+  openCalendarDay(day: number) {
+    this.activeDate = this.calendarService.getISOStringByDate(
+      this.yearMonth.year,
+      this.yearMonth.month + 1,
+      day + 1
+    );
+  }
+
+  onCloseCalendarDay(event: string) {
+    this.activeDate = event;
   }
 }
