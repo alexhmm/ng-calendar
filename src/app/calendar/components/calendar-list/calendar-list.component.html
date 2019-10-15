@@ -10,4 +10,7 @@
       class="display-block"
     ></app-calendar-list-item>
   </div>
+  <div *ngIf="activeAppointments.length < 1" class="font-size-14">
+    Keine Termine vorhanden.
+  </div>
 </div>

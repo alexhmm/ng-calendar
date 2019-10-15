@@ -2,6 +2,7 @@
   <div class="flex flex-row">
     <div class="flex flex-column margin-right-8">
       <div
+        [ngClass]="{ 'color-primary': appointment.day === date }"
         class="calendar-list-item--day flex flex-justify-center font-size-18 margin-bottom-8"
       >
         <b>{{ appointment.day }}</b>
@@ -9,14 +10,10 @@
       <div class="flex flex-justify-center font-size-14 margin-bottom-8">
         {{ day }}
       </div>
-      <div
-        *ngIf="appointment.day === date"
-        class="calendar-list-item--day-active"
-      ></div>
     </div>
 
     <div class="calendar-list-item--content flex flex-column">
-      <div class="font-size-14 margin-y-4">
+      <div class="color-primary font-size-14 margin-y-4">
         <b>{{ appointment.title }}</b>
       </div>
       <div

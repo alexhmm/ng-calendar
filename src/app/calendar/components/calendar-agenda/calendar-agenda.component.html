@@ -1,5 +1,5 @@
 <div class="padding-16">
-  <mat-grid-list cols="7" rowHeight="75px">
+  <mat-grid-list cols="7" [rowHeight]="rowHeight">
     <mat-grid-tile colspan="1" rowspan="1"
       ><div
         class="calendar-agenda--title flex flex-justify-center flex-align-center"
@@ -52,7 +52,7 @@
     <mat-grid-tile
       *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
-      rowspan="1"
+      rowspan="2"
     >
       <div
         class="calendar-agenda--tile calendar-agenda--tile-other flex flex-justify-center flex-align-center"
@@ -63,7 +63,7 @@
     <mat-grid-tile
       *ngFor="let monthDay of monthDays; let i = index"
       colspan="1"
-      rowspan="1"
+      rowspan="2"
     >
       <div
         [ngClass]="{
@@ -73,7 +73,7 @@
             currentMonth === yearMonth.month
         }"
         (click)="openCalendarDay(i)"
-        class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary width-100"
+        class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
       >
         {{ monthDay }}
         <div
@@ -81,70 +81,71 @@
             'calendar-agenda--tile-overlay':
               activeAppointmentDays.indexOf(monthDay) > -1
           }"
-        ></div>
+          class="font-size-12"
+        >
+          {{
+            activeAppointmentPreviews[findIndex(monthDay)]?.appointments?.length
+          }}
+        </div>
+        <!-- <ng-container *ngIf="findIndex(monthDay) > -1">
+          <div
+            *ngFor="
+              let title of activeAppointmentPreviews[findIndex(monthDay)]
+                .appointments;
+              let i = index
+            "
+            [ngClass]="{
+              'calendar-agenda--tile-overlay': i < 5
+            }"
+          ></div>
+        </ng-container> -->
       </div>
-      <ng-container *ngIf="findIndex(monthDay) > -1">
-        <ng-container
+      <div
+        *ngIf="findIndex(monthDay) > -1"
+        class="calendar-agenda--tile-preview border-radius-8 font-size-12 padding-4 text-overflow-ellipsis"
+      >
+        {{ activeAppointmentPreviews[findIndex(monthDay)].appointments[0] }}
+      </div>
+      <!-- <div
+        *ngIf="findIndex(monthDay) > -1"
+        class="calendar-agenda--tile-appointments flex flex-row flex-justify-center flex-wrap width-100"
+      >
+        <div
           *ngFor="
             let title of activeAppointmentPreviews[findIndex(monthDay)]
               .appointments;
             let i = index
           "
+          [ngClass]="{
+            'margin-right-2':
+              i <
+              activeAppointmentPreviews[findIndex(monthDay)].appointments
+                .length -
+                1,
+            'margin-bottom-2':
+              i <
+              activeAppointmentPreviews[findIndex(monthDay)].appointments
+                .length -
+                1
+          }"
+          class="calendar-agenda--tile-preview border-radius-4 font-size-12 padding-2"
         >
           <div
-            *ngIf="i < 2"
-            class="calendar-agenda--tile-preview font-size-12 text-overflow-ellipsis"
+            *ngIf="
+              i <
+              activeAppointmentPreviews[findIndex(monthDay)].appointments.length
+            "
+            class="text-overflow-ellipsis width-100"
           >
             {{ title }}
           </div>
-        </ng-container>
-      </ng-container>
-
-      <!-- <div
-        *ngIf="
-          monthDay === date &&
-          currentYear === yearMonth.year &&
-          currentMonth === yearMonth.month
-        "
-        class="font-size-12"
-      >
-        test 1
-      </div>
-      <div
-        *ngIf="
-          monthDay === date &&
-          currentYear === yearMonth.year &&
-          currentMonth === yearMonth.month
-        "
-        class="font-size-12"
-      >
-        test 2
-      </div> -->
-      <!-- <div
-        *ngIf="
-          monthDay === date &&
-          currentYear === yearMonth.year &&
-          currentMonth === yearMonth.month
-        "
-        class="font-size-12"
-      >
-        test 3
-      </div> -->
-      <!-- <div
-        *ngIf="
-          monthDay === date &&
-          currentYear === yearMonth.year &&
-          currentMonth === yearMonth.month
-        "
-        class="font-size-12"
-      >
-        test 4
+        </div>
       </div> -->
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let nextMonthDay of nextMonthDays; let i = index"
       colspan="1"
-      rowspan="1"
+      rowspan="2"
       class="calendar-agenda--tile-other"
     >
       {{ nextMonthDay }}

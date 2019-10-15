@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AppointmentView } from '../../models/appointment-view';
+import { AppService } from 'src/app/shared/services/app/app.service';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
@@ -20,19 +23,31 @@ export class CalendarAgendaComponent implements OnInit {
   activeAppointmentPreviews: { day: number; appointments: string[] }[] = [];
   monthDays: number[];
   nextMonthDays: number[];
+  ngUnsubscribe: Subject<object> = new Subject();
   prevMonthDays: number[];
+  rowHeight = '40px';
   yearMonth: {
     year: number;
     month: number;
   };
 
-  constructor(private calendarService: CalendarService) {}
+  constructor(
+    private appService: AppService,
+    private calendarService: CalendarService
+  ) {}
 
   ngOnInit() {
-    this.calendarService.activeMonth.subscribe(activeMonth => {
-      this.activeMonth = activeMonth;
-      this.getMonthData();
-    });
+    this.appService.stateHeight
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(innerHeight => {
+        this.rowHeight = Math.floor((innerHeight - 57 - 32) / 6.5 / 2) + 'px';
+      });
+    this.calendarService.activeMonth
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(activeMonth => {
+        this.activeMonth = activeMonth;
+        this.getMonthData();
+      });
   }
 
   getMonthData(): void {
@@ -56,7 +71,6 @@ export class CalendarAgendaComponent implements OnInit {
       this.yearMonth.year,
       this.yearMonth.month
     );
-    console.log('activeAppointmentPreviews', this.activeAppointmentPreviews);
   }
 
   findIndex(day: number): number {

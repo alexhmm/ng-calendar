@@ -1,5 +1,19 @@
 @import '../../../global.scss';
 
+@for $i from 0 through 5 {
+  .calendar-agenda {
+    &--tile {
+      &-overlay {
+        &:nth-child(#{$i}) {
+          // &:before {
+          right: #{$i * 6px - 6px};
+          // }
+        }
+      }
+    }
+  }
+}
+
 ::ng-deep .mat-grid-tile .mag-figure .calendar-agenda--title {
   display: flex !important;
   align-items: center !important;
@@ -15,10 +29,12 @@
 .calendar-agenda {
   &--day {
     position: fixed;
+    overflow-y: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 320px;
+    max-height: calc(100% - 64px);
     -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
@@ -26,7 +42,7 @@
   &--tile {
     position: relative;
     width: 32px;
-    height: 40px;
+    min-height: 32px !important;
     &:hover:before {
       width: 50%;
     }
@@ -47,20 +63,25 @@
       // background-color: $color-primary;
       // border-radius: 12px;
     }
+    &-appointments {
+      overflow-y: hidden;
+      // white-space: wrap;
+      // height: calc(100% - 34px);
+    }
     &-preview {
-      visibility: hidden;
+      display: none;
     }
     &-other {
       color: #00000050;
     }
     &-overlay {
       position: absolute;
-      width: 4px;
-      height: 4px;
-      top: 4px;
-      right: 4px;
-      border-radius: 4px;
-      background-color: $color-primary;
+      color: $color-primary;
+      top: 0px;
+      // background-color: $color-primary;
+      // width: 4px;
+      // height: 4px;
+      // border-radius: 4px;
     }
   }
   &--title {
@@ -70,23 +91,23 @@
   }
 }
 
-@media (min-width: $sm) {
+@media (min-width: $md) {
   .calendar-agenda {
     &--day {
       width: 480px;
     }
     &--tile {
-      // width: 40px;
-      // height: 48px;
       &-active {
         border-radius: 16px;
       }
       &-preview {
-        visibility: visible;
+        display: block;
+        max-width: calc(100% - 16px);
+        color: white;
+        background-color: $color-primary;
       }
       &-overlay {
-        // top: 8px;
-        // right: 8px;
+        // visibility: hidden;
       }
     }
   }

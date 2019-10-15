@@ -30,6 +30,12 @@
   height: 100%;
 }
 
+.overflow {
+  &-hidden {
+    overflow: hidden;
+  }
+}
+
 /* BREAKPOINTS */
 
 $sm: 576px;
@@ -41,6 +47,9 @@ $xl: 1200px;
 
 .border {
   &-radius {
+    &-4 {
+      border-radius: 4px;
+    }
     &-8 {
       border-radius: 8px;
     }
@@ -172,6 +181,9 @@ $color-tertiary: #9146ff;
     margin: 16px;
   }
   &-bottom {
+    &-2 {
+      margin-bottom: 2px;
+    }
     &-4 {
       margin-bottom: 4px;
     }
@@ -183,6 +195,9 @@ $color-tertiary: #9146ff;
     }
   }
   &-left {
+    &-2 {
+      margin-left: 2px;
+    }
     &-4 {
       margin-left: 4px;
     }
@@ -194,6 +209,9 @@ $color-tertiary: #9146ff;
     }
   }
   &-right {
+    &-2 {
+      margin-right: 2px;
+    }
     &-4 {
       margin-right: 4px;
     }
@@ -205,6 +223,9 @@ $color-tertiary: #9146ff;
     }
   }
   &-top {
+    &-2 {
+      margin-top: 2px;
+    }
     &-4 {
       margin-top: 4px;
     }
@@ -254,6 +275,9 @@ $color-tertiary: #9146ff;
 /* PADDING */
 
 .padding {
+  &-2 {
+    padding: 2px;
+  }
   &-4 {
     padding: 4px;
   }
@@ -319,6 +343,9 @@ $color-tertiary: #9146ff;
     }
   }
   &-y {
+    &-2 {
+      padding: 4px 0px;
+    }
     &-4 {
       padding: 4px 0px;
     }
