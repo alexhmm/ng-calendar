@@ -1,8 +1,6 @@
-<div
-  class="calendar--header flex flex-row flex-justify-between flex-align-center padding-top-16 padding-bottom-16 width-100"
->
+<div class="header flex flex-row flex-justify-between flex-align-center">
   <div class="flex flex-row flex-align-center margin-left-16">
-    <div class="flex flex-align-center icon-primary margin-right-16">
+    <div class="flex flex-align-center icon-button-primary margin-right-16">
       <mat-icon (click)="prevMonth()" class="margin-right-8"
         >keyboard_arrow_up</mat-icon
       >
@@ -13,7 +11,10 @@
     </div>
   </div>
   <div class="margin-right-16">
-    <div class="flex flex-align-center icon-primary">
+    <div class="flex flex-align-center icon-button-primary">
+      <mat-icon (click)="onCreateAppointment()" class="margin-right-8"
+        >add</mat-icon
+      >
       <mat-icon (click)="showCalendarAgenda()" class="margin-right-8"
         >view_module</mat-icon
       >
@@ -36,3 +37,9 @@
   [date]="date"
 >
 </app-calendar-list>
+
+<app-appointment-create-edit
+  *ngIf="stateCreateEdit"
+  (closeAppointmentCreateEdit)="onCloseAppointmentCreateEdit($event)"
+  class="calendar--appointment-create border-radius-16 z-index-10"
+></app-appointment-create-edit>

@@ -1,29 +1,9 @@
 @import '../../../global.scss';
 
-@for $i from 0 through 5 {
-  .calendar-agenda {
-    &--tile {
-      &-overlay {
-        &:nth-child(#{$i}) {
-          // &:before {
-          right: #{$i * 6px - 6px};
-          // }
-        }
-      }
-    }
-  }
-}
-
-::ng-deep .mat-grid-tile .mag-figure .calendar-agenda--title {
-  display: flex !important;
-  align-items: center !important;
-}
-
 ::ng-deep .mat-grid-tile .mat-figure {
   display: flex;
   flex-direction: column;
   justify-content: flex-start !important;
-  text-overflow: clip;
 }
 
 .calendar-agenda {
@@ -41,7 +21,7 @@
   }
   &--tile {
     position: relative;
-    width: 32px;
+    width: 40px;
     min-height: 32px !important;
     &:hover:before {
       width: 50%;
@@ -56,17 +36,8 @@
       position: absolute;
       border-bottom: 4px solid $color-primary;
     }
-    &-active {
-      color: $color-primary;
-      font-weight: bold;
-      // color: white;
-      // background-color: $color-primary;
-      // border-radius: 12px;
-    }
-    &-appointments {
-      overflow-y: hidden;
-      // white-space: wrap;
-      // height: calc(100% - 34px);
+    &-header {
+      height: 100%;
     }
     &-preview {
       display: none;
@@ -78,16 +49,8 @@
       position: absolute;
       color: $color-primary;
       top: 0px;
-      // background-color: $color-primary;
-      // width: 4px;
-      // height: 4px;
-      // border-radius: 4px;
+      right: 0px;
     }
-  }
-  &--title {
-    width: 32px;
-    height: 40px;
-    color: #777777;
   }
 }
 
@@ -97,17 +60,11 @@
       width: 480px;
     }
     &--tile {
-      &-active {
-        border-radius: 16px;
-      }
       &-preview {
         display: block;
         max-width: calc(100% - 16px);
         color: white;
         background-color: $color-primary;
-      }
-      &-overlay {
-        // visibility: hidden;
       }
     }
   }

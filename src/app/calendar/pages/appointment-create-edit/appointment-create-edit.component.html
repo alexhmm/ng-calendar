@@ -1,0 +1,92 @@
+<div class="margin-16">
+  <div
+    class="header flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
+  >
+    <mat-icon (click)="onGoBack()">arrow_back</mat-icon>
+    <div class="color-primary">
+      <b>{{ !appointment ? 'Termin erstellen' : 'Termin bearbeiten' }}</b>
+    </div>
+    <div class="header-icon"></div>
+  </div>
+  <!-- <div
+    class="flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
+  >
+    <div class="color-primary">
+      <b>Termin erstellen</b>
+    </div>
+    <mat-icon (click)="onCloseAppointmentCreateEdit()">close</mat-icon>
+  </div> -->
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="flex flex-column">
+      <div class="flex flex-column margin-bottom-8">
+        <div class="font-size-12 margin-bottom-4">
+          <b>Start</b>
+        </div>
+        <div
+          class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
+        >
+          <div class="flex flex-align-center width-100">
+            <input
+              formControlName="dateStart"
+              placeholder="Choose a date"
+              class="input-form margin-right-8"
+            />
+          </div>
+          <mat-icon class="font-size-20">calendar_today</mat-icon>
+        </div>
+      </div>
+      <div class="flex flex-column margin-bottom-8">
+        <div class="font-size-12 margin-bottom-4">
+          <b>Ende</b>
+        </div>
+        <div
+          class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
+        >
+          <div class="flex flex-align-center width-100">
+            <input
+              formControlName="dateEnd"
+              placeholder="Choose a date"
+              class="input-form margin-right-8"
+            />
+          </div>
+          <mat-icon class="font-size-20">calendar_today</mat-icon>
+        </div>
+      </div>
+      <div class="flex flex-column margin-bottom-8">
+        <div class="font-size-12 margin-bottom-4">
+          <b>Titel</b>
+        </div>
+        <div
+          class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
+        >
+          <input formControlName="title" class="input-form" />
+        </div>
+      </div>
+      <div class="flex flex-column margin-bottom-8">
+        <div class="font-size-12 margin-bottom-4">
+          <b>Beschreibung</b>
+        </div>
+        <div
+          class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
+        >
+          <input formControlName="description" class="input-form" />
+        </div>
+      </div>
+      <div class="flex flex-column margin-bottom-16">
+        <div class="font-size-12 margin-bottom-4">
+          <b>Ort</b>
+        </div>
+        <div
+          class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
+        >
+          <input formControlName="place" class="input-form" />
+        </div>
+      </div>
+      <div class="flex flex-justify-center">
+        <button type="submit" class="button">
+          {{ !appointment ? 'Termin erstellen' : 'Termin bearbeiten' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

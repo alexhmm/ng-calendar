@@ -1,52 +1,38 @@
-<div class="padding-16">
+<div class="margin-16">
   <mat-grid-list cols="7" [rowHeight]="rowHeight">
     <mat-grid-tile colspan="1" rowspan="1"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Mo
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Mo</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Di
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Di</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Mi
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Mi</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Do
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Do</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Fr
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Fr</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        Sa
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>Sa</b>
       </div></mat-grid-tile
     >
-    <mat-grid-tile colspan="1" rowspan="1" class="calendar-agenda--title"
-      ><div
-        class="calendar-agenda--title flex flex-justify-center flex-align-center"
-      >
-        So
+    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>So</b>
       </div></mat-grid-tile
     >
     <mat-grid-tile
@@ -67,7 +53,7 @@
     >
       <div
         [ngClass]="{
-          'calendar-agenda--tile-active':
+          'color-primary font-size-18':
             monthDay === date &&
             currentYear === yearMonth.year &&
             currentMonth === yearMonth.month
@@ -75,7 +61,7 @@
         (click)="openCalendarDay(i)"
         class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
       >
-        {{ monthDay }}
+        <b>{{ monthDay }}</b>
         <div
           [ngClass]="{
             'calendar-agenda--tile-overlay':
@@ -87,18 +73,6 @@
             activeAppointmentPreviews[findIndex(monthDay)]?.appointments?.length
           }}
         </div>
-        <!-- <ng-container *ngIf="findIndex(monthDay) > -1">
-          <div
-            *ngFor="
-              let title of activeAppointmentPreviews[findIndex(monthDay)]
-                .appointments;
-              let i = index
-            "
-            [ngClass]="{
-              'calendar-agenda--tile-overlay': i < 5
-            }"
-          ></div>
-        </ng-container> -->
       </div>
       <div
         *ngIf="findIndex(monthDay) > -1"
@@ -106,49 +80,17 @@
       >
         {{ activeAppointmentPreviews[findIndex(monthDay)].appointments[0] }}
       </div>
-      <!-- <div
-        *ngIf="findIndex(monthDay) > -1"
-        class="calendar-agenda--tile-appointments flex flex-row flex-justify-center flex-wrap width-100"
-      >
-        <div
-          *ngFor="
-            let title of activeAppointmentPreviews[findIndex(monthDay)]
-              .appointments;
-            let i = index
-          "
-          [ngClass]="{
-            'margin-right-2':
-              i <
-              activeAppointmentPreviews[findIndex(monthDay)].appointments
-                .length -
-                1,
-            'margin-bottom-2':
-              i <
-              activeAppointmentPreviews[findIndex(monthDay)].appointments
-                .length -
-                1
-          }"
-          class="calendar-agenda--tile-preview border-radius-4 font-size-12 padding-2"
-        >
-          <div
-            *ngIf="
-              i <
-              activeAppointmentPreviews[findIndex(monthDay)].appointments.length
-            "
-            class="text-overflow-ellipsis width-100"
-          >
-            {{ title }}
-          </div>
-        </div>
-      </div> -->
     </mat-grid-tile>
     <mat-grid-tile
       *ngFor="let nextMonthDay of nextMonthDays; let i = index"
       colspan="1"
       rowspan="2"
-      class="calendar-agenda--tile-other"
     >
-      {{ nextMonthDay }}
+      <div
+        class="calendar-agenda--tile calendar-agenda--tile-other flex flex-justify-center flex-align-center"
+      >
+        {{ nextMonthDay }}
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
@@ -158,5 +100,5 @@
   [activeDate]="activeDate"
   [appointments]="appointments"
   (closeCalendarDay)="onCloseCalendarDay($event)"
-  class="calendar-agenda--day border-radius-16 z-index-10"
+  class="calendar-agenda--day z-index-10"
 ></app-calendar-day>

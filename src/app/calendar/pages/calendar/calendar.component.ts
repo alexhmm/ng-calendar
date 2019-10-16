@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { CalendarService } from '../../services/calendar.service';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -18,13 +19,17 @@ export class CalendarComponent implements OnInit {
   date: number;
   format: string;
   monthText: string;
+  stateCreateEdit = false;
   stateView = 'agenda';
   yearMonth: {
     year: number;
     month: number;
   };
 
-  constructor(private calendarService: CalendarService) {}
+  constructor(
+    private router: Router,
+    private calendarService: CalendarService
+  ) {}
 
   ngOnInit() {
     this.format = moment().format('YYYY-MM-DD');
@@ -49,6 +54,15 @@ export class CalendarComponent implements OnInit {
    */
   nextMonth(): void {
     this.calendarService.setActiveMonth(this.activeMonth + 1);
+  }
+
+  onCloseAppointmentCreateEdit(): void {
+    this.stateCreateEdit = false;
+  }
+
+  onCreateAppointment(): void {
+    this.stateCreateEdit = true;
+    this.router.navigate(['create']);
   }
 
   /**

@@ -40,7 +40,7 @@ export class CalendarAgendaComponent implements OnInit {
     this.appService.stateHeight
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(innerHeight => {
-        this.rowHeight = Math.floor((innerHeight - 57 - 32) / 6.5 / 2) + 'px';
+        this.rowHeight = Math.floor((innerHeight - 57 - 48) / 6.5 / 2) + 'px';
       });
     this.calendarService.activeMonth
       .pipe(takeUntil(this.ngUnsubscribe))

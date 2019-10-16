@@ -29,14 +29,6 @@ export class CalendarService {
           title: 'Besprechnung'
         },
         {
-          id: '121lf',
-          dateStart: new Date('October 11, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 11, 2019 09:30:00').toISOString(),
-          desc: 'Wichtiger Termin',
-          place: 'Konferenzraum unten',
-          title: 'Termin'
-        },
-        {
           id: 'isu12',
           dateStart: new Date('October 15, 2019 09:00:00').toISOString(),
           dateEnd: new Date('October 15, 2019 09:30:00').toISOString(),
@@ -55,56 +47,56 @@ export class CalendarService {
         },
         {
           id: '1241f',
-          dateStart: new Date('October 17, 2019 08:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 9:00:00').toISOString(),
+          dateStart: new Date('October 16, 2019 08:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 9:00:00').toISOString(),
           desc: 'Vorgespräch',
           place: 'Konferenzraum oben',
           title: 'Termin'
         },
         {
           id: '1241g',
-          dateStart: new Date('October 17, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 10:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 10:45:00').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
         },
         {
           id: '1241u',
-          dateStart: new Date('October 17, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 12:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 11:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 12:45:00').toISOString(),
           desc: 'Planning Sprint',
           place: 'Neuer Konfi',
           title: 'Planning'
         },
         {
           id: '12482',
-          dateStart: new Date('October 17, 2019 13:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 15:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 13:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 15:45:00').toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Alfresco Office',
           title: 'Review Grooming'
         },
         {
           id: '1241g',
-          dateStart: new Date('October 17, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 10:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 10:45:00').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
         },
         {
           id: '1241u',
-          dateStart: new Date('October 17, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 12:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 11:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 12:45:00').toISOString(),
           desc: 'Planning Sprint',
           place: 'Neuer Konfi',
           title: 'Planning'
         },
         {
           id: '12482',
-          dateStart: new Date('October 17, 2019 13:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 15:45:00').toISOString(),
+          dateStart: new Date('October 16, 2019 13:00:00').toISOString(),
+          dateEnd: new Date('October 16, 2019 15:45:00').toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Alfresco Office',
           title: 'Review Grooming'
@@ -118,6 +110,14 @@ export class CalendarService {
           title: 'Grooming'
         },
         {
+          id: '121lf',
+          dateStart: new Date('October 24, 2019 09:00:00').toISOString(),
+          dateEnd: new Date('October 24, 2019 09:30:00').toISOString(),
+          desc: 'Wichtiger Termin',
+          place: 'Konferenzraum unten',
+          title: 'Termin'
+        },
+        {
           id: '1t512',
           dateStart: new Date('November 11, 2019 11:00:00').toISOString(),
           dateEnd: new Date('November 11, 2019 11:30:00').toISOString(),
@@ -127,6 +127,17 @@ export class CalendarService {
         }
       ]
     };
+  }
+
+  /**
+   * Returns one appointment by id
+   * @param id Appointment id
+   */
+  getAppointmentById(id: string): Appointment {
+    const appointments: {
+      appointments: Appointment[];
+    } = this.getAppointments();
+    return appointments.appointments.find(appointment => appointment.id === id);
   }
 
   /**
