@@ -1,38 +1,8 @@
 <div class="margin-16">
   <mat-grid-list cols="7" [rowHeight]="rowHeight">
-    <mat-grid-tile colspan="1" rowspan="1"
+    <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
       ><div class="flex flex-align-center height-100 color-primary">
-        <b>Mo</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>Di</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>Mi</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>Do</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>Fr</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>Sa</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile colspan="1" rowspan="1" class="color-primary"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>So</b>
+        <b>{{ day }}</b>
       </div></mat-grid-tile
     >
     <mat-grid-tile

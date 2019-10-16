@@ -1,0 +1,21 @@
+<div class="datetime-picker padding-16">
+  <div
+    class="flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
+  >
+    <div class="color-primary">
+      <b>{{ type === 'dateStart' ? 'Start' : 'Ende' }}</b>
+    </div>
+    <mat-icon (click)="onCloseDateTimePicker()">close</mat-icon>
+  </div>
+  <!-- <ng-container *ngIf="activeDayAppointments.length > 0"
+    ><div *ngFor="let appointment of activeDayAppointments; let i = index">
+      <app-calendar-day-item
+        [appointment]="appointment"
+        [ngClass]="{ 'margin-bottom-16': i < activeDayAppointments.length - 1 }"
+        class="display-block"
+      ></app-calendar-day-item></div
+  ></ng-container>
+  <div *ngIf="activeDayAppointments.length < 1" class="font-size-14">
+    Keine Termine vorhanden.
+  </div> -->
+</div>

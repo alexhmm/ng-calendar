@@ -267,6 +267,13 @@ export class CalendarService {
   }
 
   /**
+   * Returns short day strings
+   */
+  getDayStrings(): string[] {
+    return ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  }
+
+  /**
    * Returns ISO string by given Date
    * @param year Year
    * @param month Month

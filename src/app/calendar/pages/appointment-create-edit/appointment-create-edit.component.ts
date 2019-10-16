@@ -28,6 +28,7 @@ export class AppointmentCreateEditComponent implements OnInit {
   });
   ngUnsubscribe: Subject<object> = new Subject();
   stateEdit: boolean;
+  statePick: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +54,14 @@ export class AppointmentCreateEditComponent implements OnInit {
         });
       }
     });
+  }
+
+  onClickDateTimePicker(type: string): void {
+    this.statePick = type;
+  }
+
+  onCloseDateTimePicker(): void {
+    this.statePick = null;
   }
 
   onGoBack(): void {

@@ -14,6 +14,7 @@ import { CalendarListItemComponent } from './components/calendar-list-item/calen
 
 import { CalendarService } from './services/calendar.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatetimePickerComponent } from './components/datetime-picker/datetime-picker.component';
 
 export const ROUTES: Routes = [
   {
@@ -38,7 +39,8 @@ export const ROUTES: Routes = [
     CalendarDayComponent,
     CalendarDayItemComponent,
     CalendarListComponent,
-    CalendarListItemComponent
+    CalendarListItemComponent,
+    DatetimePickerComponent
   ],
   imports: [
     CommonModule,

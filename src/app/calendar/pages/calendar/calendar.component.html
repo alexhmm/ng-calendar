@@ -37,9 +37,3 @@
   [date]="date"
 >
 </app-calendar-list>
-
-<app-appointment-create-edit
-  *ngIf="stateCreateEdit"
-  (closeAppointmentCreateEdit)="onCloseAppointmentCreateEdit($event)"
-  class="calendar--appointment-create border-radius-16 z-index-10"
-></app-appointment-create-edit>

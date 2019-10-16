@@ -1,6 +1,18 @@
 @import '../../../global.scss';
 
 .appointment-create-edit {
+  &--datetime-picker {
+    position: fixed;
+    overflow-y: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-height: calc(100% - 64px);
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);
+  }
   &--form {
     width: 100%;
     &-date {
@@ -46,6 +58,9 @@
 
 @media screen and(min-width: $md) {
   .appointment-create-edit {
+    &--datetime-picker {
+      width: 480px;
+    }
     &--form {
       width: 720px;
     }

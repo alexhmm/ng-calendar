@@ -21,6 +21,7 @@ export class CalendarAgendaComponent implements OnInit {
   activeMonth: number;
   activeAppointmentDays: number[] = [];
   activeAppointmentPreviews: { day: number; appointments: string[] }[] = [];
+  dayStrings: string[];
   monthDays: number[];
   nextMonthDays: number[];
   ngUnsubscribe: Subject<object> = new Subject();
@@ -37,6 +38,7 @@ export class CalendarAgendaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.dayStrings = this.calendarService.getDayStrings();
     this.appService.stateHeight
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(innerHeight => {
