@@ -1,1 +1,53 @@
 @import '../../../global.scss';
+
+.appointment-create-edit {
+  &--form {
+    width: 100%;
+    &-date {
+      width: 100%;
+    }
+    &-textarea {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and(min-width: $sm) {
+  .appointment-create-edit {
+    &--form {
+      &-date:nth-child(2n) {
+        width: calc(50% - 8px);
+        margin-left: 8px;
+        margin-right: 0px;
+      }
+      &-date:nth-child(2n + 1) {
+        width: calc(50% - 8px);
+        margin-left: 0px;
+        margin-right: 8px;
+      }
+      &-textarea:nth-child(3n) {
+        width: calc(33.3333% - 12px);
+        margin-left: 0px;
+        margin-right: 8px;
+      }
+      &-textarea:nth-child(3n + 1) {
+        width: calc(33.3333% - 12px);
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+      &-textarea:nth-child(3n + 2) {
+        width: calc(33.3333% - 12px);
+        margin-left: 8px;
+        margin-right: 0px;
+      }
+    }
+  }
+}
+
+@media screen and(min-width: $md) {
+  .appointment-create-edit {
+    &--form {
+      width: 720px;
+    }
+  }
+}
