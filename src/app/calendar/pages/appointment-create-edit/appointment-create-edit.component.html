@@ -111,6 +111,7 @@
   *ngIf="statePick"
   [type]="statePick"
   (closeDateTimePicker)="onCloseDateTimePicker()"
+  (selectDate)="onSelectDate($event)"
   class="appointment-create-edit--datetime-picker"
 >
 </app-datetime-picker>

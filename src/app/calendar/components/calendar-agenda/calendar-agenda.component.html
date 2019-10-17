@@ -11,55 +11,53 @@
       rowspan="2"
     >
       <div
-        class="calendar-agenda--tile calendar-agenda--tile-other flex flex-justify-center flex-align-center"
+        class="calendar-agenda--tile-other flex flex-justify-center flex-align-center"
       >
         {{ prevMonthDay }}
       </div>
     </mat-grid-tile>
     <mat-grid-tile
-      *ngFor="let monthDay of monthDays; let i = index"
+      *ngFor="let monthDay of getMonthLength(activeMonthLength); let i = index"
       colspan="1"
       rowspan="2"
     >
       <div
         [ngClass]="{
           'color-primary font-size-18':
-            monthDay === date &&
-            currentYear === yearMonth.year &&
-            currentMonth === yearMonth.month
+            i + 1 === currentDay &&
+            activeMonth === currentMonth &&
+            activeYear === currentYear
         }"
-        (click)="openCalendarDay(i)"
-        class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
+        (click)="openCalendarDay(i + 1)"
+        class="calendar-agenda--tile calendar-agenda--active flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
       >
-        <b>{{ monthDay }}</b>
+        <b>{{ i + 1 }}</b>
         <div
-          [ngClass]="{
-            'calendar-agenda--tile-overlay':
-              activeAppointmentDays.indexOf(monthDay) > -1
-          }"
-          class="font-size-12"
+          *ngIf="getActiveDayAppointmentLength(i + 1) > 0"
+          class="calendar-agenda--tile-overlay font-size-12"
         >
-          {{
-            activeAppointmentPreviews[findIndex(monthDay)]?.appointments?.length
-          }}
+          {{ getActiveDayAppointmentLength(i + 1) }}
         </div>
       </div>
       <div
-        *ngIf="findIndex(monthDay) > -1"
+        *ngIf="getActiveDayAppointmentTitle(i + 1)"
         class="calendar-agenda--tile-preview border-radius-8 font-size-12 padding-4 text-overflow-ellipsis"
       >
-        {{ activeAppointmentPreviews[findIndex(monthDay)].appointments[0] }}
+        {{ getActiveDayAppointmentTitle(i + 1) }}
       </div>
     </mat-grid-tile>
     <mat-grid-tile
-      *ngFor="let nextMonthDay of nextMonthDays; let i = index"
+      *ngFor="
+        let nextMonthDay of getMonthLength(nextMonthLength);
+        let i = index
+      "
       colspan="1"
       rowspan="2"
     >
       <div
-        class="calendar-agenda--tile calendar-agenda--tile-other flex flex-justify-center flex-align-center"
+        class="calendar-agenda--tile-other flex flex-justify-center flex-align-center"
       >
-        {{ nextMonthDay }}
+        {{ i + 1 }}
       </div>
     </mat-grid-tile>
   </mat-grid-list>
@@ -69,6 +67,6 @@
   *ngIf="activeDate"
   [activeDate]="activeDate"
   [appointments]="appointments"
-  (closeCalendarDay)="onCloseCalendarDay($event)"
+  (closeCalendarDay)="onCloseCalendarDay()"
   class="calendar-agenda--day z-index-10"
 ></app-calendar-day>

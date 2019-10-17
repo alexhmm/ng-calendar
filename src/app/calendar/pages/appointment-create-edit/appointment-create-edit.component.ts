@@ -56,11 +56,35 @@ export class AppointmentCreateEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Handler for opening date time picker
+   * @param type Date type
+   */
   onClickDateTimePicker(type: string): void {
     this.statePick = type;
   }
 
+  /**
+   * Handler for closing date time picker
+   */
   onCloseDateTimePicker(): void {
+    this.statePick = null;
+  }
+
+  /**
+   * Handler for date selection
+   * @param event Select date event
+   */
+  onSelectDate(event: { type: string; date: string }): void {
+    if (event.type === 'dateStart') {
+      this.formGroup.patchValue({
+        dateStart: moment(event.date).format('Do MMMM YYYY, LT')
+      });
+    } else {
+      this.formGroup.patchValue({
+        dateEnd: moment(event.date).format('Do MMMM YYYY, LT')
+      });
+    }
     this.statePick = null;
   }
 

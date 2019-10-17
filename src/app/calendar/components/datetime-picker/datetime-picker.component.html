@@ -7,15 +7,100 @@
     </div>
     <mat-icon (click)="onCloseDateTimePicker()">close</mat-icon>
   </div>
-  <!-- <ng-container *ngIf="activeDayAppointments.length > 0"
-    ><div *ngFor="let appointment of activeDayAppointments; let i = index">
-      <app-calendar-day-item
-        [appointment]="appointment"
-        [ngClass]="{ 'margin-bottom-16': i < activeDayAppointments.length - 1 }"
-        class="display-block"
-      ></app-calendar-day-item></div
-  ></ng-container>
-  <div *ngIf="activeDayAppointments.length < 1" class="font-size-14">
-    Keine Termine vorhanden.
+  <div
+    *ngIf="selectedDate"
+    class="flex flex-justify-center color-primary font-size-18 margin-bottom-16"
+  >
+    <b>{{ selectedDate }}</b>
+  </div>
+  <div
+    class="flex flex-justify-center flex-align-center icon-button-primary margin-bottom-16"
+  >
+    <mat-icon (click)="prevMonth()" class="margin-right-8"
+      >keyboard_arrow_left</mat-icon
+    >
+    <div>
+      <b>{{ monthText }}</b> {{ activeYear }}
+    </div>
+    <mat-icon (click)="nextMonth()" class="margin-left-8"
+      >keyboard_arrow_right</mat-icon
+    >
+  </div>
+  <mat-grid-list cols="7" [rowHeight]="rowHeight" class="margin-bottom-16">
+    <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
+      ><div class="flex flex-align-center height-100 color-primary">
+        <b>{{ day }}</b>
+      </div></mat-grid-tile
+    >
+    <mat-grid-tile
+      *ngFor="let prevMonthDay of prevMonthDays; let i = index"
+      colspan="1"
+      rowspan="1"
+    >
+      <div
+        class="datetime-picker--tile-other flex flex-justify-center flex-align-center height-100"
+      >
+        {{ prevMonthDay }}
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let monthDay of getMonthLength(activeMonthLength); let i = index"
+      colspan="1"
+      rowspan="1"
+    >
+      <div
+        [ngClass]="{
+          'color-primary font-size-18':
+            i + 1 !== selectedDay &&
+            i + 1 === currentDay &&
+            activeMonth === currentMonth &&
+            activeYear === currentYear,
+          'datetime-picker--tile-selected':
+            i + 1 === selectedDay &&
+            activeMonth === selectedMonth &&
+            activeYear === selectedYear
+        }"
+        (click)="onSelectDay(i + 1)"
+        class="datetime-picker--tile flex flex-justify-center flex-align-center height-100 hover width-100"
+      >
+        <b>{{ i + 1 }}</b>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="
+        let nextMonthDay of getMonthLength(nextMonthLength);
+        let i = index
+      "
+      colspan="1"
+      rowspan="1"
+    >
+      <div
+        class="datetime-picker--tile-other flex flex-justify-center flex-align-center height-100"
+      >
+        {{ i + 1 }}
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="flex flex-justify-center">
+    <button (click)="onSelectDate()" class="button">
+      Datum auswählen
+    </button>
+  </div>
+  <!-- <div class="flex flex-justify-between flex-align-center">
+    <div class="font-size-14">Startzeit</div>
+    <div class="flex flex-align-center">
+      <div>{{ selectedStartHour }}</div>
+      <mat-select [(value)]="selectedStartHour" class="margin-right-8">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+      <div>{{ selectedStartMinute }}</div>
+      <mat-select [(value)]="selectedStartMinute">
+        <mat-option *ngFor="let minute of minutes" [value]="minute">
+          {{ minute }}
+        </mat-option>
+      </mat-select>
+    </div>
   </div> -->
 </div>

@@ -54,6 +54,18 @@ export class AppService {
   }
 
   /**
+   * Returns number array by length
+   * @param length Length
+   */
+  getNumberArray(length: number) {
+    const numberArray: number[] = [];
+    for (let i = 0; i < length; i++) {
+      numberArray.push(i);
+    }
+    return numberArray;
+  }
+
+  /**
    * Sets screen state when window width changes
    */
   setScreenState() {

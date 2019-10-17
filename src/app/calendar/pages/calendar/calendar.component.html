@@ -7,7 +7,7 @@
       <mat-icon (click)="nextMonth()">keyboard_arrow_down</mat-icon>
     </div>
     <div>
-      <b>{{ monthText }}</b> {{ yearMonth.year }}
+      <b>{{ monthText }}</b> {{ activeYear }}
     </div>
   </div>
   <div class="margin-right-16">
@@ -24,16 +24,14 @@
 </div>
 <app-calendar-agenda
   *ngIf="stateView === 'agenda'"
-  [appointments]="appointments.appointments"
+  [currentDay]="currentDay"
   [currentMonth]="currentMonth"
   [currentYear]="currentYear"
-  [date]="date"
 ></app-calendar-agenda>
 <app-calendar-list
   *ngIf="stateView === 'list'"
-  [appointments]="appointments.appointments"
+  [currentDay]="currentDay"
   [currentMonth]="currentMonth"
   [currentYear]="currentYear"
-  [date]="date"
 >
 </app-calendar-list>

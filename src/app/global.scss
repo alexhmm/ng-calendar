@@ -227,11 +227,14 @@ $xl: 1200px;
 
 /* HOVER */
 
-.hover-primary {
-  @include transition(color, 0.25s, ease-in-out);
+.hover {
   cursor: pointer;
-  &:hover {
-    color: $color-primary;
+  &-primary {
+    @include transition(color, 0.25s, ease-in-out);
+    cursor: pointer;
+    &:hover {
+      color: $color-primary;
+    }
   }
 }
 

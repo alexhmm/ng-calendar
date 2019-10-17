@@ -43,6 +43,8 @@
       display: none;
     }
     &-other {
+      width: 40px;
+      min-height: 32px !important;
       color: #00000050;
     }
     &-overlay {

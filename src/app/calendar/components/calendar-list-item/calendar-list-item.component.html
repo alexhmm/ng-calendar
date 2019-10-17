@@ -2,10 +2,10 @@
   <div class="flex flex-row">
     <div class="flex flex-column margin-right-8">
       <div
-        [ngClass]="{ 'color-primary': appointment.day === date }"
+        [ngClass]="{ 'color-primary': activeDay === currentDay }"
         class="calendar-list-item--day flex flex-justify-center font-size-18 margin-bottom-8"
       >
-        <b>{{ appointment.day }}</b>
+        <b>{{ activeDay }}</b>
       </div>
       <div class="flex flex-justify-center font-size-14 margin-bottom-8">
         {{ day }}
@@ -13,16 +13,28 @@
     </div>
 
     <div class="calendar-list-item--content flex flex-column">
-      <div class="color-primary font-size-14 margin-y-4">
-        <b>{{ appointment.title }}</b>
+      <div class="font-size-16 margin-y-4">
+        <a
+          [routerLink]="['edit', appointment.id]"
+          routerLinkActive="active"
+          class="text-decoration-none text-hover-primary"
+          ><b>{{ appointment.title }}</b></a
+        >
       </div>
       <div
-        class="calendar-list-item--content-time font-size-14 margin-bottom-8"
+        class="calendar-list-item--content-time font-size-13 margin-bottom-8"
       >
         {{ timeStart }} - {{ timeEnd }}
       </div>
-      <div class="font-size-14">{{ appointment.place }}</div>
-      <div class="font-size-14">{{ appointment.desc }}</div>
+      <div
+        class="flex flex-align-center icon-primary icon-size-20 margin-bottom-4"
+      >
+        <mat-icon class="margin-right-4">room</mat-icon>
+        <div class="font-size-14">{{ appointment.place }}</div>
+      </div>
+      <div class="flex flex-align-center font-size-14">
+        {{ appointment.desc }}
+      </div>
     </div>
   </div>
 </div>

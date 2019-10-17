@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import * as moment from 'moment';
 
-import { AppointmentView } from '../../models/appointment-view';
+import { Appointment } from '../../models/appointment';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
@@ -20,10 +20,10 @@ import { CalendarService } from '../../services/calendar.service';
 })
 export class CalendarDayComponent implements OnInit, OnChanges {
   @Input() activeDate: string;
-  @Input() appointments: AppointmentView[];
-  @Output() closeCalendarDay = new EventEmitter<string>();
+  @Input() appointments: Appointment[];
+  @Output() closeCalendarDay = new EventEmitter<any>();
 
-  activeDayAppointments: AppointmentView[];
+  activeDayAppointments: Appointment[];
   date: string;
 
   constructor(private calendarService: CalendarService) {}
@@ -39,14 +39,13 @@ export class CalendarDayComponent implements OnInit, OnChanges {
   }
 
   initView() {
-    this.activeDayAppointments = this.calendarService.getActiveDayAppointmentsByISOString(
-      this.appointments,
-      this.activeDate.substring(0, 10)
+    this.activeDayAppointments = this.calendarService.getActiveDayAppointmentsByDateString(
+      this.activeDate
     );
     this.date = moment(this.activeDate).format('dddd, Do MMMM YYYY');
   }
 
   onCloseCalendarDay(): void {
-    this.closeCalendarDay.emit(null);
+    this.closeCalendarDay.emit();
   }
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-import * as moment from 'moment';
-import { CalendarService } from '../../services/calendar.service';
-import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { Appointment } from '../../models/appointment';
+import { CalendarService } from '../../services/calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -11,20 +13,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  appointments: { appointments: any[] };
+  appointments: { appointments: Appointment[] };
   appointments$ = of(this.calendarService.getAppointments());
   activeMonth: number;
+  activeYear: number;
+  currentDay = moment().date();
   currentMonth = this.calendarService.getCurrentMonth();
   currentYear = this.calendarService.getCurrentYear();
-  date: number;
-  format: string;
+  monthDifference: number;
   monthText: string;
+  ngUnsubscribe: Subject<object> = new Subject();
   stateCreateEdit = false;
   stateView = 'agenda';
-  yearMonth: {
-    year: number;
-    month: number;
-  };
 
   constructor(
     private router: Router,
@@ -32,12 +32,12 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.format = moment().format('YYYY-MM-DD');
-    this.date = moment().date();
-    this.calendarService.activeMonth.subscribe(activeMonth => {
-      this.activeMonth = activeMonth;
-      this.getMonthData();
-    });
+    this.calendarService.monthDifference
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(monthDifference => {
+        this.monthDifference = monthDifference;
+        this.getMonthData();
+      });
     this.appointments$.subscribe(appointments => {
       this.appointments = appointments;
       this.getMonthData();
@@ -45,15 +45,18 @@ export class CalendarComponent implements OnInit {
   }
 
   getMonthData(): void {
-    this.yearMonth = this.calendarService.getYearMonth(this.activeMonth);
-    this.monthText = this.calendarService.getMonthText(this.yearMonth.month);
+    this.activeMonth = this.calendarService.getActiveMonth(
+      this.monthDifference
+    );
+    this.activeYear = this.calendarService.getActiveYear(this.monthDifference);
+    this.monthText = this.calendarService.getMonthText(this.activeMonth);
   }
 
   /**
    * Click handler for next month
    */
   nextMonth(): void {
-    this.calendarService.setActiveMonth(this.activeMonth + 1);
+    this.calendarService.setMonthDifference(this.monthDifference + 1);
   }
 
   onCloseAppointmentCreateEdit(): void {
@@ -69,7 +72,7 @@ export class CalendarComponent implements OnInit {
    * Click handler for previous month
    */
   prevMonth(): void {
-    this.calendarService.setActiveMonth(this.activeMonth - 1);
+    this.calendarService.setMonthDifference(this.monthDifference - 1);
   }
 
   showCalendarAgenda(): void {

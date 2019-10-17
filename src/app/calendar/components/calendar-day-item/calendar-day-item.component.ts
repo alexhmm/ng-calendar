@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
-import { AppointmentView } from '../../models/appointment-view';
+import { Appointment } from '../../models/appointment';
 
 @Component({
   selector: 'app-calendar-day-item',
@@ -9,7 +9,7 @@ import { AppointmentView } from '../../models/appointment-view';
   styleUrls: ['./calendar-day-item.component.scss']
 })
 export class CalendarDayItemComponent implements OnInit {
-  @Input() appointment: AppointmentView;
+  @Input() appointment: Appointment;
 
   dateEnd: string;
   dateStart: string;
@@ -21,7 +21,7 @@ export class CalendarDayItemComponent implements OnInit {
   ngOnInit() {
     this.dateEnd = moment(this.appointment.dateEnd).format('MMMM Do YYYY');
     this.dateStart = moment(this.appointment.dateStart).format('MMMM Do YYYY');
-    this.timeEnd = moment(this.appointment.dateEnd).format('h:mm');
-    this.timeStart = moment(this.appointment.dateStart).format('h:mm');
+    this.timeEnd = moment(this.appointment.dateEnd).format('LT');
+    this.timeStart = moment(this.appointment.dateStart).format('LT');
   }
 }

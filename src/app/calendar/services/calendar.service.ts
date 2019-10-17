@@ -3,14 +3,13 @@ import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 
 import { Appointment } from '../models/appointment';
-import { AppointmentView } from '../models/appointment-view';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  activeMonthSrc = new BehaviorSubject(0);
-  activeMonth = this.activeMonthSrc.asObservable();
+  monthDifferenceSrc = new BehaviorSubject(0);
+  monthDifference = this.monthDifferenceSrc.asObservable();
 
   constructor() {}
 
@@ -95,8 +94,8 @@ export class CalendarService {
         },
         {
           id: '12482',
-          dateStart: new Date('October 16, 2019 13:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 15:45:00').toISOString(),
+          dateStart: new Date('October 17, 2019 13:00:00').toISOString(),
+          dateEnd: new Date('October 17, 2019 15:45:00').toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Alfresco Office',
           title: 'Review Grooming'
@@ -130,29 +129,14 @@ export class CalendarService {
   }
 
   /**
-   * Returns one appointment by id
-   * @param id Appointment id
-   */
-  getAppointmentById(id: string): Appointment {
-    const appointments: {
-      appointments: Appointment[];
-    } = this.getAppointments();
-    return appointments.appointments.find(appointment => appointment.id === id);
-  }
-
-  /**
    * Returns active month days with appointments
    * @param appointments All appointments
    * @param activeYear Actiive year
    * @param activeMonth Active month
    */
-  getActiveAppointments(
-    appointments,
-    activeYear,
-    activeMonth
-  ): AppointmentView[] {
+  getActiveAppointments(activeYear, activeMonth): Appointment[] {
     const activeAppointments = [];
-    for (const appointment of appointments) {
+    for (const appointment of this.getAppointments().appointments) {
       if (
         moment(appointment.dateStart).year() === activeYear &&
         moment(appointment.dateStart).month() === activeMonth
@@ -161,9 +145,9 @@ export class CalendarService {
           id: appointment.id,
           dateStart: appointment.dateStart,
           dateEnd: appointment.dateEnd,
-          day: moment(appointment.dateStart).date(),
-          month: moment(appointment.date).month(),
-          year: moment(appointment.date).year(),
+          // day: moment(appointment.dateStart).date(),
+          // month: moment(appointment.dateStart).month(),
+          // year: moment(appointment.dateStart).year(),
           desc: appointment.desc,
           place: appointment.place,
           title: appointment.title
@@ -174,76 +158,64 @@ export class CalendarService {
   }
 
   /**
-   * Returns active month day numbers with appointments
-   * @param appointments All appointments
-   * @param activeYear Actiive year
+   * Returns appointment length of active day
+   * @param activeAppointments Active appointments
+   * @param activeDay Active Day
    * @param activeMonth Active month
+   * @param activeYear Active year
    */
-  getActiveAppointmentDays(appointments, activeYear, activeMonth): number[] {
-    const activeAppointmentDays: number[] = [];
-    for (const appointment of appointments) {
+  getActiveDayAppointmentLength(
+    activeAppointments: Appointment[],
+    activeDay,
+    activeMonth,
+    activeYear
+  ) {
+    const date = this.getDateStringByNumbers(
+      activeDay,
+      activeMonth,
+      activeYear
+    );
+    let length = 0;
+    for (const activeAppointment of activeAppointments) {
       if (
-        moment(appointment.dateStart).year() === activeYear &&
-        moment(appointment.dateStart).month() === activeMonth
+        activeAppointment.dateStart.includes(date) ||
+        activeAppointment.dateEnd.includes(date)
       ) {
-        const date = moment(appointment.dateStart).date();
-        if (activeAppointmentDays.indexOf(date) < 0) {
-          activeAppointmentDays.push(date);
-        }
+        length++;
       }
     }
-    return activeAppointmentDays;
+    return length;
   }
 
   /**
-   * Returns Active appointment titls for agenda preview
-   * @param appointments Appointment list
-   * @param activeYear Active year
+   * Returns first matched active appointment
+   * @param activeAppointments Active appointments
+   * @param activeDay Active day
    * @param activeMonth Active month
+   * @param activeYear Active year
    */
-  getActiveAppointmentPreviews(
-    appointments: AppointmentView[],
-    activeYear,
-    activeMonth
-  ): { day: number; appointments: string[] }[] {
-    const activeAppointmentPreviews: {
-      day: number;
-      appointments: string[];
-    }[] = [];
-    for (const appointment of appointments) {
-      if (
-        moment(appointment.dateStart).year() === activeYear &&
-        moment(appointment.dateStart).month() === activeMonth
-      ) {
-        // Check if day is already added to array
-
-        if (
-          activeAppointmentPreviews.findIndex(
-            app => app.day === moment(appointment.dateStart).date()
-          ) < 0
-        ) {
-          const apps = [];
-          apps.push(appointment.title);
-          activeAppointmentPreviews.push({
-            day: moment(appointment.dateStart).date(),
-            appointments: [...apps]
-          });
-          // Push another title into same day
-        } else {
-          const index = activeAppointmentPreviews.findIndex(
-            app => app.day === moment(appointment.dateStart).date()
-          );
-          activeAppointmentPreviews[index].appointments.push(appointment.title);
-        }
-      }
+  getActiveDayAppointmentTitle(
+    activeAppointments: Appointment[],
+    activeDay: number,
+    activeMonth: number,
+    activeYear: number
+  ): string {
+    // Find first appointment with matched date
+    const date = activeAppointments.find(activeAppointment =>
+      activeAppointment.dateStart.includes(
+        this.getDateStringByNumbers(activeDay, activeMonth, activeYear)
+      )
+    );
+    // Return first appointment title
+    if (date) {
+      return date.title;
+    } else {
+      return null;
     }
-    return activeAppointmentPreviews;
   }
 
-  getActiveDayAppointmentsByISOString(
-    appointments: AppointmentView[],
-    date: string
-  ): AppointmentView[] {
+  getActiveDayAppointmentsByDateString(date: string): Appointment[] {
+    const appointments = this.getAppointments().appointments;
     const activeDayAppointments = [];
     for (const appointment of appointments) {
       if (
@@ -267,30 +239,59 @@ export class CalendarService {
   }
 
   /**
+   * Returns calculated month by month difference
+   * @param monthDifference Month difference
+   */
+  getActiveMonth(monthDifference: number) {
+    return moment()
+      .add(monthDifference, 'months')
+      .month();
+  }
+
+  /**
+   * Returns year by month difference number
+   * @param monthDifference Month difference
+   */
+  getActiveYear(monthDifference: number): number {
+    return moment()
+      .add(monthDifference, 'months')
+      .year();
+  }
+
+  /**
+   * Returns one appointment by id
+   * @param id Appointment id
+   */
+  getAppointmentById(id: string): Appointment {
+    const appointments: {
+      appointments: Appointment[];
+    } = this.getAppointments();
+    return appointments.appointments.find(appointment => appointment.id === id);
+  }
+
+  /**
+   * Returns date string by numbers
+   * @param day Day
+   * @param month Month
+   * @param year Year
+   */
+  getDateStringByNumbers(day: number, month: number, year: number): string {
+    let dayString: any = day;
+    let monthString: any = month + 1;
+    if (day < 10) {
+      dayString = '0' + day;
+    }
+    if (monthString < 10) {
+      monthString = '0' + monthString;
+    }
+    return year + '-' + monthString + '-' + dayString;
+  }
+
+  /**
    * Returns short day strings
    */
   getDayStrings(): string[] {
     return ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  }
-
-  /**
-   * Returns ISO string by given Date
-   * @param year Year
-   * @param month Month
-   * @param day Day
-   */
-  getISOStringByDate(
-    year: number,
-    month: number | string,
-    day: number | string
-  ): string {
-    if (month < 10) {
-      month = '0' + month;
-    }
-    if (day < 10) {
-      day = '0' + day;
-    }
-    return moment(year + '-' + month + '-' + day).toISOString(true);
   }
 
   /**
@@ -308,22 +309,22 @@ export class CalendarService {
   }
 
   /**
-   * Returns days of month
-   * @param monthDiff Difference from current month
+   * Returns month length (days)
+   * @param monthDifference Month difference
    */
-  getMonthLength(monthDiff: number): number {
+  getMonthLength(monthDifference: number): number {
     return moment()
-      .add(monthDiff, 'months')
+      .add(monthDifference, 'months')
       .daysInMonth();
   }
 
   /**
    * Returns first day of month
-   * @param monthDiff Difference from current month
+   * @param monthDifference Month difference
    */
-  getMonthStart(monthDiff: number): number {
+  getMonthStart(monthDifference: number): number {
     let start = moment()
-      .add(monthDiff, 'months')
+      .add(monthDifference, 'months')
       .startOf('month')
       .day();
     // Set monday as first calendar day
@@ -371,11 +372,45 @@ export class CalendarService {
   }
 
   /**
-   * Returns selected month days for view
-   * @param monthDiff Difference from current month
+   * Returns next month length for view
+   * @param monthDifference Month difference
    */
-  getSelectedMonthDays(monthDiff: number): number[] {
-    const selectedMonthLength = this.getMonthLength(monthDiff);
+  getNextMonthLength(monthDifference: number): number {
+    return (
+      42 -
+      this.getMonthLength(monthDifference) -
+      this.getPrevMonthLength(monthDifference)
+    );
+  }
+
+  getPrevMonthDays(monthDifference: number): number[] {
+    const days: number[] = [];
+    const prevMonthFullLength = this.getMonthLength(monthDifference - 1);
+    const prevMonthRestLength = this.getPrevMonthLength(monthDifference);
+    for (let i = 0; i < prevMonthRestLength; i++) {
+      days.push(prevMonthFullLength - prevMonthRestLength + i + 1);
+    }
+    return days;
+  }
+
+  /**
+   * Returns previous month length for view
+   * @param monthDifference Month difference
+   */
+  getPrevMonthLength(monthDifference: number): number {
+    return (length = Math.abs(
+      this.getMonthLength(monthDifference - 1) -
+        (this.getMonthLength(monthDifference - 1) -
+          this.getMonthStart(monthDifference))
+    ));
+  }
+
+  /**
+   * Returns selected month days for view
+   * @param monthDifference Month Difference
+   */
+  getSelectedMonthDays(monthDifference: number): number[] {
+    const selectedMonthLength = this.getMonthLength(monthDifference);
     const selectedMonthDays: number[] = [];
     for (let i = 0; i < selectedMonthLength; i++) {
       selectedMonthDays.push(i + 1);
@@ -384,54 +419,11 @@ export class CalendarService {
   }
 
   /**
-   * Returns next month days for view
-   * @param monthDiff Difference from current month
+   * Sets month difference number
+   * @param monthDifference Month difference
    */
-  getNextMonthDays(monthDiff: number): number[] {
-    const monthLength = this.getMonthLength(monthDiff);
-    const monthStart = this.getMonthStart(monthDiff);
-    const nextMonthLengthView = 42 - monthLength - monthStart;
-    const nextMonthDays: number[] = [];
-    for (let i = 0; i < nextMonthLengthView; i++) {
-      nextMonthDays.push(i + 1);
-    }
-    return nextMonthDays;
-  }
-
-  /**
-   * Returns previous month days for view
-   * @param monthDiff Difference from current month
-   */
-  getPrevMonthDays(monthDiff: number): number[] {
-    const prevMonthLength = this.getMonthLength(monthDiff - 1);
-    const monthStart = this.getMonthStart(monthDiff);
-    const prevMonthDays: number[] = [];
-    for (let i = 0; i < monthStart; i++) {
-      prevMonthDays.push(prevMonthLength - monthStart + i + 1);
-    }
-    return prevMonthDays;
-  }
-
-  /**
-   * Returns year month data
-   * @param monthDiff Difference from current month
-   */
-  getYearMonth(monthDiff: number): { year: number; month: number } {
-    return {
-      year: moment()
-        .add(monthDiff, 'months')
-        .year(),
-      month: moment()
-        .add(monthDiff, 'months')
-        .month()
-    };
-  }
-
-  /**
-   * Set active month
-   * @param activeMonth Active month
-   */
-  setActiveMonth(activeMonth: number): void {
-    this.activeMonthSrc.next(activeMonth);
+  setMonthDifference(monthDifference: number): void {
+    this.monthDifferenceSrc.next(monthDifference);
+    console.log('setMonthDifference', monthDifference);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Appointment } from '../../models/appointment';
-import { AppointmentView } from '../../models/appointment-view';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
@@ -10,33 +9,26 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./calendar-list.component.scss']
 })
 export class CalendarListComponent implements OnInit {
-  @Input() appointments: Appointment[];
+  @Input() currentDay: number;
   @Input() currentMonth: number;
   @Input() currentYear: number;
-  @Input() date: number;
 
-  activeAppointments: AppointmentView[] = [];
-  activeMonth: number;
-  yearMonth: {
-    year: number;
-    month: number;
-  };
+  activeAppointments: Appointment[] = [];
+  monthDifference: number;
 
   constructor(private calendarService: CalendarService) {}
 
   ngOnInit() {
-    this.calendarService.activeMonth.subscribe(activeMonth => {
-      this.activeMonth = activeMonth;
+    this.calendarService.monthDifference.subscribe(monthDifference => {
+      this.monthDifference = monthDifference;
       this.getMonthData();
     });
   }
 
   getMonthData(): void {
-    this.yearMonth = this.calendarService.getYearMonth(this.activeMonth);
     this.activeAppointments = this.calendarService.getActiveAppointments(
-      this.appointments,
-      this.yearMonth.year,
-      this.yearMonth.month
+      this.calendarService.getActiveYear(this.monthDifference),
+      this.calendarService.getActiveMonth(this.monthDifference)
     );
   }
 }

@@ -2,4 +2,43 @@
 
 .datetime-picker {
   background-color: white;
+  &--tile {
+    position: relative;
+    width: 40px;
+    min-height: 32px !important;
+    &:hover:before {
+      width: 50%;
+    }
+    &:before {
+      @include transition(width, 0.15s, ease-in-out);
+      content: '';
+      left: 0%;
+      bottom: 0px;
+      width: 0%;
+      height: 4px;
+      position: absolute;
+      border-bottom: 4px solid $color-primary;
+    }
+    // &-header {
+    //   height: 100%;
+    // }
+    // &-preview {
+    //   display: none;
+    // }
+    &-other {
+      width: 40px;
+      min-height: 32px !important;
+      color: #00000050;
+    }
+    &-selected {
+      color: white;
+      background-color: $color-primary;
+    }
+    // &-overlay {
+    //   position: absolute;
+    //   color: $color-primary;
+    //   top: 0px;
+    //   right: 0px;
+    // }
+  }
 }
