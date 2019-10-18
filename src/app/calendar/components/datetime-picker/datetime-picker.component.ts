@@ -35,6 +35,7 @@ export class DatetimePickerComponent implements OnInit {
   selectedDay: number;
   selectedMonth: number;
   selectedYear: number;
+  time: string;
 
   constructor(
     private appService: AppService,
@@ -42,6 +43,7 @@ export class DatetimePickerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.time = moment(this.selectedDate).format('LT');
     this.calendarService.monthDifference
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(monthDifference => {
@@ -95,7 +97,8 @@ export class DatetimePickerComponent implements OnInit {
       this.selectedMonth,
       this.selectedYear
     );
-    this.selectDate.emit({ type: this.type, date });
+    const dateTime = date + ' ' + this.time;
+    this.selectDate.emit({ type: this.type, date: dateTime });
   }
 
   onSelectDay(day: number) {
