@@ -1,5 +1,9 @@
 @import '../../../global.scss';
 
+::ng-deep .datetime-picker .mat-select-value {
+  display: none !important;
+}
+
 .datetime-picker {
   background-color: white;
   &--tile {
@@ -19,12 +23,6 @@
       position: absolute;
       border-bottom: 4px solid $color-primary;
     }
-    // &-header {
-    //   height: 100%;
-    // }
-    // &-preview {
-    //   display: none;
-    // }
     &-other {
       width: 40px;
       min-height: 32px !important;
@@ -34,11 +32,10 @@
       color: white;
       background-color: $color-primary;
     }
-    // &-overlay {
-    //   position: absolute;
-    //   color: $color-primary;
-    //   top: 0px;
-    //   right: 0px;
-    // }
+    &-time {
+      &--input {
+        max-width: 24px;
+      }
+    }
   }
 }

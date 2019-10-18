@@ -82,8 +82,13 @@ $xl: 1200px;
 
 /* DISPLAY */
 
-.display-block {
-  display: block;
+.display {
+  &-block {
+    display: block;
+  }
+  &-none {
+    display: none;
+  }
 }
 
 /* ELEMENTS */
@@ -262,6 +267,9 @@ $xl: 1200px;
     }
     &-16 {
       margin-bottom: 16px;
+    }
+    &-32 {
+      margin-bottom: 32px;
     }
   }
   &-left {

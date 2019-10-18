@@ -15,14 +15,19 @@ import { CalendarService } from '../../services/calendar.service';
 })
 export class AppointmentCreateEditComponent implements OnInit {
   appointment?: Appointment;
-  date: string;
+  dateEnd = new Date().toISOString();
+  dateEndView = moment(this.dateEnd).format('Do MMMM YYYY, LT');
+  dateStart = new Date().toISOString();
+  dateStartView = moment(this.dateStart).format('Do MMMM YYYY, LT');
   formGroup = new FormGroup({
-    dateStart: new FormControl(moment(new Date()).format('Do MMMM YYYY, LT'), [
-      Validators.required
-    ]),
-    dateEnd: new FormControl(moment(new Date()).format('Do MMMM YYYY, LT'), [
-      Validators.required
-    ]),
+    dateStart: new FormControl(
+      moment(this.dateEnd).format('Do MMMM YYYY, LT'),
+      [Validators.required]
+    ),
+    dateEnd: new FormControl(
+      moment(this.dateStart).format('Do MMMM YYYY, LT'),
+      [Validators.required]
+    ),
     description: new FormControl(''),
     place: new FormControl('', [Validators.required]),
     title: new FormControl('', [Validators.required])
@@ -45,6 +50,8 @@ export class AppointmentCreateEditComponent implements OnInit {
         this.appointment = this.calendarService.getAppointmentById(
           appointmentId
         );
+        this.dateEnd = this.appointment.dateEnd;
+        this.dateStart = this.appointment.dateStart;
         this.formGroup.patchValue({
           dateEnd: moment(this.appointment.dateEnd).format('Do MMMM YYYY, LT'),
           dateStart: moment(this.appointment.dateStart).format(
@@ -65,17 +72,11 @@ export class AppointmentCreateEditComponent implements OnInit {
   onClickDateTimePicker(type: string): void {
     this.statePick = type;
     let monthDifference: number;
-    if (!this.appointment && type === 'dateStart') {
-      this.stateDate = new Date().toISOString();
+    if (type === 'dateStart') {
+      this.stateDate = moment(this.dateStart).toISOString();
       monthDifference = this.calendarService.getMonthDifference(this.stateDate);
-    } else if (!this.appointment && type === 'dateEnd') {
-      this.stateDate = new Date().toISOString();
-      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
-    } else if (this.appointment && type === 'dateStart') {
-      this.stateDate = this.appointment.dateStart;
-      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
-    } else if (this.appointment && type === 'dateEnd') {
-      this.stateDate = this.appointment.dateEnd;
+    } else {
+      this.stateDate = this.dateEnd;
       monthDifference = this.calendarService.getMonthDifference(this.stateDate);
     }
     this.calendarService.setMonthDifference(monthDifference);
@@ -94,12 +95,14 @@ export class AppointmentCreateEditComponent implements OnInit {
    */
   onSelectDate(event: { type: string; date: string }): void {
     if (event.type === 'dateStart') {
+      this.dateStart = event.date;
       this.formGroup.patchValue({
-        dateStart: moment(event.date).format('Do MMMM YYYY, LT')
+        dateStart: moment(this.dateStart).format('Do MMMM YYYY, LT')
       });
     } else {
+      this.dateEnd = event.date;
       this.formGroup.patchValue({
-        dateEnd: moment(event.date).format('Do MMMM YYYY, LT')
+        dateEnd: moment(this.dateEnd).format('Do MMMM YYYY, LT')
       });
     }
     this.statePick = null;

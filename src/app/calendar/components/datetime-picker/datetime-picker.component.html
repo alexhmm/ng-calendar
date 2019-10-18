@@ -3,15 +3,26 @@
     class="flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
   >
     <div class="color-primary">
-      <b>{{ type === 'dateStart' ? 'Start' : 'Ende' }}</b>
+      <b>{{
+        type === 'dateStart'
+          ? 'Startdatum auswählen'
+          : 'Enddatum
+        auswählen'
+      }}</b>
     </div>
     <mat-icon (click)="onCloseDateTimePicker()">close</mat-icon>
   </div>
   <div
     *ngIf="selectedDate"
-    class="flex flex-justify-center color-primary font-size-18 margin-bottom-16"
+    class="flex flex-justify-center color-primary font-size-18 margin-bottom-4"
   >
     <b>{{ selectedDate }}</b>
+  </div>
+  <div
+    *ngIf="time"
+    class="flex flex-justify-center color-primary font-size-14 margin-bottom-16"
+  >
+    <b>{{ time }}</b>
   </div>
   <div
     class="flex flex-justify-center flex-align-center icon-button-primary margin-bottom-16"
@@ -81,26 +92,37 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
+  <div
+    class="flex flex-justify-between flex-align-center margin-left-16 margin-right-16 margin-bottom-32"
+  >
+    <div class="font-size-14">Uhrzeit</div>
+    <div class="flex flex-align-center">
+      <input
+        maxLength="2"
+        [value]="hour"
+        (input)="onInputTimeHourChange($event.target.value)"
+        class="datetime-picker--tile-time--input input-form"
+      />
+      <div>:</div>
+      <input
+        maxLength="2"
+        [value]="minute"
+        (input)="onInputTimeMinuteChange($event.target.value)"
+        class="datetime-picker--tile-time--input input-form margin-right-8"
+      />
+      <mat-select
+        [value]="time"
+        (selectionChange)="onSelectTimeChange($event.value)"
+      >
+        <mat-option *ngFor="let timeString of timeStrings" [value]="timeString">
+          {{ timeString[0] + ':' + timeString[1] }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
   <div class="flex flex-justify-center">
     <button (click)="onSelectDate()" class="button">
       Datum auswählen
     </button>
   </div>
-  <!-- <div class="flex flex-justify-between flex-align-center">
-    <div class="font-size-14">Startzeit</div>
-    <div class="flex flex-align-center">
-      <div>{{ selectedStartHour }}</div>
-      <mat-select [(value)]="selectedStartHour" class="margin-right-8">
-        <mat-option *ngFor="let hour of hours" [value]="hour">
-          {{ hour }}
-        </mat-option>
-      </mat-select>
-      <div>{{ selectedStartMinute }}</div>
-      <mat-select [(value)]="selectedStartMinute">
-        <mat-option *ngFor="let minute of minutes" [value]="minute">
-          {{ minute }}
-        </mat-option>
-      </mat-select>
-    </div>
-  </div> -->
 </div>
