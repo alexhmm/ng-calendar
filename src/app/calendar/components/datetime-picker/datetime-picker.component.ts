@@ -12,6 +12,7 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./datetime-picker.component.scss']
 })
 export class DatetimePickerComponent implements OnInit {
+  @Input() selectedDate: string;
   @Input() type: string;
   @Output() selectDate = new EventEmitter<{ type: string; date: string }>();
   @Output() closeDateTimePicker = new EventEmitter<any>();
@@ -20,7 +21,6 @@ export class DatetimePickerComponent implements OnInit {
   activeMonth: number;
   activeMonthLength: number;
   activeYear: number;
-  currentDay = moment().date();
   currentMonth = this.calendarService.getCurrentMonth();
   currentYear = this.calendarService.getCurrentYear();
   dayStrings = this.calendarService.getDayStrings();
@@ -32,7 +32,6 @@ export class DatetimePickerComponent implements OnInit {
   ngUnsubscribe: Subject<object> = new Subject();
   prevMonthDays: number[];
   rowHeight = '30px';
-  selectedDate: string;
   selectedDay: number;
   selectedMonth: number;
   selectedYear: number;
@@ -49,7 +48,9 @@ export class DatetimePickerComponent implements OnInit {
         this.monthDifference = monthDifference;
         this.getMonthData();
       });
-    this.onSelectDay(this.currentDay);
+    this.onSelectDay(
+      moment(this.selectedDate).date() || moment(new Date()).date()
+    );
   }
 
   getMonthData(): void {

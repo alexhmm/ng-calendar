@@ -15,6 +15,7 @@ import { CalendarService } from '../../services/calendar.service';
 })
 export class AppointmentCreateEditComponent implements OnInit {
   appointment?: Appointment;
+  date: string;
   formGroup = new FormGroup({
     dateStart: new FormControl(moment(new Date()).format('Do MMMM YYYY, LT'), [
       Validators.required
@@ -27,6 +28,7 @@ export class AppointmentCreateEditComponent implements OnInit {
     title: new FormControl('', [Validators.required])
   });
   ngUnsubscribe: Subject<object> = new Subject();
+  stateDate: string;
   stateEdit: boolean;
   statePick: string;
 
@@ -62,6 +64,21 @@ export class AppointmentCreateEditComponent implements OnInit {
    */
   onClickDateTimePicker(type: string): void {
     this.statePick = type;
+    let monthDifference: number;
+    if (!this.appointment && type === 'dateStart') {
+      this.stateDate = new Date().toISOString();
+      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+    } else if (!this.appointment && type === 'dateEnd') {
+      this.stateDate = new Date().toISOString();
+      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+    } else if (this.appointment && type === 'dateStart') {
+      this.stateDate = this.appointment.dateStart;
+      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+    } else if (this.appointment && type === 'dateEnd') {
+      this.stateDate = this.appointment.dateEnd;
+      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+    }
+    this.calendarService.setMonthDifference(monthDifference);
   }
 
   /**

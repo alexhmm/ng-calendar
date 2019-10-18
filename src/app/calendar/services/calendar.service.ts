@@ -118,8 +118,8 @@ export class CalendarService {
         },
         {
           id: '1t512',
-          dateStart: new Date('November 11, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('November 11, 2019 11:30:00').toISOString(),
+          dateStart: new Date('December 11, 2019 11:00:00').toISOString(),
+          dateEnd: new Date('December 11, 2019 11:30:00').toISOString(),
           desc: 'Alfreso Review',
           place: 'Alfresco Office English Baygriff',
           title: 'Review'
@@ -267,6 +267,26 @@ export class CalendarService {
       appointments: Appointment[];
     } = this.getAppointments();
     return appointments.appointments.find(appointment => appointment.id === id);
+  }
+
+  /**
+   * Returns month difference by given ISO Date string
+   * @param ISODate ISO Date string
+   */
+  getMonthDifference(ISODate: string): number {
+    const aYear = moment(ISODate).year();
+    const bYear = moment(new Date()).year();
+    const aMonth = moment(ISODate).month() + 1;
+    const bMonth = moment(new Date()).month() + 1;
+    let difference: number;
+    const yearDiff = aYear - bYear;
+    const monthDiff = aMonth - bMonth;
+    if (yearDiff < 0 || yearDiff > 0) {
+      difference = yearDiff * 12 + monthDiff;
+    } else {
+      difference = monthDiff;
+    }
+    return difference;
   }
 
   /**
@@ -424,6 +444,5 @@ export class CalendarService {
    */
   setMonthDifference(monthDifference: number): void {
     this.monthDifferenceSrc.next(monthDifference);
-    console.log('setMonthDifference', monthDifference);
   }
 }

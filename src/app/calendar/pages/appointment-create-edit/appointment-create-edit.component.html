@@ -108,7 +108,8 @@
 </div>
 
 <app-datetime-picker
-  *ngIf="statePick"
+  *ngIf="statePick && stateDate"
+  [selectedDate]="stateDate"
   [type]="statePick"
   (closeDateTimePicker)="onCloseDateTimePicker()"
   (selectDate)="onSelectDate($event)"
