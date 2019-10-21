@@ -13,10 +13,10 @@
     <mat-icon (click)="onCloseDateTimePicker()">close</mat-icon>
   </div>
   <div
-    *ngIf="selectedDate"
+    *ngIf="activeDate"
     class="flex flex-justify-center color-primary font-size-18 margin-bottom-4"
   >
-    <b>{{ selectedDate }}</b>
+    <b>{{ activeDate }}</b>
   </div>
   <div
     *ngIf="time"
@@ -24,74 +24,10 @@
   >
     <b>{{ time }}</b>
   </div>
-  <div
-    class="flex flex-justify-center flex-align-center icon-button-primary margin-bottom-16"
-  >
-    <mat-icon (click)="prevMonth()" class="margin-right-8"
-      >keyboard_arrow_left</mat-icon
-    >
-    <div>
-      <b>{{ monthText }}</b> {{ activeYear }}
-    </div>
-    <mat-icon (click)="nextMonth()" class="margin-left-8"
-      >keyboard_arrow_right</mat-icon
-    >
-  </div>
-  <mat-grid-list cols="7" [rowHeight]="rowHeight" class="margin-bottom-16">
-    <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
-      ><div class="flex flex-align-center height-100 color-primary">
-        <b>{{ day }}</b>
-      </div></mat-grid-tile
-    >
-    <mat-grid-tile
-      *ngFor="let prevMonthDay of prevMonthDays; let i = index"
-      colspan="1"
-      rowspan="1"
-    >
-      <div
-        class="datetime-picker--tile-other flex flex-justify-center flex-align-center height-100"
-      >
-        {{ prevMonthDay }}
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile
-      *ngFor="let monthDay of getMonthLength(activeMonthLength); let i = index"
-      colspan="1"
-      rowspan="1"
-    >
-      <div
-        [ngClass]="{
-          'color-primary font-size-18':
-            i + 1 !== selectedDay &&
-            i + 1 === currentDay &&
-            activeMonth === currentMonth &&
-            activeYear === currentYear,
-          'datetime-picker--tile-selected':
-            i + 1 === selectedDay &&
-            activeMonth === selectedMonth &&
-            activeYear === selectedYear
-        }"
-        (click)="onSelectDay(i + 1)"
-        class="datetime-picker--tile flex flex-justify-center flex-align-center height-100 hover width-100"
-      >
-        <b>{{ i + 1 }}</b>
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile
-      *ngFor="
-        let nextMonthDay of getMonthLength(nextMonthLength);
-        let i = index
-      "
-      colspan="1"
-      rowspan="1"
-    >
-      <div
-        class="datetime-picker--tile-other flex flex-justify-center flex-align-center height-100"
-      >
-        {{ i + 1 }}
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <app-date-picker
+    [selectedDate]="selectedDate"
+    (selectDate)="onSelectDate($event)"
+  ></app-date-picker>
   <div
     class="flex flex-justify-between flex-align-center margin-left-16 margin-right-16 margin-bottom-32"
   >
@@ -121,7 +57,7 @@
     </div>
   </div>
   <div class="flex flex-justify-center">
-    <button (click)="onSelectDate()" class="button">
+    <button (click)="onSelectDateTime()" class="button">
       Datum auswählen
     </button>
   </div>

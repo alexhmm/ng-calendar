@@ -45,6 +45,7 @@ export class DatetimePickerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.activeDate = moment(this.selectedDate).format('dddd, Do MMMM YYYY');
     this.hour = moment(this.selectedDate)
       .format('LT')
       .substr(
@@ -55,47 +56,6 @@ export class DatetimePickerComponent implements OnInit {
       );
     this.minute = moment(this.selectedDate).format('mm');
     this.time = moment(this.selectedDate).format('LT');
-    this.calendarService.monthDifference
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(monthDifference => {
-        this.monthDifference = monthDifference;
-        this.getMonthData();
-      });
-    this.onSelectDay(
-      moment(this.selectedDate).date() || moment(new Date()).date()
-    );
-  }
-
-  getMonthData(): void {
-    this.activeMonth = this.calendarService.getActiveMonth(
-      this.monthDifference
-    );
-    this.activeYear = this.calendarService.getActiveYear(this.monthDifference);
-    this.monthText = this.calendarService.getMonthText(this.activeMonth);
-    this.activeMonthLength = this.calendarService.getMonthLength(
-      this.monthDifference
-    );
-    this.prevMonthDays = this.calendarService.getPrevMonthDays(
-      this.monthDifference
-    );
-    this.nextMonthLength = this.calendarService.getNextMonthLength(
-      this.monthDifference
-    );
-  }
-
-  /**
-   * Returns number array of given month length
-   * @param monthLength Month length
-   */
-  getMonthLength(monthLength: number): number[] {
-    return new Array(monthLength);
-  }
-
-  /**
-   * Click handler for next month
-   */
-  nextMonth(): void {
-    this.calendarService.setMonthDifference(this.monthDifference + 1);
   }
 
   onCloseDateTimePicker(): void {
@@ -128,26 +88,13 @@ export class DatetimePickerComponent implements OnInit {
     this.time = this.hour + ':' + this.minute;
   }
 
-  onSelectDate(): void {
-    const date = this.calendarService.getDateStringByNumbers(
-      this.selectedDay,
-      this.selectedMonth,
-      this.selectedYear
-    );
-    const dateTime = date + ' ' + this.time;
-    this.selectDate.emit({ type: this.type, date: dateTime });
+  onSelectDate(date: string): void {
+    this.activeDate = moment(date).format('dddd, Do MMMM YYYY');
+    this.selectedDate = date;
   }
 
-  onSelectDay(day: number) {
-    this.selectedDay = day;
-    this.selectedMonth = this.activeMonth;
-    this.selectedYear = this.activeYear;
-    const date = this.calendarService.getDateStringByNumbers(
-      this.selectedDay,
-      this.selectedMonth,
-      this.selectedYear
-    );
-    this.selectedDate = moment(date).format('dddd, Do MMMM YYYY');
+  onSelectDateTime(): void {
+    this.selectDate.emit({ type: this.type, date: this.selectedDate });
   }
 
   /**
@@ -158,12 +105,5 @@ export class DatetimePickerComponent implements OnInit {
     this.time = event[0] + ':' + event[1];
     this.hour = event[0];
     this.minute = event[1];
-  }
-
-  /**
-   * Click handler for previous month
-   */
-  prevMonth(): void {
-    this.calendarService.setMonthDifference(this.monthDifference - 1);
   }
 }
