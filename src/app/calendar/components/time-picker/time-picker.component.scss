@@ -1,0 +1,56 @@
+@import '../../../global.scss';
+
+.time-picker {
+  height: 256px;
+  &--clock {
+    background-color: $color-primary;
+    border-radius: 192px;
+    color: white;
+    height: 192px;
+    position: relative;
+    width: 192px;
+    &-hour {
+      &-0 {
+        position: absolute;
+      }
+      &-1 {
+        position: absolute;
+        right: calc(25% + 4px);
+        top: calc(8.3333% + 4px);
+        transform: translateX(25%) translateY(-8.3333%);
+      }
+      &-2 {
+        position: absolute;
+        right: calc(8.3333% + 4px);
+        top: calc(25% + 4px);
+        transform: translateX(8.3333%) translateY(-25%);
+      }
+      &-3 {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &-6 {
+        position: absolute;
+        bottom: 8px;
+        // left: 91px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &-9 {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &-12 {
+        position: absolute;
+        // left: 88.5px;
+        left: 50%;
+        top: 8px;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

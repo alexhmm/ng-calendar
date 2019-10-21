@@ -34,7 +34,9 @@ export class DatetimePickerComponent implements OnInit {
   rowHeight = '30px';
   selectedDay: number;
   selectedMonth: number;
+  selectedTime: string;
   selectedYear: number;
+  statePicker = 'date';
   stateInputTimer = 0;
   time: string;
   timeStrings = this.calendarService.getTimeStrings();
@@ -46,6 +48,7 @@ export class DatetimePickerComponent implements OnInit {
 
   ngOnInit() {
     this.activeDate = moment(this.selectedDate).format('dddd, Do MMMM YYYY');
+    this.selectedTime = moment(this.selectedDate).format('LT');
     this.hour = moment(this.selectedDate)
       .format('LT')
       .substr(
@@ -95,6 +98,14 @@ export class DatetimePickerComponent implements OnInit {
 
   onSelectDateTime(): void {
     this.selectDate.emit({ type: this.type, date: this.selectedDate });
+  }
+
+  onShowDatePicker(): void {
+    this.statePicker = 'date';
+  }
+
+  onShowTimePicker(): void {
+    this.statePicker = 'time';
   }
 
   /**

@@ -14,51 +14,42 @@
   </div>
   <div
     *ngIf="activeDate"
-    class="flex flex-justify-center color-primary font-size-18 margin-bottom-4"
+    class="flex flex-justify-center font-size-18 margin-bottom-16"
   >
     <b>{{ activeDate }}</b>
   </div>
   <div
-    *ngIf="time"
-    class="flex flex-justify-center color-primary font-size-14 margin-bottom-16"
+    class="flex flex-align-center icon-button-primary margin-bottom-16 width-100"
   >
-    <b>{{ time }}</b>
+    <div
+      [ngClass]="{ 'datetime-picker--active': statePicker === 'date' }"
+      class="flex flex-justify-center width-33"
+    >
+      <mat-icon (click)="onShowDatePicker()">calendar_today</mat-icon>
+    </div>
+    <div class="flex flex-justify-center width-33">
+      <b>{{ time }}</b>
+    </div>
+    <div
+      [ngClass]="{ 'datetime-picker--active': statePicker === 'time' }"
+      class="flex flex-justify-center width-33"
+    >
+      <mat-icon (click)="onShowTimePicker()">access_time</mat-icon>
+    </div>
   </div>
   <app-date-picker
+    *ngIf="statePicker === 'date'"
     [selectedDate]="selectedDate"
     (selectDate)="onSelectDate($event)"
   ></app-date-picker>
-  <div
-    class="flex flex-justify-between flex-align-center margin-left-16 margin-right-16 margin-bottom-32"
-  >
-    <div class="font-size-14">Uhrzeit</div>
-    <div class="flex flex-align-center">
-      <input
-        maxLength="2"
-        [value]="hour"
-        (input)="onInputTimeHourChange($event.target.value)"
-        class="datetime-picker--tile-time--input input-form"
-      />
-      <div>:</div>
-      <input
-        maxLength="2"
-        [value]="minute"
-        (input)="onInputTimeMinuteChange($event.target.value)"
-        class="datetime-picker--tile-time--input input-form margin-right-8"
-      />
-      <mat-select
-        [value]="time"
-        (selectionChange)="onSelectTimeChange($event.value)"
-      >
-        <mat-option *ngFor="let timeString of timeStrings" [value]="timeString">
-          {{ timeString[0] + ':' + timeString[1] }}
-        </mat-option>
-      </mat-select>
-    </div>
-  </div>
+  <app-time-picker
+    *ngIf="statePicker === 'time'"
+    [selectedTime]="selectedTime"
+    (selectTime)="onSelectTime($event)"
+  ></app-time-picker>
   <div class="flex flex-justify-center">
     <button (click)="onSelectDateTime()" class="button">
-      Datum auswählen
+      Datum und Zeit auswählen
     </button>
   </div>
 </div>
