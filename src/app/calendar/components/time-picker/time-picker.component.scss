@@ -1,55 +1,92 @@
 @import '../../../global.scss';
 
+/// Mixin to put items on a circle
+/// [1] - Allows children to be absolutely positioned
+/// [2] - Allows the mixin to be used on a list
+/// [3] - In case box-sizing: border-box has been enabled
+/// [4] - Allows any type of direct children to be targeted
+///
+/// @param {Integer} $nb-items - Number or items
+/// @param {Length} $circle-size - Container size
+/// @param {Length} $item-size - Item size
+/// @param {String | false} $class-for-IE - Base class name for old IE
+@mixin time-picker--clock-item(
+  $item-length,
+  $circle-size,
+  $item-size,
+  $translate,
+  $class-for-IE: false
+) {
+  $half-item: ($item-size / 2);
+  $half-parent: ($circle-size / 2);
+
+  position: relative; /* 1 */
+  width: $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none; /* 2 */
+  box-sizing: content-box; /* 3 */
+
+  > * {
+    /* 4 */
+    // display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $item-size;
+    height: $item-size;
+    margin: -$half-item;
+  }
+
+  $angle: (360 / $item-length);
+  $rot: 0;
+
+  @for $i from 1 through $item-length {
+    @if not $class-for-IE {
+      > :nth-of-type(#{$i}) {
+        transform: rotate($rot * 1deg - 90deg)
+          translate($half-parent - $translate)
+          rotate($rot * -1deg + 90deg);
+      }
+    } @else {
+      > .#{$class-for-IE}#{$i} {
+        // If CSS transforms are not supported
+        $mt: sin($rot * pi() / 180) * $half-parent - $half-item;
+        $ml: cos($rot * pi() / 180) * $half-parent - $half-item;
+        margin: $mt 0 0 $ml;
+      }
+    }
+
+    $rot: ($rot + $angle);
+  }
+}
+
 .time-picker {
   height: 256px;
   &--clock {
-    background-color: $color-primary;
-    border-radius: 192px;
-    color: white;
-    height: 192px;
-    position: relative;
-    width: 192px;
-    &-hour {
-      &-0 {
-        position: absolute;
+    &-inner {
+      @include time-picker--clock-item(12, 224px, 20px, 40px, false);
+      color: white;
+      font-size: 14px;
+      position: absolute;
+      &--item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
       }
-      &-1 {
-        position: absolute;
-        right: calc(25% + 4px);
-        top: calc(8.3333% + 4px);
-        transform: translateX(25%) translateY(-8.3333%);
-      }
-      &-2 {
-        position: absolute;
-        right: calc(8.3333% + 4px);
-        top: calc(25% + 4px);
-        transform: translateX(8.3333%) translateY(-25%);
-      }
-      &-3 {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      &-6 {
-        position: absolute;
-        bottom: 8px;
-        // left: 91px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      &-9 {
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      &-12 {
-        position: absolute;
-        // left: 88.5px;
-        left: 50%;
-        top: 8px;
-        transform: translateX(-50%);
+    }
+    &-outer {
+      @include time-picker--clock-item(12, 224px, 24px, 16px, false);
+      background-color: $color-primary;
+      color: white;
+      position: absolute;
+      &--item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
       }
     }
   }
