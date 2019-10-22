@@ -10,6 +10,8 @@ import { Appointment } from '../models/appointment';
 export class CalendarService {
   monthDifferenceSrc = new BehaviorSubject(0);
   monthDifference = this.monthDifferenceSrc.asObservable();
+  stateTimePickerSrc = new BehaviorSubject('hour');
+  stateTimePicker = this.stateTimePickerSrc.asObservable();
 
   constructor() {}
 
@@ -437,6 +439,14 @@ export class CalendarService {
     );
   }
 
+  /**
+   * Returns number array by given length
+   * @param length Length
+   */
+  getNumberArray(length: number) {
+    return new Array(length);
+  }
+
   getPrevMonthDays(monthDifference: number): number[] {
     const days: number[] = [];
     const prevMonthFullLength = this.getMonthLength(monthDifference - 1);
@@ -470,6 +480,20 @@ export class CalendarService {
       selectedMonthDays.push(i + 1);
     }
     return selectedMonthDays;
+  }
+
+  /**
+   * Returns inner circle hours for time picker
+   */
+  getTimePickerHoursInner(): number[] {
+    return [0, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  }
+
+  /**
+   * Returns outer circle hours for time picker
+   */
+  getTimePickerHoursOuter(): number[] {
+    return [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   }
 
   /**
@@ -582,5 +606,9 @@ export class CalendarService {
    */
   setMonthDifference(monthDifference: number): void {
     this.monthDifferenceSrc.next(monthDifference);
+  }
+
+  setStateTimePicker(state: string): void {
+    this.stateTimePickerSrc.next(state);
   }
 }

@@ -1,32 +1,46 @@
 <div
   class="time-picker flex flex-column flex-justify-center flex-align-center margin-bottom-16"
 >
-  <div class="time-picker--clock-outer flex">
-    <div class="time-picker--clock-outer--item">12</div>
-    <div class="time-picker--clock-outer--item">1</div>
-    <div class="time-picker--clock-outer--item">2</div>
-    <div class="time-picker--clock-outer--item">3</div>
-    <div class="time-picker--clock-outer--item">4</div>
-    <div class="time-picker--clock-outer--item">5</div>
-    <div class="time-picker--clock-outer--item">6</div>
-    <div class="time-picker--clock-outer--item">7</div>
-    <div class="time-picker--clock-outer--item">8</div>
-    <div class="time-picker--clock-outer--item">9</div>
-    <div class="time-picker--clock-outer--item">10</div>
-    <div class="time-picker--clock-outer--item">11</div>
-  </div>
-  <div class="time-picker--clock-inner">
-    <div class="time-picker--clock-inner--item">0</div>
-    <div class="time-picker--clock-inner--item">13</div>
-    <div class="time-picker--clock-inner--item">14</div>
-    <div class="time-picker--clock-inner--item">15</div>
-    <div class="time-picker--clock-inner--item">16</div>
-    <div class="time-picker--clock-inner--item">17</div>
-    <div class="time-picker--clock-inner--item">18</div>
-    <div class="time-picker--clock-inner--item">19</div>
-    <div class="time-picker--clock-inner--item">20</div>
-    <div class="time-picker--clock-inner--item">21</div>
-    <div class="time-picker--clock-inner--item">22</div>
-    <div class="time-picker--clock-inner--item">23</div>
-  </div>
+  <ng-container *ngIf="stateTimePicker === 'hour'">
+    <div class="time-picker--clock-outer flex">
+      <div
+        *ngFor="let viewHourOuter of viewHoursOuter; let i = index"
+        [ngClass]="{
+          'time-picker--clock-active': hour === viewHourOuter
+        }"
+        (click)="onClickHour(viewHourOuter)"
+        class="time-picker--clock-outer--item"
+      >
+        {{ viewHourOuter }}
+      </div>
+    </div>
+    <div class="time-picker--clock-inner">
+      <div
+        *ngFor="let viewHourInner of viewHoursInner"
+        [ngClass]="{
+          'time-picker--clock-active': hour === viewHourInner
+        }"
+        (click)="onClickHour(viewHourInner)"
+        class="time-picker--clock-outer--item"
+      >
+        {{ viewHourInner }}
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="stateTimePicker === 'minute'">
+    <div class="time-picker--clock-outer flex">
+      <ng-container *ngFor="let viewMinute of viewMinutes; let i = index">
+        <div
+          *ngIf="i % 5 === 0"
+          [ngClass]="{
+            'time-picker--clock-outer--item-active': minute === i
+          }"
+          (click)="onClickMinute(i)"
+          class="time-picker--clock-outer--item"
+        >
+          {{ i }}
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
 </div>

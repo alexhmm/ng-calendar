@@ -65,28 +65,48 @@
 .time-picker {
   height: 256px;
   &--clock {
+    &-active {
+      background-color: white;
+      color: $color-primary;
+    }
     &-inner {
-      @include time-picker--clock-item(12, 224px, 20px, 40px, false);
+      @include time-picker--clock-item(12, 224px, 24px, 48px, false);
+      background-color: $color-primary;
       color: white;
       font-size: 14px;
       position: absolute;
       &--item {
-        display: flex;
-        justify-content: center;
         align-items: center;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        @include transition(background, 0.25s, ease-in-out);
+        @include transition(color, 0.25s, ease-in-out);
+        &:hover {
+          cursor: pointer;
+          background-color: white;
+          color: $color-primary;
+        }
       }
     }
     &-outer {
-      @include time-picker--clock-item(12, 224px, 24px, 16px, false);
-      background-color: $color-primary;
+      @include time-picker--clock-item(12, 224px, 28px, 20px, false);
       color: white;
       position: absolute;
       &--item {
-        display: flex;
-        justify-content: center;
         align-items: center;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        @include transition(background, 0.25s, ease-in-out);
+        @include transition(color, 0.25s, ease-in-out);
+        &:hover {
+          cursor: pointer;
+          background-color: white;
+          color: $color-primary;
+        }
       }
     }
   }
