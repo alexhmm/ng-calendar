@@ -1,15 +1,20 @@
 <div
   class="flex flex-justify-center flex-align-center icon-button-primary margin-bottom-16"
 >
-  <mat-icon (click)="prevMonth()" class="margin-right-8"
-    >keyboard_arrow_left</mat-icon
-  >
-  <div>
-    <b>{{ monthText }}</b> {{ activeYear }}
+  <div class="flex flex-justify-center width-33">
+    <mat-icon (click)="prevMonth()" class="margin-right-8"
+      >keyboard_arrow_left</mat-icon
+    >
   </div>
-  <mat-icon (click)="nextMonth()" class="margin-left-8"
-    >keyboard_arrow_right</mat-icon
-  >
+  <div class="flex flex-justify-center width-33">
+    <b>{{ monthText }}</b
+    >&nbsp;{{ activeYear }}
+  </div>
+  <div class="flex flex-justify-center width-33">
+    <mat-icon (click)="nextMonth()" class="margin-left-8"
+      >keyboard_arrow_right</mat-icon
+    >
+  </div>
 </div>
 <mat-grid-list cols="7" rowHeight="30px" class="margin-bottom-16">
   <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
@@ -45,7 +50,7 @@
           activeMonth === selectedMonth &&
           activeYear === selectedYear
       }"
-      (click)="onSelectDate(i + 1)"
+      (click)="onSetDate(i + 1)"
       class="date-picker--tile flex flex-justify-center flex-align-center height-100 hover width-100"
     >
       <b>{{ i + 1 }}</b>

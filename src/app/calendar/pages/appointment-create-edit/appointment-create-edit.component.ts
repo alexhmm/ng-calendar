@@ -16,9 +16,7 @@ import { CalendarService } from '../../services/calendar.service';
 export class AppointmentCreateEditComponent implements OnInit {
   appointment?: Appointment;
   dateEnd = new Date().toISOString();
-  dateEndView = moment(this.dateEnd).format('Do MMMM YYYY, LT');
   dateStart = new Date().toISOString();
-  dateStartView = moment(this.dateStart).format('Do MMMM YYYY, LT');
   formGroup = new FormGroup({
     dateStart: new FormControl(
       moment(this.dateEnd).format('Do MMMM YYYY, LT'),
@@ -70,7 +68,6 @@ export class AppointmentCreateEditComponent implements OnInit {
    * @param type Date type
    */
   onClickDateTimePicker(type: string): void {
-    this.statePick = type;
     let monthDifference: number;
     if (type === 'dateStart') {
       this.stateDate = moment(this.dateStart).toISOString();
@@ -80,6 +77,8 @@ export class AppointmentCreateEditComponent implements OnInit {
       monthDifference = this.calendarService.getMonthDifference(this.stateDate);
     }
     this.calendarService.setMonthDifference(monthDifference);
+    this.calendarService.setDate(this.stateDate);
+    this.statePick = type;
   }
 
   /**
@@ -93,7 +92,7 @@ export class AppointmentCreateEditComponent implements OnInit {
    * Handler for date selection
    * @param event Select date event
    */
-  onSelectDate(event: { type: string; date: string }): void {
+  onSetDate(event: { type: string; date: string }): void {
     if (event.type === 'dateStart') {
       this.dateStart = event.date;
       this.formGroup.patchValue({
@@ -108,11 +107,21 @@ export class AppointmentCreateEditComponent implements OnInit {
     this.statePick = null;
   }
 
+  /**
+   * Navigates back to CalendarComponent
+   */
   onGoBack(): void {
     this.router.navigate(['']);
   }
 
+  /**
+   * Submits appointment data
+   */
   onSubmit(): void {
+    this.formGroup.patchValue({
+      dateEnd: this.dateEnd,
+      dateStart: this.dateStart
+    });
     console.log('onSubmit', this.formGroup.value);
     this.router.navigate(['']);
   }

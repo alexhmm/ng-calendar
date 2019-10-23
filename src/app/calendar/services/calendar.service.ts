@@ -8,10 +8,16 @@ import { Appointment } from '../models/appointment';
   providedIn: 'root'
 })
 export class CalendarService {
+  dateSrc = new BehaviorSubject(null);
+  date = this.dateSrc.asObservable();
+  hourSrc = new BehaviorSubject(null);
+  hour = this.hourSrc.asObservable();
+  minuteSrc = new BehaviorSubject(null);
+  minute = this.minuteSrc.asObservable();
   monthDifferenceSrc = new BehaviorSubject(0);
   monthDifference = this.monthDifferenceSrc.asObservable();
-  stateTimePickerSrc = new BehaviorSubject('hour');
-  stateTimePicker = this.stateTimePickerSrc.asObservable();
+  statePickerSrc = new BehaviorSubject('date');
+  statePicker = this.statePickerSrc.asObservable();
 
   constructor() {}
 
@@ -23,16 +29,16 @@ export class CalendarService {
       appointments: [
         {
           id: 'isu11',
-          dateStart: new Date('December 2, 2018 09:00:00').toISOString(),
-          dateEnd: new Date('December 2, 2018 09:30:00').toISOString(),
+          dateStart: moment('2018-12-02 09:00').toISOString(),
+          dateEnd: moment('2018-12-02 09:30').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
         },
         {
           id: 'isu12',
-          dateStart: new Date('October 15, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 15, 2019 09:30:00').toISOString(),
+          dateStart: moment('2019-10-15 09:00').toISOString(),
+          dateEnd: moment('2019-10-15 09:30').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title:
@@ -40,128 +46,94 @@ export class CalendarService {
         },
         {
           id: '1241u',
-          dateStart: new Date('October 15, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('October 15, 2019 12:45:00').toISOString(),
+          dateStart: moment('2019-10-15 11:00').toISOString(),
+          dateEnd: moment('2019-10-15 12:45').toISOString(),
           desc: 'Tische in den Keller bringen.',
           place: 'Haus',
           title: 'Aufräumen'
         },
         {
           id: '1241f',
-          dateStart: new Date('October 16, 2019 08:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 9:00:00').toISOString(),
+          dateStart: moment('2019-10-16 08:00').toISOString(),
+          dateEnd: moment('2019-10-16 09:00').toISOString(),
           desc: 'Vorgespräch',
           place: 'Konferenzraum oben',
           title: 'Termin'
         },
         {
           id: '1241g',
-          dateStart: new Date('October 16, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 10:45:00').toISOString(),
+          dateStart: moment('2019-10-16 09:00').toISOString(),
+          dateEnd: moment('2019-10-16 10:45').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
         },
         {
           id: '1241u',
-          dateStart: new Date('October 16, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 12:45:00').toISOString(),
+          dateStart: moment('2019-10-16 11:00').toISOString(),
+          dateEnd: moment('2019-10-16 12:45').toISOString(),
           desc: 'Planning Sprint',
           place: 'Neuer Konfi',
           title: 'Planning'
         },
         {
           id: '12482',
-          dateStart: new Date('October 16, 2019 13:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 15:45:00').toISOString(),
+          dateStart: moment('2019-10-16 13:00').toISOString(),
+          dateEnd: moment('2019-10-16 15:45').toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Alfresco Office',
           title: 'Review Grooming'
         },
         {
           id: '1241g',
-          dateStart: new Date('October 16, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 10:45:00').toISOString(),
+          dateStart: moment('2019-10-16 09:00').toISOString(),
+          dateEnd: moment('2019-10-16 10:45').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum unten',
           title: 'Besprechnung'
         },
         {
           id: '1241u',
-          dateStart: new Date('October 16, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('October 16, 2019 12:45:00').toISOString(),
+          dateStart: moment('2019-10-16 11:00').toISOString(),
+          dateEnd: moment('2019-10-16 12:45').toISOString(),
           desc: 'Planning Sprint',
           place: 'Neuer Konfi',
           title: 'Planning'
         },
         {
           id: '12482',
-          dateStart: new Date('October 17, 2019 13:00:00').toISOString(),
-          dateEnd: new Date('October 17, 2019 15:45:00').toISOString(),
+          dateStart: moment('2019-10-17 13:00').toISOString(),
+          dateEnd: moment('2019-10-17 15:45').toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Alfresco Office',
           title: 'Review Grooming'
         },
         {
           id: 'fsfqf',
-          dateStart: new Date('October 19, 2019 10:30:00').toISOString(),
-          dateEnd: new Date('October 20, 2019 11:00:00').toISOString(),
+          dateStart: moment('2019-10-19 10:30').toISOString(),
+          dateEnd: moment('2019-10-20 11:00').toISOString(),
           desc: 'Grooming Frooming Fäncy Begroooofe',
           place: 'Alfresco Büro',
           title: 'Grooming'
         },
         {
           id: '121lf',
-          dateStart: new Date('October 24, 2019 09:00:00').toISOString(),
-          dateEnd: new Date('October 24, 2019 09:30:00').toISOString(),
+          dateStart: moment('2019-10-24 09:00').toISOString(),
+          dateEnd: moment('2019-10-24 09:30').toISOString(),
           desc: 'Wichtiger Termin',
           place: 'Konferenzraum unten',
           title: 'Termin'
         },
         {
           id: '1t512',
-          dateStart: new Date('December 11, 2019 11:00:00').toISOString(),
-          dateEnd: new Date('December 11, 2019 11:30:00').toISOString(),
+          dateStart: moment('2019-12-11 11:00').toISOString(),
+          dateEnd: moment('2019-12-11 11:30').toISOString(),
           desc: 'Alfreso Review',
           place: 'Alfresco Office English Baygriff',
           title: 'Review'
         }
       ]
     };
-  }
-
-  checkTimeString(time: string): string {
-    if (time.length > 5) {
-      time = time.substr(0, 5);
-    }
-    // Remove zero on first place
-    if (time.indexOf('0') === 0) {
-      time = time.substr(1, time.length);
-    }
-
-    const colon = time.indexOf(':');
-    let hour: number;
-    let hourString: string;
-    // let minute: number;
-    // let minuteString: string;
-    if (colon > 0) {
-      // Check if hours are between 0 and 23 and minutes between 01 and 59
-      if (colon === 1 && time.length === 4) {
-        hour = +time.charAt(0);
-      } else if (colon === 2 && time.length === 5) {
-        hourString = time.charAt(0) + time.charAt(1);
-        hour = +hourString;
-        console.log('colon[2]', hour);
-      } else {
-        return '00:00';
-      }
-      if (hour < 0) {
-        hour = 0;
-      } else if (hour > 23) {
-        hour = 23;
-      }
-    }
-    return hour + ':';
   }
 
   /**
@@ -181,9 +153,6 @@ export class CalendarService {
           id: appointment.id,
           dateStart: appointment.dateStart,
           dateEnd: appointment.dateEnd,
-          // day: moment(appointment.dateStart).date(),
-          // month: moment(appointment.dateStart).month(),
-          // year: moment(appointment.dateStart).year(),
           desc: appointment.desc,
           place: appointment.place,
           title: appointment.title
@@ -311,9 +280,9 @@ export class CalendarService {
    */
   getMonthDifference(ISODate: string): number {
     const aYear = moment(ISODate).year();
-    const bYear = moment(new Date()).year();
+    const bYear = moment(moment()).year();
     const aMonth = moment(ISODate).month() + 1;
-    const bMonth = moment(new Date()).month() + 1;
+    const bMonth = moment(moment()).month() + 1;
     let difference: number;
     const yearDiff = aYear - bYear;
     const monthDiff = aMonth - bMonth;
@@ -485,130 +454,87 @@ export class CalendarService {
   /**
    * Returns inner circle hours for time picker
    */
-  getTimePickerHoursInner(): number[] {
-    return [0, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  getTimePickerHoursInner(): string[] {
+    return [
+      '0',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
+      '22',
+      '23'
+    ];
   }
 
   /**
    * Returns outer circle hours for time picker
    */
-  getTimePickerHoursOuter(): number[] {
-    return [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  getTimePickerHoursOuter(): string[] {
+    return ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
   }
 
   /**
-   * Returns time strings
+   * Returns minutes for time picker
    */
-  getTimeStrings(): string[][] {
+  getTimePickerMinutes(): string[] {
     return [
-      ['0', '00'],
-      ['0', '15'],
-      ['0', '30'],
-      ['0', '45'],
-      ['1', '00'],
-      ['1', '15'],
-      ['1', '30'],
-      ['1', '45'],
-      ['2', '00'],
-      ['2', '15'],
-      ['2', '30'],
-      ['2', '45'],
-      ['3', '00'],
-      ['3', '15'],
-      ['3', '30'],
-      ['3', '45'],
-      ['4', '00'],
-      ['4', '15'],
-      ['4', '30'],
-      ['4', '45'],
-      ['5', '00'],
-      ['5', '15'],
-      ['5', '30'],
-      ['5', '45'],
-      ['6', '00'],
-      ['6', '15'],
-      ['6', '30'],
-      ['6', '45'],
-      ['7', '00'],
-      ['7', '15'],
-      ['7', '30'],
-      ['7', '45'],
-      ['8', '00'],
-      ['8', '15'],
-      ['8', '30'],
-      ['8', '45'],
-      ['9', '00'],
-      ['9', '15'],
-      ['9', '30'],
-      ['9', '45'],
-      ['10', '00'],
-      ['10', '15'],
-      ['10', '30'],
-      ['10', '45'],
-      ['11', '00'],
-      ['11', '15'],
-      ['11', '30'],
-      ['11', '45'],
-      ['12', '00'],
-      ['12', '15'],
-      ['12', '30'],
-      ['12', '45'],
-      ['13', '00'],
-      ['13', '15'],
-      ['13', '30'],
-      ['13', '45'],
-      ['14', '00'],
-      ['14', '15'],
-      ['14', '30'],
-      ['14', '45'],
-      ['15', '00'],
-      ['15', '15'],
-      ['15', '30'],
-      ['15', '45'],
-      ['16', '00'],
-      ['16', '15'],
-      ['16', '30'],
-      ['16', '45'],
-      ['17', '00'],
-      ['17', '15'],
-      ['17', '30'],
-      ['17', '45'],
-      ['18', '00'],
-      ['18', '15'],
-      ['18', '30'],
-      ['18', '45'],
-      ['19', '00'],
-      ['19', '15'],
-      ['19', '30'],
-      ['19', '45'],
-      ['20', '00'],
-      ['20', '15'],
-      ['20', '30'],
-      ['20', '45'],
-      ['21', '00'],
-      ['21', '15'],
-      ['21', '30'],
-      ['21', '45'],
-      ['22', '00'],
-      ['22', '15'],
-      ['22', '30'],
-      ['22', '45'],
-      ['23', '00'],
-      ['23', '15'],
-      ['23', '30'],
-      ['23', '45']
+      '00',
+      '05',
+      '10',
+      '15',
+      '20',
+      '25',
+      '30',
+      '35',
+      '40',
+      '45',
+      '50',
+      '55'
     ];
   }
 
   /**
-   * Sets month difference number
+   * Set month difference number
    * @param monthDifference Month difference
    */
   setMonthDifference(monthDifference: number): void {
     this.monthDifferenceSrc.next(monthDifference);
   }
 
-  setStateTimePicker(state: string): void {
-    this.stateTimePickerSrc.next(state);
+  /**
+   * Set date string
+   * @param date Date
+   */
+  setDate(date: string): void {
+    this.dateSrc.next(date);
+  }
+
+  /**
+   * Set hour string
+   * @param hour Hour
+   */
+  setHour(hour: string): void {
+    this.hourSrc.next(hour);
+  }
+
+  /**
+   * Set minute string
+   * @param minute Minute
+   */
+  setMinute(minute: string): void {
+    this.minuteSrc.next(minute);
+  }
+
+  /**
+   * Set picker state
+   * @param statePicker Picker state
+   */
+  setStatePicker(statePicker: string): void {
+    this.statePickerSrc.next(statePicker);
   }
 }

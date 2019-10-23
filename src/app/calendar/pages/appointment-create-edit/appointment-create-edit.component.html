@@ -107,12 +107,11 @@
   </div>
 </div>
 
-<app-datetime-picker
-  *ngIf="statePick && stateDate"
-  [selectedDate]="stateDate"
+<app-date-time-picker
+  *ngIf="statePick"
   [type]="statePick"
   (closeDateTimePicker)="onCloseDateTimePicker()"
-  (selectDate)="onSelectDate($event)"
+  (setDate)="onSetDate($event)"
   class="appointment-create-edit--datetime-picker"
 >
-</app-datetime-picker>
+</app-date-time-picker>

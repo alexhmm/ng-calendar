@@ -1,0 +1,73 @@
+<div class="datetime-picker padding-16">
+  <div
+    class="flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
+  >
+    <div class="color-primary">
+      <b>{{
+        type === 'dateStart'
+          ? 'Startzeitpunkt auswählen'
+          : 'Endzeitpunkt
+        auswählen'
+      }}</b>
+    </div>
+    <mat-icon (click)="onCloseDateTimePicker()">close</mat-icon>
+  </div>
+  <div
+    *ngIf="activeDate"
+    class="flex flex-justify-center font-size-18 margin-bottom-16"
+  >
+    <b>{{ activeDate }}</b>
+  </div>
+  <div
+    class="flex flex-align-center icon-button-primary margin-bottom-16 width-100"
+  >
+    <div
+      [ngClass]="{ 'datetime-picker--active': statePicker === 'date' }"
+      class="flex flex-justify-center width-33"
+    >
+      <mat-icon (click)="onSetStatePicker('date')">calendar_today</mat-icon>
+    </div>
+    <div class="flex flex-justify-center width-33">
+      <div
+        (click)="onSetStatePicker('hour')"
+        class="text-bold text-hover text-hover-primary"
+      >
+        {{ hour }}
+      </div>
+      <div>:</div>
+      <div
+        (click)="onSetStatePicker('minute')"
+        class="text-bold text-hover text-hover-primary"
+      >
+        {{ minute }}
+      </div>
+    </div>
+    <div
+      [ngClass]="{
+        'datetime-picker--active':
+          statePicker === 'hour' || statePicker === 'minute'
+      }"
+      class="flex flex-justify-center width-33"
+    >
+      <mat-icon (click)="onSetStatePicker('hour')">access_time</mat-icon>
+    </div>
+  </div>
+  <app-date-picker *ngIf="statePicker === 'date'"></app-date-picker>
+  <app-time-picker
+    *ngIf="statePicker === 'hour' || statePicker === 'minute'"
+  ></app-time-picker>
+  <div class="flex flex-justify-between flex-align-center icon-button-primary">
+    <div class="flex flex-align-center">
+      <mat-icon
+        *ngIf="statePicker === 'hour' || statePicker === 'minute'"
+        (click)="onGoBack()"
+        >arrow_back</mat-icon
+      >
+    </div>
+    <div>
+      <button (click)="onSubmit()" class="button">
+        OK
+      </button>
+    </div>
+  </div>
+</div>

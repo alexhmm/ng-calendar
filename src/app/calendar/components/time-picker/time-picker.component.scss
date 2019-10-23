@@ -92,6 +92,7 @@
     }
     &-outer {
       @include time-picker--clock-item(12, 224px, 28px, 20px, false);
+      background-color: $color-primary;
       color: white;
       position: absolute;
       &--item {

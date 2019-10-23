@@ -4,11 +4,11 @@
   <ng-container *ngIf="stateTimePicker === 'hour'">
     <div class="time-picker--clock-outer flex">
       <div
-        *ngFor="let viewHourOuter of viewHoursOuter; let i = index"
+        *ngFor="let viewHourOuter of viewHoursOuter"
         [ngClass]="{
-          'time-picker--clock-active': hour === viewHourOuter
+          'time-picker--clock-active': hourView === viewHourOuter
         }"
-        (click)="onClickHour(viewHourOuter)"
+        (click)="onSetHour(viewHourOuter)"
         class="time-picker--clock-outer--item"
       >
         {{ viewHourOuter }}
@@ -20,7 +20,7 @@
         [ngClass]="{
           'time-picker--clock-active': hour === viewHourInner
         }"
-        (click)="onClickHour(viewHourInner)"
+        (click)="onSetHour(viewHourInner)"
         class="time-picker--clock-outer--item"
       >
         {{ viewHourInner }}
@@ -29,18 +29,16 @@
   </ng-container>
   <ng-container *ngIf="stateTimePicker === 'minute'">
     <div class="time-picker--clock-outer flex">
-      <ng-container *ngFor="let viewMinute of viewMinutes; let i = index">
-        <div
-          *ngIf="i % 5 === 0"
-          [ngClass]="{
-            'time-picker--clock-outer--item-active': minute === i
-          }"
-          (click)="onClickMinute(i)"
-          class="time-picker--clock-outer--item"
-        >
-          {{ i }}
-        </div>
-      </ng-container>
+      <div
+        *ngFor="let viewMinute of viewMinutes"
+        [ngClass]="{
+          'time-picker--clock-active': minute === viewMinute
+        }"
+        (click)="onSetMinute(viewMinute)"
+        class="time-picker--clock-outer--item"
+      >
+        {{ viewMinute }}
+      </div>
     </div>
   </ng-container>
 </div>

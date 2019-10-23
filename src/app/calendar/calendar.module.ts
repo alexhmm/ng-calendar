@@ -12,7 +12,7 @@ import { CalendarDayItemComponent } from './components/calendar-day-item/calenda
 import { CalendarListComponent } from './components/calendar-list/calendar-list.component';
 import { CalendarListItemComponent } from './components/calendar-list-item/calendar-list-item.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
-import { DatetimePickerComponent } from './components/datetime-picker/datetime-picker.component';
+import { DateTimePickerComponent } from './components/date-time-picker/date-time-picker.component';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 
 import { CalendarService } from './services/calendar.service';
@@ -42,7 +42,7 @@ export const ROUTES: Routes = [
     CalendarListComponent,
     CalendarListItemComponent,
     DatePickerComponent,
-    DatetimePickerComponent,
+    DateTimePickerComponent,
     TimePickerComponent
   ],
   imports: [

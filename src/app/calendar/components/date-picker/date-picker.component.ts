@@ -11,8 +11,8 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./date-picker.component.scss']
 })
 export class DatePickerComponent implements OnInit {
-  @Input() selectedDate: string;
-  @Output() selectDate = new EventEmitter<string>();
+  // @Input() selectedDate: string;
+  @Output() setDate = new EventEmitter<string>();
 
   activeDate: string;
   activeMonth: number;
@@ -26,6 +26,7 @@ export class DatePickerComponent implements OnInit {
   nextMonthLength: number;
   ngUnsubscribe: Subject<object> = new Subject();
   prevMonthDays: number[];
+  selectedDate: string;
   selectedDay: number;
   selectedMonth: number;
   selectedYear: number;
@@ -39,9 +40,14 @@ export class DatePickerComponent implements OnInit {
         this.monthDifference = monthDifference;
         this.initMonthData();
       });
-    this.onSelectViewData(
-      moment(this.selectedDate).date() || moment(new Date()).date()
-    );
+    this.calendarService.date
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(date => {
+        this.selectedDate = date;
+        this.onSetViewData(
+          moment(this.selectedDate).date() || moment(new Date()).date()
+        );
+      });
   }
 
   /**
@@ -83,25 +89,27 @@ export class DatePickerComponent implements OnInit {
    * Selects view data
    * @param day Day number
    */
-  onSelectViewData(day: number) {
+  onSetViewData(day: number): void {
     this.selectedDay = day;
     this.selectedMonth = this.activeMonth;
     this.selectedYear = this.activeYear;
   }
 
   /**
-   * Selects date on click
+   * Handler for setting date on click
    * @param day Day number
    */
-  onSelectDate(day: number) {
-    this.onSelectViewData(day);
+  onSetDate(day: number): void {
+    this.onSetViewData(day);
     const date = this.calendarService.getDateStringByNumbers(
       this.selectedDay,
       this.selectedMonth,
       this.selectedYear
     );
     this.selectedDate = moment(date).toISOString();
-    this.selectDate.emit(this.selectedDate);
+    // this.setDate.emit(this.selectedDate);
+    this.calendarService.setDate(this.selectedDate);
+    this.calendarService.setStatePicker('hour');
   }
 
   /**
