@@ -18,6 +18,7 @@ export class DatePickerComponent implements OnInit {
   activeMonth: number;
   activeMonthLength: number;
   activeYear: number;
+  currentDay = this.calendarService.getCurrentDayInMonth();
   currentMonth = this.calendarService.getCurrentMonth();
   currentYear = this.calendarService.getCurrentYear();
   dayStrings = this.calendarService.getDayStrings();

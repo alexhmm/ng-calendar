@@ -339,6 +339,13 @@ export class CalendarService {
   }
 
   /**
+   * Returns current day
+   */
+  getCurrentDayInMonth(): number {
+    return moment().date();
+  }
+
+  /**
    * Returns current month
    */
   getCurrentMonth(): number {
