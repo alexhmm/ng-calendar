@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -22,6 +22,7 @@ export class DatePickerComponent implements OnInit {
   currentYear = this.calendarService.getCurrentYear();
   dayStrings = this.calendarService.getDayStrings();
   monthDifference: number;
+  monthStringsShort = this.calendarService.getMonthStringsShort();
   monthText: string;
   nextMonthLength: number;
   ngUnsubscribe: Subject<object> = new Subject();
@@ -30,6 +31,7 @@ export class DatePickerComponent implements OnInit {
   selectedDay: number;
   selectedMonth: number;
   selectedYear: number;
+  stateView = 'month';
 
   constructor(private calendarService: CalendarService) {}
 
@@ -79,20 +81,17 @@ export class DatePickerComponent implements OnInit {
   }
 
   /**
-   * Click handler for next month
+   * Handler for next month
    */
   nextMonth(): void {
     this.calendarService.setMonthDifference(this.monthDifference + 1);
   }
 
   /**
-   * Selects view data
-   * @param day Day number
+   * Handler for next year
    */
-  onSetViewData(day: number): void {
-    this.selectedDay = day;
-    this.selectedMonth = this.activeMonth;
-    this.selectedYear = this.activeYear;
+  nextYear(): void {
+    this.activeYear++;
   }
 
   /**
@@ -113,9 +112,59 @@ export class DatePickerComponent implements OnInit {
   }
 
   /**
-   * Click handler for previous month
+   * Handler for setting month difference by click
+   * @param month Month
+   */
+  onSetMonthByClick(month: number): void {
+    const monthDifference = this.calendarService.getMonthDifferenceByYearMonth(
+      this.activeYear,
+      month
+    );
+    this.calendarService.setMonthDifference(monthDifference);
+    this.stateView = 'month';
+  }
+
+  /**
+   * Handler for setting month difference by current selection
+   */
+  onSetMonthBySelection(): void {
+    const monthDifference = this.calendarService.getMonthDifferenceByYearMonth(
+      this.selectedYear,
+      this.selectedMonth
+    );
+    this.calendarService.setMonthDifference(monthDifference);
+    this.stateView = 'month';
+  }
+
+  /**
+   * Selects view data
+   * @param day Day number
+   */
+  onSetViewData(day: number): void {
+    this.selectedDay = day;
+    this.selectedMonth = this.activeMonth;
+    this.selectedYear = this.activeYear;
+  }
+
+  /**
+   * Set view state
+   * @param stateView View state
+   */
+  onSetStateView(stateView: string) {
+    this.stateView = stateView;
+  }
+
+  /**
+   * Handler for previous month
    */
   prevMonth(): void {
     this.calendarService.setMonthDifference(this.monthDifference - 1);
+  }
+
+  /**
+   * Handler for previous year
+   */
+  prevYear(): void {
+    this.activeYear--;
   }
 }

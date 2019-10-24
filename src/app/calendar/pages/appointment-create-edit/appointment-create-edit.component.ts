@@ -71,10 +71,14 @@ export class AppointmentCreateEditComponent implements OnInit {
     let monthDifference: number;
     if (type === 'dateStart') {
       this.stateDate = moment(this.dateStart).toISOString();
-      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+      monthDifference = this.calendarService.getMonthDifferenceByISOString(
+        this.stateDate
+      );
     } else {
       this.stateDate = this.dateEnd;
-      monthDifference = this.calendarService.getMonthDifference(this.stateDate);
+      monthDifference = this.calendarService.getMonthDifferenceByISOString(
+        this.stateDate
+      );
     }
     this.calendarService.setMonthDifference(monthDifference);
     this.calendarService.setDate(this.stateDate);

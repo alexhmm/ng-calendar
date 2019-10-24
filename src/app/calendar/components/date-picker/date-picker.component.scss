@@ -2,6 +2,18 @@
 
 .date-picker {
   background-color: white;
+  height: 272px;
+  &--month {
+    height: 192px;
+    &-tile {
+      padding: 0px 8px;
+      height: 32px;
+    }
+  }
+  &--selected {
+    color: white;
+    background-color: $color-primary;
+  }
   &--tile {
     position: relative;
     width: 40px;

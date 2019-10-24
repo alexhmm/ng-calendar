@@ -52,7 +52,10 @@
       <mat-icon (click)="onSetStatePicker('hour')">access_time</mat-icon>
     </div>
   </div>
-  <app-date-picker *ngIf="statePicker === 'date'"></app-date-picker>
+  <app-date-picker
+    *ngIf="statePicker === 'date'"
+    class="height-100"
+  ></app-date-picker>
   <app-time-picker
     *ngIf="statePicker === 'hour' || statePicker === 'minute'"
   ></app-time-picker>
@@ -64,7 +67,7 @@
         >arrow_back</mat-icon
       >
     </div>
-    <div>
+    <div class="flex flex-align-end height-100">
       <button (click)="onSubmit()" class="button">
         OK
       </button>

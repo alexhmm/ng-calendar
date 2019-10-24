@@ -275,10 +275,10 @@ export class CalendarService {
   }
 
   /**
-   * Returns month difference by given ISO Date string
+   * Returns month difference by ISO Date string
    * @param ISODate ISO Date string
    */
-  getMonthDifference(ISODate: string): number {
+  getMonthDifferenceByISOString(ISODate: string): number {
     const aYear = moment(ISODate).year();
     const bYear = moment(moment()).year();
     const aMonth = moment(ISODate).month() + 1;
@@ -286,6 +286,25 @@ export class CalendarService {
     let difference: number;
     const yearDiff = aYear - bYear;
     const monthDiff = aMonth - bMonth;
+    if (yearDiff < 0 || yearDiff > 0) {
+      difference = yearDiff * 12 + monthDiff;
+    } else {
+      difference = monthDiff;
+    }
+    return difference;
+  }
+
+  /**
+   * Returns month difference by year and month numbers
+   * @param year Year
+   * @param month Month
+   */
+  getMonthDifferenceByYearMonth(year: number, month: number): number {
+    const currentYear = this.getCurrentYear();
+    const currentMonth = this.getCurrentMonth();
+    let difference: number;
+    const yearDiff = year - currentYear;
+    const monthDiff = month - currentMonth;
     if (yearDiff < 0 || yearDiff > 0) {
       difference = yearDiff * 12 + monthDiff;
     } else {
@@ -394,6 +413,46 @@ export class CalendarService {
       default:
         return '';
     }
+  }
+
+  /**
+   * Returns month strings
+   */
+  getMonthStrings(): string[] {
+    return [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember'
+    ];
+  }
+
+  /**
+   * Returns short month strings
+   */
+  getMonthStringsShort(): string[] {
+    return [
+      'Jan',
+      'Feb',
+      'Mär',
+      'Apr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Dez'
+    ];
   }
 
   /**
