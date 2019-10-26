@@ -8,6 +8,8 @@ import { Appointment } from '../models/appointment';
   providedIn: 'root'
 })
 export class CalendarService {
+  activeYearSrc = new BehaviorSubject(null);
+  activeYear = this.activeYearSrc.asObservable();
   dateSrc = new BehaviorSubject(null);
   date = this.dateSrc.asObservable();
   hourSrc = new BehaviorSubject(null);
@@ -16,6 +18,8 @@ export class CalendarService {
   minute = this.minuteSrc.asObservable();
   monthDifferenceSrc = new BehaviorSubject(0);
   monthDifference = this.monthDifferenceSrc.asObservable();
+  stateAgendaSrc = new BehaviorSubject('month');
+  stateAgenda = this.stateAgendaSrc.asObservable();
   statePickerSrc = new BehaviorSubject('date');
   statePicker = this.statePickerSrc.asObservable();
 
@@ -565,7 +569,15 @@ export class CalendarService {
   }
 
   /**
-   * Set month difference number
+   * Sets active year
+   * @param year Year
+   */
+  setActiveYear(year: number): void {
+    this.activeYearSrc.next(year);
+  }
+
+  /**
+   * Sets month difference number
    * @param monthDifference Month difference
    */
   setMonthDifference(monthDifference: number): void {
@@ -573,7 +585,7 @@ export class CalendarService {
   }
 
   /**
-   * Set date string
+   * Sets date string
    * @param date Date
    */
   setDate(date: string): void {
@@ -581,7 +593,7 @@ export class CalendarService {
   }
 
   /**
-   * Set hour string
+   * Sets hour string
    * @param hour Hour
    */
   setHour(hour: string): void {
@@ -589,7 +601,7 @@ export class CalendarService {
   }
 
   /**
-   * Set minute string
+   * Sets minute string
    * @param minute Minute
    */
   setMinute(minute: string): void {
@@ -597,7 +609,15 @@ export class CalendarService {
   }
 
   /**
-   * Set picker state
+   * Sets agenda state
+   * @param stateAgenda Agenda state
+   */
+  setStateAgenda(stateAgenda: string): void {
+    this.stateAgendaSrc.next(stateAgenda);
+  }
+
+  /**
+   * Sets picker state
    * @param statePicker Picker state
    */
   setStatePicker(statePicker: string): void {

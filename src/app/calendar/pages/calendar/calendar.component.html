@@ -1,13 +1,33 @@
 <div class="header flex flex-row flex-justify-between flex-align-center">
-  <div class="flex flex-row flex-align-center margin-left-16">
+  <div
+    *ngIf="stateAgenda === 'year'"
+    class="flex flex-row flex-align-center margin-left-16"
+  >
+    <div class="flex flex-align-center icon-button-primary margin-right-16">
+      <mat-icon (click)="prevYear()" class="margin-right-8"
+        >keyboard_arrow_up</mat-icon
+      >
+      <mat-icon (click)="nextYear()">keyboard_arrow_down</mat-icon>
+    </div>
+    <div
+      (click)="setStateAgenda('month')"
+      class="text-hover text-hover-primary"
+    >
+      <b>{{ activeYear }}</b>
+    </div>
+  </div>
+  <div
+    *ngIf="stateAgenda === 'month'"
+    class="flex flex-row flex-align-center margin-left-16"
+  >
     <div class="flex flex-align-center icon-button-primary margin-right-16">
       <mat-icon (click)="prevMonth()" class="margin-right-8"
         >keyboard_arrow_up</mat-icon
       >
       <mat-icon (click)="nextMonth()">keyboard_arrow_down</mat-icon>
     </div>
-    <div>
-      <b>{{ monthText }}</b> {{ activeYear }}
+    <div (click)="setStateAgenda('year')" class="text-hover text-hover-primary">
+      <b>{{ monthText }}&nbsp;{{ activeYear }}</b>
     </div>
   </div>
   <div class="margin-right-16">
@@ -27,6 +47,7 @@
   [currentDay]="currentDay"
   [currentMonth]="currentMonth"
   [currentYear]="currentYear"
+  (setMonthByClick)="onSetMonthByClick($event)"
 ></app-calendar-agenda>
 <app-calendar-list
   *ngIf="stateView === 'list'"

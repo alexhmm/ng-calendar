@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
   monthText: string;
   ngUnsubscribe: Subject<object> = new Subject();
   stateCreateEdit = false;
+  stateAgenda: string;
   stateView = 'agenda';
 
   constructor(
@@ -37,6 +38,11 @@ export class CalendarComponent implements OnInit {
       .subscribe(monthDifference => {
         this.monthDifference = monthDifference;
         this.getMonthData();
+      });
+    this.calendarService.stateAgenda
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(stateAgenda => {
+        this.stateAgenda = stateAgenda;
       });
     this.appointments$.subscribe(appointments => {
       this.appointments = appointments;
@@ -59,6 +65,14 @@ export class CalendarComponent implements OnInit {
     this.calendarService.setMonthDifference(this.monthDifference + 1);
   }
 
+  /**
+   * Click handler for next year
+   */
+  nextYear(): void {
+    this.activeYear++;
+    this.calendarService.setActiveYear(this.activeYear);
+  }
+
   onCloseAppointmentCreateEdit(): void {
     this.stateCreateEdit = false;
   }
@@ -69,10 +83,42 @@ export class CalendarComponent implements OnInit {
   }
 
   /**
+   * Handler for setting month view by click
+   * @param month Month
+   */
+  onSetMonthByClick(month: number) {
+    const monthDifference = this.calendarService.getMonthDifferenceByYearMonth(
+      this.activeYear,
+      month
+    );
+    this.calendarService.setMonthDifference(monthDifference);
+    this.calendarService.setStateAgenda('month');
+  }
+
+  /**
    * Click handler for previous month
    */
   prevMonth(): void {
     this.calendarService.setMonthDifference(this.monthDifference - 1);
+  }
+
+  /**
+   * Click handler for previous year
+   */
+  prevYear(): void {
+    this.activeYear--;
+    this.calendarService.setActiveYear(this.activeYear);
+  }
+
+  /**
+   * Sets agenda view state
+   * @param state Agenda state
+   */
+  setStateAgenda(state: string): void {
+    this.calendarService.setStateAgenda(state);
+    if (state === 'year' && this.stateView === 'list') {
+      this.stateView = 'agenda';
+    }
   }
 
   showCalendarAgenda(): void {

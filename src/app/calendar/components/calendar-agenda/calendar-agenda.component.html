@@ -1,5 +1,33 @@
-<div class="margin-16">
-  <mat-grid-list cols="7" [rowHeight]="rowHeight">
+<div class="calendar-agenda margin-16">
+  <!-- YEAR VIEW BEGIN -->
+  <mat-grid-list
+    *ngIf="stateView === 'year'"
+    [cols]="viewYearCols"
+    [rowHeight]="viewYearRowHeight"
+  >
+    <mat-grid-tile
+      *ngFor="let monthString of monthStrings; let i = index"
+      colspan="1"
+      rowspan="1"
+      ><div
+        [ngClass]="{
+          'color-primary font-size-18':
+            activeYear === currentYear && i === currentMonth
+        }"
+        (click)="onSetMonthByClick(i)"
+        class="flex flex-align-center height-100 text-hover text-hover-primary"
+      >
+        <b>{{ monthString }}</b>
+      </div></mat-grid-tile
+    >
+  </mat-grid-list>
+  <!-- YEAR VIEW END -->
+  <!-- MONTH VIEW BEGIN -->
+  <mat-grid-list
+    *ngIf="stateView === 'month'"
+    cols="7"
+    [rowHeight]="viewMonthRowHeight"
+  >
     <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
       ><div class="flex flex-align-center height-100 color-primary">
         <b>{{ day }}</b>
@@ -61,6 +89,7 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
+  <!-- MONTH VIEW END -->
 </div>
 
 <app-calendar-day

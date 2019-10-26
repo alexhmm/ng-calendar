@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -15,6 +15,7 @@ export class CalendarAgendaComponent implements OnInit {
   @Input() currentDay: number;
   @Input() currentMonth: number;
   @Input() currentYear: number;
+  @Output() setMonthByClick = new EventEmitter<number>();
 
   activeAppointments: Appointment[];
   activeDate: string;
@@ -23,10 +24,14 @@ export class CalendarAgendaComponent implements OnInit {
   activeYear: number;
   dayStrings = this.calendarService.getDayStrings();
   monthDifference: number;
+  monthStrings = this.calendarService.getMonthStrings();
   nextMonthLength: number;
   ngUnsubscribe: Subject<object> = new Subject();
   prevMonthDays: number[];
-  rowHeight = '40px';
+  stateView: string;
+  viewMonthRowHeight = '40px';
+  viewYearCols = 3;
+  viewYearRowHeight = '80px';
 
   constructor(
     private appService: AppService,
@@ -37,13 +42,35 @@ export class CalendarAgendaComponent implements OnInit {
     this.appService.stateHeight
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(innerHeight => {
-        this.rowHeight = Math.floor((innerHeight - 57 - 48) / 6.5 / 2) + 'px';
+        this.viewMonthRowHeight =
+          Math.floor((innerHeight - 56 - 48) / 6.5 / 2) + 'px';
+        this.viewYearRowHeight =
+          Math.floor(innerHeight - 56 - 32) / (12 / this.viewYearCols) + 'px';
+      });
+    this.appService.stateScreen
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(stateScreen => {
+        if (stateScreen === 'xs') {
+          this.viewYearCols = 2;
+        } else {
+          this.viewYearCols = 3;
+        }
+      });
+    this.calendarService.activeYear
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(activeYear => {
+        this.activeYear = activeYear;
       });
     this.calendarService.monthDifference
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(monthDifference => {
         this.monthDifference = monthDifference;
         this.getMonthData();
+      });
+    this.calendarService.stateAgenda
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(stateAgenda => {
+        this.stateView = stateAgenda;
       });
   }
 
@@ -118,5 +145,13 @@ export class CalendarAgendaComponent implements OnInit {
    */
   onCloseCalendarDay() {
     this.activeDate = null;
+  }
+
+  /**
+   * Handler for setting month view by click
+   */
+  onSetMonthByClick(month: number): void {
+    this.setMonthByClick.emit(month);
+    // this.getMonthData();
   }
 }
