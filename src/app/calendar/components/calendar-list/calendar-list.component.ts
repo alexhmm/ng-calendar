@@ -27,8 +27,8 @@ export class CalendarListComponent implements OnInit {
 
   getMonthData(): void {
     this.activeAppointments = this.calendarService.getActiveAppointments(
-      this.calendarService.getActiveYear(this.monthDifference),
-      this.calendarService.getActiveMonth(this.monthDifference)
+      this.calendarService.getYearByMonthDifference(this.monthDifference),
+      this.calendarService.getMonthByMonthDifference(this.monthDifference)
     );
   }
 }

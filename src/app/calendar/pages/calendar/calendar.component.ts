@@ -46,27 +46,31 @@ export class CalendarComponent implements OnInit {
       });
     this.appointments$.subscribe(appointments => {
       this.appointments = appointments;
-      this.getMonthData();
     });
   }
 
+  /**
+   * Sets view data
+   */
   getMonthData(): void {
-    this.activeMonth = this.calendarService.getActiveMonth(
+    this.activeMonth = this.calendarService.getMonthByMonthDifference(
       this.monthDifference
     );
-    this.activeYear = this.calendarService.getActiveYear(this.monthDifference);
+    this.activeYear = this.calendarService.getYearByMonthDifference(
+      this.monthDifference
+    );
     this.monthText = this.calendarService.getMonthText(this.activeMonth);
   }
 
   /**
-   * Click handler for next month
+   * Handler for setting next month
    */
   nextMonth(): void {
     this.calendarService.setMonthDifference(this.monthDifference + 1);
   }
 
   /**
-   * Click handler for next year
+   * Handler for setting next year
    */
   nextYear(): void {
     this.activeYear++;
@@ -96,14 +100,14 @@ export class CalendarComponent implements OnInit {
   }
 
   /**
-   * Click handler for previous month
+   * Handler for setting previous month
    */
   prevMonth(): void {
     this.calendarService.setMonthDifference(this.monthDifference - 1);
   }
 
   /**
-   * Click handler for previous year
+   * Handler for setting previous year
    */
   prevYear(): void {
     this.activeYear--;
@@ -126,6 +130,7 @@ export class CalendarComponent implements OnInit {
   }
 
   showCalendarList(): void {
+    this.calendarService.setStateAgenda('month');
     this.stateView = 'list';
   }
 }

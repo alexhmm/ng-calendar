@@ -19,18 +19,18 @@ import { CalendarService } from '../../services/calendar.service';
   styleUrls: ['./calendar-day.component.scss']
 })
 export class CalendarDayComponent implements OnInit, OnChanges {
-  @Input() activeDate: string;
   @Input() appointments: Appointment[];
+  @Input() selectedDate: string;
   @Output() closeCalendarDay = new EventEmitter<any>();
 
-  activeDayAppointments: Appointment[];
+  selectedDayAppointments: Appointment[];
   date: string;
 
   constructor(private calendarService: CalendarService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const activeDate: SimpleChange = changes.activeDate;
-    this.activeDate = activeDate.currentValue;
+    const selectedDate: SimpleChange = changes.selectedDate;
+    this.selectedDate = selectedDate.currentValue;
     this.initView();
   }
 
@@ -39,10 +39,10 @@ export class CalendarDayComponent implements OnInit, OnChanges {
   }
 
   initView() {
-    this.activeDayAppointments = this.calendarService.getActiveDayAppointmentsByDateString(
-      this.activeDate
+    this.selectedDayAppointments = this.calendarService.getActiveDayAppointmentsByDateString(
+      this.selectedDate
     );
-    this.date = moment(this.activeDate).format('dddd, Do MMMM YYYY');
+    this.date = moment(this.selectedDate).format('dddd, Do MMMM YYYY');
   }
 
   onCloseCalendarDay(): void {

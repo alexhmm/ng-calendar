@@ -10,14 +10,21 @@
       colspan="1"
       rowspan="1"
       ><div
-        [ngClass]="{
-          'color-primary font-size-18':
-            activeYear === currentYear && i === currentMonth
-        }"
         (click)="onSetMonthByClick(i)"
         class="flex flex-align-center height-100 text-hover text-hover-primary"
       >
-        <b>{{ monthString }}</b>
+        <div
+          [ngClass]="{
+            'color-primary font-size-18':
+              activeYear === currentYear && i === currentMonth,
+            'calendar-agenda--year-month--selected':
+              activeYear === selectedYear && i === selectedMonth
+          }"
+          class="calendar-agenda--year-month flex flex-center
+      "
+        >
+          <b>{{ monthString }}</b>
+        </div>
       </div></mat-grid-tile
     >
   </mat-grid-list>
@@ -45,7 +52,10 @@
       </div>
     </mat-grid-tile>
     <mat-grid-tile
-      *ngFor="let monthDay of getMonthLength(activeMonthLength); let i = index"
+      *ngFor="
+        let monthDay of getMonthLength(selectedMonthLength);
+        let i = index
+      "
       colspan="1"
       rowspan="2"
     >
@@ -53,25 +63,25 @@
         [ngClass]="{
           'color-primary font-size-18':
             i + 1 === currentDay &&
-            activeMonth === currentMonth &&
-            activeYear === currentYear
+            selectedMonth === currentMonth &&
+            selectedYear === currentYear
         }"
         (click)="openCalendarDay(i + 1)"
         class="calendar-agenda--tile calendar-agenda--active flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
       >
         <b>{{ i + 1 }}</b>
         <div
-          *ngIf="getActiveDayAppointmentLength(i + 1) > 0"
+          *ngIf="getSelectedDayAppointmentLength(i + 1) > 0"
           class="calendar-agenda--tile-overlay font-size-12"
         >
-          {{ getActiveDayAppointmentLength(i + 1) }}
+          {{ getSelectedDayAppointmentLength(i + 1) }}
         </div>
       </div>
       <div
-        *ngIf="getActiveDayAppointmentTitle(i + 1)"
+        *ngIf="getSelectedDayAppointmentTitle(i + 1)"
         class="calendar-agenda--tile-preview border-radius-8 font-size-12 padding-4 text-overflow-ellipsis"
       >
-        {{ getActiveDayAppointmentTitle(i + 1) }}
+        {{ getSelectedDayAppointmentTitle(i + 1) }}
       </div>
     </mat-grid-tile>
     <mat-grid-tile
@@ -93,8 +103,8 @@
 </div>
 
 <app-calendar-day
-  *ngIf="activeDate"
-  [activeDate]="activeDate"
+  *ngIf="selectedDate"
+  [selectedDate]="selectedDate"
   [appointments]="appointments"
   (closeCalendarDay)="onCloseCalendarDay()"
   class="calendar-agenda--day z-index-10"

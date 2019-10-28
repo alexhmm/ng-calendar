@@ -57,10 +57,12 @@ export class DatePickerComponent implements OnInit {
    * Inits month view data
    */
   initMonthData(): void {
-    this.activeMonth = this.calendarService.getActiveMonth(
+    this.activeMonth = this.calendarService.getMonthByMonthDifference(
       this.monthDifference
     );
-    this.activeYear = this.calendarService.getActiveYear(this.monthDifference);
+    this.activeYear = this.calendarService.getYearByMonthDifference(
+      this.monthDifference
+    );
     this.monthText = this.calendarService.getMonthText(this.activeMonth);
     this.activeMonthLength = this.calendarService.getMonthLength(
       this.monthDifference

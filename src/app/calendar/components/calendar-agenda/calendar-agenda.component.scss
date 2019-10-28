@@ -18,6 +18,14 @@
     top: 0px;
     left: 0px;
     bottom: 0px;
+    &-month {
+      padding: 0px 8px;
+      height: 32px;
+      &--selected {
+        color: white;
+        background-color: $color-primary;
+      }
+    }
   }
   &--day {
     position: fixed;

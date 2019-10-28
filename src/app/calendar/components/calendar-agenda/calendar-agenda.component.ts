@@ -18,9 +18,7 @@ export class CalendarAgendaComponent implements OnInit {
   @Output() setMonthByClick = new EventEmitter<number>();
 
   activeAppointments: Appointment[];
-  activeDate: string;
   activeMonth: number;
-  activeMonthLength: number;
   activeYear: number;
   dayStrings = this.calendarService.getDayStrings();
   monthDifference: number;
@@ -28,6 +26,10 @@ export class CalendarAgendaComponent implements OnInit {
   nextMonthLength: number;
   ngUnsubscribe: Subject<object> = new Subject();
   prevMonthDays: number[];
+  selectedDate: string;
+  selectedMonth: number;
+  selectedMonthLength: number;
+  selectedYear: number;
   stateView: string;
   viewMonthRowHeight = '40px';
   viewYearCols = 3;
@@ -39,14 +41,6 @@ export class CalendarAgendaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.appService.stateHeight
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(innerHeight => {
-        this.viewMonthRowHeight =
-          Math.floor((innerHeight - 56 - 48) / 6.5 / 2) + 'px';
-        this.viewYearRowHeight =
-          Math.floor(innerHeight - 56 - 32) / (12 / this.viewYearCols) + 'px';
-      });
     this.appService.stateScreen
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(stateScreen => {
@@ -56,10 +50,13 @@ export class CalendarAgendaComponent implements OnInit {
           this.viewYearCols = 3;
         }
       });
-    this.calendarService.activeYear
+    this.appService.stateHeight
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(activeYear => {
-        this.activeYear = activeYear;
+      .subscribe(innerHeight => {
+        this.viewMonthRowHeight =
+          Math.floor((innerHeight - 56 - 48) / 6.5 / 2) + 'px';
+        this.viewYearRowHeight =
+          Math.floor(innerHeight - 56 - 32) / (12 / this.viewYearCols) + 'px';
       });
     this.calendarService.monthDifference
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -72,18 +69,33 @@ export class CalendarAgendaComponent implements OnInit {
       .subscribe(stateAgenda => {
         this.stateView = stateAgenda;
       });
+    this.calendarService.activeMonth
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(activeMonth => (this.activeMonth = activeMonth));
+    this.calendarService.activeYear
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(activeYear => (this.activeYear = activeYear));
   }
 
+  /**
+   * Sets view data
+   */
   getMonthData(): void {
-    this.activeMonth = this.calendarService.getActiveMonth(
+    this.selectedMonth = this.calendarService.getMonthByMonthDifference(
       this.monthDifference
     );
-    this.activeYear = this.calendarService.getActiveYear(this.monthDifference);
-    this.activeAppointments = this.calendarService.getActiveAppointments(
-      this.activeYear,
-      this.activeMonth
+    this.selectedYear = this.calendarService.getYearByMonthDifference(
+      this.monthDifference
     );
-    this.activeMonthLength = this.calendarService.getMonthLength(
+    // this.activeMonth = this.selectedMonth;
+    // this.activeYear = this.selectedYear;
+    this.calendarService.setActiveMonth(this.selectedMonth);
+    this.calendarService.setActiveYear(this.selectedYear);
+    this.activeAppointments = this.calendarService.getActiveAppointments(
+      this.selectedYear,
+      this.selectedMonth
+    );
+    this.selectedMonthLength = this.calendarService.getMonthLength(
       this.monthDifference
     );
     this.prevMonthDays = this.calendarService.getPrevMonthDays(
@@ -106,12 +118,12 @@ export class CalendarAgendaComponent implements OnInit {
    * Returns appointment length of active day
    * @param activeDay Active day
    */
-  getActiveDayAppointmentLength(activeDay: number): number {
+  getSelectedDayAppointmentLength(activeDay: number): number {
     return this.calendarService.getActiveDayAppointmentLength(
       this.activeAppointments,
       activeDay,
-      this.activeMonth,
-      this.activeYear
+      this.selectedMonth,
+      this.selectedYear
     );
   }
 
@@ -119,12 +131,12 @@ export class CalendarAgendaComponent implements OnInit {
    * Returns first appointment title of active day
    * @param activeDay Active day
    */
-  getActiveDayAppointmentTitle(activeDay: number): string {
+  getSelectedDayAppointmentTitle(activeDay: number): string {
     return this.calendarService.getActiveDayAppointmentTitle(
       this.activeAppointments,
       activeDay,
-      this.activeMonth,
-      this.activeYear
+      this.selectedMonth,
+      this.selectedYear
     );
   }
 
@@ -133,10 +145,10 @@ export class CalendarAgendaComponent implements OnInit {
    * @param activeDay Active day
    */
   openCalendarDay(activeDay: number) {
-    this.activeDate = this.calendarService.getDateStringByNumbers(
+    this.selectedDate = this.calendarService.getDateStringByNumbers(
       activeDay,
-      this.activeMonth,
-      this.activeYear
+      this.selectedMonth,
+      this.selectedYear
     );
   }
 
@@ -144,7 +156,7 @@ export class CalendarAgendaComponent implements OnInit {
    * Closes CalendarDayComponent dialog
    */
   onCloseCalendarDay() {
-    this.activeDate = null;
+    this.selectedDate = null;
   }
 
   /**
@@ -152,6 +164,5 @@ export class CalendarAgendaComponent implements OnInit {
    */
   onSetMonthByClick(month: number): void {
     this.setMonthByClick.emit(month);
-    // this.getMonthData();
   }
 }

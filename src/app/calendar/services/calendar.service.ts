@@ -8,6 +8,8 @@ import { Appointment } from '../models/appointment';
   providedIn: 'root'
 })
 export class CalendarService {
+  activeMonthSrc = new BehaviorSubject(null);
+  activeMonth = this.activeMonthSrc.asObservable();
   activeYearSrc = new BehaviorSubject(null);
   activeYear = this.activeYearSrc.asObservable();
   dateSrc = new BehaviorSubject(null);
@@ -16,14 +18,16 @@ export class CalendarService {
   hour = this.hourSrc.asObservable();
   minuteSrc = new BehaviorSubject(null);
   minute = this.minuteSrc.asObservable();
-  monthDifferenceSrc = new BehaviorSubject(0);
+  monthDifferenceSrc = new BehaviorSubject(null);
   monthDifference = this.monthDifferenceSrc.asObservable();
   stateAgendaSrc = new BehaviorSubject('month');
   stateAgenda = this.stateAgendaSrc.asObservable();
   statePickerSrc = new BehaviorSubject('date');
   statePicker = this.statePickerSrc.asObservable();
 
-  constructor() {}
+  constructor() {
+    this.setMonthDifference(0);
+  }
 
   /**
    * TEST: Returns fake appointments
@@ -251,7 +255,7 @@ export class CalendarService {
    * Returns calculated month by month difference
    * @param monthDifference Month difference
    */
-  getActiveMonth(monthDifference: number) {
+  getMonthByMonthDifference(monthDifference: number) {
     return moment()
       .add(monthDifference, 'months')
       .month();
@@ -261,7 +265,7 @@ export class CalendarService {
    * Returns year by month difference number
    * @param monthDifference Month difference
    */
-  getActiveYear(monthDifference: number): number {
+  getYearByMonthDifference(monthDifference: number): number {
     return moment()
       .add(monthDifference, 'months')
       .year();
@@ -569,10 +573,18 @@ export class CalendarService {
   }
 
   /**
+   * Sets active month
+   * @param month Month
+   */
+  setActiveMonth(month: number) {
+    this.activeMonthSrc.next(month);
+  }
+
+  /**
    * Sets active year
    * @param year Year
    */
-  setActiveYear(year: number): void {
+  setActiveYear(year: number) {
     this.activeYearSrc.next(year);
   }
 
