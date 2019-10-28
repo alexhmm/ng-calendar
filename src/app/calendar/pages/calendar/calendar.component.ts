@@ -125,12 +125,15 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  showCalendarAgenda(): void {
-    this.stateView = 'agenda';
-  }
-
-  showCalendarList(): void {
-    this.calendarService.setStateAgenda('month');
-    this.stateView = 'list';
+  /**
+   * Sets view state
+   */
+  setStateView(): void {
+    if (this.stateView === 'list') {
+      this.stateView = 'agenda';
+    } else {
+      this.calendarService.setStateAgenda('month');
+      this.stateView = 'list';
+    }
   }
 }

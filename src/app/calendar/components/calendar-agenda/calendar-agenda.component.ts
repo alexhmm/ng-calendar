@@ -30,6 +30,7 @@ export class CalendarAgendaComponent implements OnInit {
   selectedMonth: number;
   selectedMonthLength: number;
   selectedYear: number;
+  stateScreen: string;
   stateView: string;
   viewMonthRowHeight = '40px';
   viewYearCols = 3;
@@ -44,7 +45,8 @@ export class CalendarAgendaComponent implements OnInit {
     this.appService.stateScreen
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(stateScreen => {
-        if (stateScreen === 'xs') {
+        this.stateScreen = stateScreen;
+        if (this.stateScreen === 'xs') {
           this.viewYearCols = 2;
         } else {
           this.viewYearCols = 3;
@@ -53,10 +55,21 @@ export class CalendarAgendaComponent implements OnInit {
     this.appService.stateHeight
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(innerHeight => {
-        this.viewMonthRowHeight =
-          Math.floor((innerHeight - 56 - 48) / 6.5 / 2) + 'px';
-        this.viewYearRowHeight =
-          Math.floor(innerHeight - 56 - 32) / (12 / this.viewYearCols) + 'px';
+        if (this.stateScreen !== 'xl') {
+          this.viewMonthRowHeight =
+            Math.floor((innerHeight - 73 - 24 - 48) / 6.5 / 2) + 'px';
+          this.viewYearRowHeight =
+            Math.floor(innerHeight - 73 - 24 - 8 - 32) /
+              (12 / this.viewYearCols) +
+            'px';
+        } else {
+          this.viewMonthRowHeight =
+            Math.floor((innerHeight - 113 - 24 - 48) / 6.5 / 2) + 'px';
+          this.viewYearRowHeight =
+            Math.floor(innerHeight - 113 - 24 - 8 - 32) /
+              (12 / this.viewYearCols) +
+            'px';
+        }
       });
     this.calendarService.monthDifference
       .pipe(takeUntil(this.ngUnsubscribe))

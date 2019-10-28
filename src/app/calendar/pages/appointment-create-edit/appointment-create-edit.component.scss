@@ -22,6 +22,15 @@
       width: 100%;
     }
   }
+  &--header {
+    width: calc(100% - 32px);
+    &-container {
+      width: 32px;
+    }
+    &-title {
+      font-size: 18px;
+    }
+  }
 }
 
 @media screen and(min-width: $sm) {
@@ -62,7 +71,19 @@
       width: 480px;
     }
     &--form {
-      width: 720px;
+      width: 1200px;
+    }
+  }
+}
+
+@media (min-width: $xl) {
+  .appointment-create-edit {
+    &--header {
+      height: 64px;
+      width: 1200px;
+      &-title {
+        font-size: 24px;
+      }
     }
   }
 }

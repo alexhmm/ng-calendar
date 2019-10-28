@@ -1,14 +1,20 @@
-<div class="margin-16">
+<div class="flex flex-column flex-align-center">
   <div
-    class="header flex flex-justify-between flex-align-center icon-button-primary margin-bottom-16"
+    class="appointment-create-edit--header flex flex-justify-between flex-align-center margin-16 padding-bottom-16"
   >
-    <mat-icon (click)="onGoBack()">arrow_back</mat-icon>
-    <div class="color-primary">
+    <div
+      class="appointment-create-edit--header-container flex flex-align-center icon-button-primary"
+    >
+      <mat-icon (click)="onGoBack()">arrow_back</mat-icon>
+    </div>
+    <div class="appointment-create-edit--header-title color-primary">
       <b>{{ !appointment ? 'Termin erstellen' : 'Termin bearbeiten' }}</b>
     </div>
-    <div class="header-icon"></div>
+    <div class="appointment-create-edit--header-container"></div>
   </div>
-  <div class="flex flex-justify-center width-100">
+  <div
+    class="appointment-create-edit--content flex flex-justify-center margin-x-16"
+  >
     <form
       [formGroup]="formGroup"
       (ngSubmit)="onSubmit()"

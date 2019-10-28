@@ -1,1 +1,58 @@
 @import '../../../global.scss';
+
+.calendar {
+  &--content {
+    width: 100%;
+  }
+  &--header {
+    width: 100%;
+    &-xl-container {
+      display: none;
+    }
+    &-xs-container {
+      display: flex;
+      width: 64px;
+    }
+    &-title {
+      font-size: 18px;
+    }
+  }
+  &--nav {
+    width: 100%;
+    &-container {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: $sm) {
+  .calendar {
+    &--nav {
+      &-container {
+        width: 320px;
+      }
+    }
+  }
+}
+
+@media (min-width: $xl) {
+  .calendar {
+    &--header {
+      height: 64px;
+      width: 1200px;
+      &-xl-container {
+        display: flex;
+        width: 360px;
+      }
+      &-xs-container {
+        display: none;
+      }
+      &-title {
+        font-size: 24px;
+      }
+    }
+    &--content {
+      width: 1200px;
+    }
+  }
+}

@@ -1,58 +1,108 @@
-<div class="header flex flex-row flex-justify-between flex-align-center">
+<div class="flex flex-justify-center">
   <div
-    *ngIf="stateAgenda === 'year'"
-    class="flex flex-row flex-align-center margin-left-16"
+    class="calendar--header flex flex-row flex-justify-between flex-align-center margin-16 padding-bottom-16"
   >
-    <div class="flex flex-align-center icon-button-primary margin-right-16">
-      <mat-icon (click)="prevYear()" class="margin-right-8"
-        >keyboard_arrow_up</mat-icon
-      >
-      <mat-icon (click)="nextYear()">keyboard_arrow_down</mat-icon>
+    <div
+      class="calendar--header-xs-container flex flex-align-center icon-button-primary"
+    >
+      <mat-icon>menu</mat-icon>
     </div>
     <div
-      (click)="setStateAgenda('month')"
-      class="text-hover text-hover-primary"
+      class="calendar--header-xl-container flex flex-align-center icon-button-primary"
     >
-      <b>{{ activeYear }}</b>
+      <mat-icon>menu</mat-icon>
     </div>
-  </div>
-  <div
-    *ngIf="stateAgenda === 'month'"
-    class="flex flex-row flex-align-center margin-left-16"
-  >
-    <div class="flex flex-align-center icon-button-primary margin-right-16">
-      <mat-icon (click)="prevMonth()" class="margin-right-8"
-        >keyboard_arrow_up</mat-icon
-      >
-      <mat-icon (click)="nextMonth()">keyboard_arrow_down</mat-icon>
+    <div class="calendar--header-title color-primary">
+      <b>Kalendar</b>
     </div>
-    <div (click)="setStateAgenda('year')" class="text-hover text-hover-primary">
-      <b>{{ monthText }}&nbsp;{{ activeYear }}</b>
-    </div>
-  </div>
-  <div class="margin-right-16">
-    <div class="flex flex-align-center icon-button-primary">
-      <mat-icon (click)="onCreateAppointment()" class="margin-right-8"
-        >add</mat-icon
+    <div>
+      <div
+        class="calendar--header-xs-container flex flex-align-center icon-button-primary"
       >
-      <mat-icon (click)="showCalendarAgenda()" class="margin-right-8"
-        >view_module</mat-icon
-      >
-      <mat-icon (click)="showCalendarList()">view_list</mat-icon>
+        <mat-icon (click)="onCreateAppointment()" class="margin-right-8"
+          >add</mat-icon
+        >
+        <mat-icon (click)="setStateView()">{{
+          stateView === 'agenda' ? 'view_list' : 'view_module'
+        }}</mat-icon>
+        <!-- <mat-icon (click)="showCalendarList()">view_list</mat-icon> -->
+      </div>
+      <div class="calendar--header-xl-container flex-justify-end">
+        <div
+          (click)="onCreateAppointment()"
+          class="icon-button-neutral flex flex-row flex-align-center margin-right-16"
+        >
+          <div class="margin-right-4">
+            Neuer Termin
+          </div>
+          <mat-icon>add</mat-icon>
+        </div>
+        <div
+          (click)="setStateView()"
+          class="icon-button-neutral flex flex-row flex-align-center"
+        >
+          <div class="margin-right-4">
+            Kalenderansicht
+          </div>
+          <mat-icon>{{
+            stateView === 'agenda' ? 'view_list' : 'view_module'
+          }}</mat-icon>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<app-calendar-agenda
-  *ngIf="stateView === 'agenda'"
-  [currentDay]="currentDay"
-  [currentMonth]="currentMonth"
-  [currentYear]="currentYear"
-  (setMonthByClick)="onSetMonthByClick($event)"
-></app-calendar-agenda>
-<app-calendar-list
-  *ngIf="stateView === 'list'"
-  [currentDay]="currentDay"
-  [currentMonth]="currentMonth"
-  [currentYear]="currentYear"
->
-</app-calendar-list>
+
+<div class="flex flex-justify-center width-100">
+  <div
+    class="calendar--nav-container flex flex-row flex-justify-between flex-align-center icon-button-primary margin-x-16"
+  >
+    <ng-container *ngIf="stateAgenda === 'year'">
+      <div class="flex flex-align-center margin-right-16">
+        <mat-icon (click)="prevYear()">keyboard_arrow_left</mat-icon>
+      </div>
+      <div
+        (click)="setStateAgenda('month')"
+        class="text-hover text-hover-primary margin-right-16"
+      >
+        <b>{{ activeYear }}</b>
+      </div>
+      <div class="flex flex-align-center">
+        <mat-icon (click)="nextYear()">keyboard_arrow_right</mat-icon>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="stateAgenda === 'month'">
+      <div class="flex flex-align-center margin-right-16">
+        <mat-icon (click)="prevMonth()">keyboard_arrow_left</mat-icon>
+      </div>
+      <div
+        (click)="setStateAgenda('year')"
+        class="margin-right-16 text-hover text-hover-primary"
+      >
+        <b>{{ monthText }}&nbsp;{{ activeYear }}</b>
+      </div>
+      <div class="flex flex-align-center">
+        <mat-icon (click)="nextMonth()">keyboard_arrow_right</mat-icon>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="flex flex-justify-center">
+  <div class="calendar--content">
+    <app-calendar-agenda
+      *ngIf="stateView === 'agenda'"
+      [currentDay]="currentDay"
+      [currentMonth]="currentMonth"
+      [currentYear]="currentYear"
+      (setMonthByClick)="onSetMonthByClick($event)"
+    ></app-calendar-agenda>
+    <app-calendar-list
+      *ngIf="stateView === 'list'"
+      [currentDay]="currentDay"
+      [currentMonth]="currentMonth"
+      [currentYear]="currentYear"
+    >
+    </app-calendar-list>
+  </div>
+</div>

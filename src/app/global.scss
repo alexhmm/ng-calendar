@@ -108,10 +108,12 @@ $xl: 1200px;
   }
 }
 
-.header {
-  margin: 16px 0px;
-  &-icon {
-    width: 24px;
+.icon-button-neutral {
+  @include transition(color, 0.25s, ease-in-out);
+  cursor: pointer;
+  font-size: 16px;
+  &:hover {
+    color: $color-primary;
   }
 }
 
