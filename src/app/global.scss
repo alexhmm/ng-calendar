@@ -15,6 +15,7 @@
 /* COLORS */
 
 $color-primary: #00c8af;
+$color-primary-light: #00c8af10;
 $color-secondary: #9146ff;
 $color-tertiary: #ffca5f;
 
@@ -66,6 +67,12 @@ $xl: 1200px;
     &-primary {
       border-bottom: 1px solid $color-primary;
     }
+  }
+  &-light {
+    border: 1px solid #00000010;
+  }
+  &-primary {
+    border: 1px solid $color-primary;
   }
   &-radius {
     &-4 {
@@ -441,6 +448,11 @@ $xl: 1200px;
 /* TEXT */
 
 .text {
+  &-align {
+    &-end {
+      text-align: end;
+    }
+  }
   &-bold {
     font-weight: bold;
   }

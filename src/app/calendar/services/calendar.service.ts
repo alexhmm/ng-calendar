@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 
 import { Appointment } from '../models/appointment';
+import { AppointmentView } from '../models/appointment-view';
 
 @Injectable({
   providedIn: 'root'
@@ -201,32 +202,45 @@ export class CalendarService {
   }
 
   /**
-   * Returns first matched active appointment
+   * Returns first appointment from active day
    * @param activeAppointments Active appointments
    * @param activeDay Active day
    * @param activeMonth Active month
    * @param activeYear Active year
    */
-  getActiveDayAppointmentTitle(
+  getActiveDayAppointmentFirst(
     activeAppointments: Appointment[],
     activeDay: number,
     activeMonth: number,
     activeYear: number
-  ): string {
+  ): AppointmentView {
     // Find first appointment with matched date
-    const date = activeAppointments.find(activeAppointment =>
+    const appointment = activeAppointments.find(activeAppointment =>
       activeAppointment.dateStart.includes(
         this.getDateStringByNumbers(activeDay, activeMonth, activeYear)
       )
     );
-    // Return first appointment title
-    if (date) {
-      return date.title;
+    if (appointment) {
+      const appointmentView = {
+        id: appointment.id,
+        dateStart: appointment.dateStart,
+        dateEnd: appointment.dateEnd,
+        desc: appointment.desc,
+        place: appointment.place,
+        timeEnd: moment(appointment.dateEnd).format('LT'),
+        timeStart: moment(appointment.dateStart).format('LT'),
+        title: appointment.title
+      };
+      return appointmentView;
     } else {
       return null;
     }
   }
 
+  /**
+   * Returns active day appointments by date string
+   * @param date Date string
+   */
   getActiveDayAppointmentsByDateString(date: string): Appointment[] {
     const appointments = this.getAppointments().appointments;
     const activeDayAppointments = [];
@@ -239,9 +253,6 @@ export class CalendarService {
           id: appointment.id,
           dateStart: appointment.dateStart,
           dateEnd: appointment.dateEnd,
-          // day: moment(appointment.dateStart).date(),
-          // month: moment(appointment.dateStart).month(),
-          // year: moment(appointment.dateStart).year(),
           desc: appointment.desc,
           place: appointment.place,
           title: appointment.title

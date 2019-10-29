@@ -76,16 +76,44 @@
 }
 
 @media (min-width: $md) {
+  ::ng-deep .calendar-agenda--mat-grid-tile .mat-figure {
+    align-items: flex-end !important;
+    justify-content: flex-start !important;
+  }
+
   .calendar-agenda {
     &--day {
       width: 480px;
     }
+    &--mat-grid-tile {
+      border: 1px solid #fafafa;
+      &-title {
+        border: 1px solid #fafafa;
+        background-color: #fafafa;
+      }
+    }
     &--tile {
+      margin-right: 8px;
+      &-other {
+        margin-right: 8px;
+      }
       &-preview {
+        background-color: $color-primary-light;
+        border-radius: 2px 0px 0px 2px;
+        color: $color-primary;
         display: block;
-        max-width: calc(100% - 16px);
-        color: white;
-        background-color: $color-primary;
+        height: 100%;
+        position: relative;
+        width: calc(100% - 8px);
+        &--overlay {
+          height: 100%;
+          left: 0px;
+          position: absolute;
+          top: 0px;
+          width: 4px;
+          background-color: $color-primary;
+          border-radius: 4px;
+        }
       }
     }
   }

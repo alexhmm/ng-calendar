@@ -35,7 +35,11 @@
     cols="7"
     [rowHeight]="viewMonthRowHeight"
   >
-    <mat-grid-tile *ngFor="let day of dayStrings" colspan="1" rowspan="1"
+    <mat-grid-tile
+      *ngFor="let day of dayStrings"
+      colspan="1"
+      rowspan="1"
+      class="calendar-agenda--mat-grid-tile-title"
       ><div class="flex flex-align-center height-100 color-primary">
         <b>{{ day }}</b>
       </div></mat-grid-tile
@@ -44,6 +48,7 @@
       *ngFor="let prevMonthDay of prevMonthDays; let i = index"
       colspan="1"
       rowspan="2"
+      class="calendar-agenda--mat-grid-tile"
     >
       <div
         class="calendar-agenda--tile-other flex flex-justify-center flex-align-center"
@@ -58,6 +63,7 @@
       "
       colspan="1"
       rowspan="2"
+      class="calendar-agenda--mat-grid-tile"
     >
       <div
         [ngClass]="{
@@ -67,7 +73,7 @@
             selectedYear === currentYear
         }"
         (click)="openCalendarDay(i + 1)"
-        class="calendar-agenda--tile calendar-agenda--active flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
+        class="calendar-agenda--tile flex flex-justify-center flex-align-center hover-primary margin-bottom-2 width-100"
       >
         <b>{{ i + 1 }}</b>
         <div
@@ -78,10 +84,26 @@
         </div>
       </div>
       <div
-        *ngIf="getSelectedDayAppointmentTitle(i + 1)"
-        class="calendar-agenda--tile-preview border-radius-8 font-size-12 padding-4 text-overflow-ellipsis"
+        *ngIf="getSelectedDayAppointmentFirst(i + 1)"
+        class="flex flex-center height-100 width-100 text-hover"
+        (click)="openCalendarDay(i + 1)"
       >
-        {{ getSelectedDayAppointmentTitle(i + 1) }}
+        <div
+          class="calendar-agenda--tile-preview flex flex-justify-end font-size-12"
+        >
+          <div
+            class="margin-bottom-4 margin-left-16 margin-right-8 margin-top-4 text-align-end text-overflow-ellipsis"
+          >
+            <b>{{ getSelectedDayAppointmentFirst(i + 1)?.title }}</b>
+          </div>
+          <div
+            class="margin-bottom-4 margin-left-16 margin-right-8 margin-top-4 text-align-end text-overflow-ellipsis"
+          >
+            {{ getSelectedDayAppointmentFirst(i + 1)?.timeStart }} -
+            {{ getSelectedDayAppointmentFirst(i + 1)?.timeEnd }}
+          </div>
+          <div class="calendar-agenda--tile-preview--overlay"></div>
+        </div>
       </div>
     </mat-grid-tile>
     <mat-grid-tile
@@ -91,6 +113,7 @@
       "
       colspan="1"
       rowspan="2"
+      class="calendar-agenda--mat-grid-tile"
     >
       <div
         class="calendar-agenda--tile-other flex flex-justify-center flex-align-center"

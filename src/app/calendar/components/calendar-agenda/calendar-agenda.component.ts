@@ -51,22 +51,19 @@ export class CalendarAgendaComponent implements OnInit {
         } else {
           this.viewYearCols = 3;
         }
-      });
-    this.appService.stateHeight
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(innerHeight => {
-        if (this.stateScreen !== 'xl') {
+        if (
+          this.stateScreen === 'md' ||
+          this.stateScreen === 'lg' ||
+          this.stateScreen === 'xl' ||
+          this.stateScreen === 'fhd'
+        ) {
+          this.viewMonthRowHeight = '40px';
+          this.viewYearRowHeight = '80px';
+        } else {
           this.viewMonthRowHeight =
             Math.floor((innerHeight - 73 - 24 - 48) / 6.5 / 2) + 'px';
           this.viewYearRowHeight =
             Math.floor(innerHeight - 73 - 24 - 8 - 32) /
-              (12 / this.viewYearCols) +
-            'px';
-        } else {
-          this.viewMonthRowHeight =
-            Math.floor((innerHeight - 113 - 24 - 48) / 6.5 / 2) + 'px';
-          this.viewYearRowHeight =
-            Math.floor(innerHeight - 113 - 24 - 8 - 32) /
               (12 / this.viewYearCols) +
             'px';
         }
@@ -100,8 +97,6 @@ export class CalendarAgendaComponent implements OnInit {
     this.selectedYear = this.calendarService.getYearByMonthDifference(
       this.monthDifference
     );
-    // this.activeMonth = this.selectedMonth;
-    // this.activeYear = this.selectedYear;
     this.calendarService.setActiveMonth(this.selectedMonth);
     this.calendarService.setActiveYear(this.selectedYear);
     this.activeAppointments = this.calendarService.getActiveAppointments(
@@ -140,17 +135,14 @@ export class CalendarAgendaComponent implements OnInit {
     );
   }
 
-  /**
-   * Returns first appointment title of active day
-   * @param activeDay Active day
-   */
-  getSelectedDayAppointmentTitle(activeDay: number): string {
-    return this.calendarService.getActiveDayAppointmentTitle(
+  getSelectedDayAppointmentFirst(activeDay: number): Appointment {
+    const appointmentFirst = this.calendarService.getActiveDayAppointmentFirst(
       this.activeAppointments,
       activeDay,
       this.selectedMonth,
       this.selectedYear
     );
+    return appointmentFirst;
   }
 
   /**
