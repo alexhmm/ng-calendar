@@ -5,11 +5,16 @@ import { takeUntil } from 'rxjs/operators';
 import { Appointment } from '../../models/appointment';
 import { AppService } from 'src/app/shared/services/app/app.service';
 import { CalendarService } from '../../services/calendar.service';
+import {
+  modalEnterContainer,
+  modalEnterContent
+} from 'src/app/shared/services/animations/animations';
 
 @Component({
   selector: 'app-calendar-agenda',
   templateUrl: './calendar-agenda.component.html',
-  styleUrls: ['./calendar-agenda.component.scss']
+  styleUrls: ['./calendar-agenda.component.scss'],
+  animations: [modalEnterContainer, modalEnterContent]
 })
 export class CalendarAgendaComponent implements OnInit {
   @Input() currentDay: number;
