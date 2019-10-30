@@ -113,11 +113,13 @@
   </div>
 </div>
 
-<app-date-time-picker
-  *ngIf="statePick"
-  [type]="statePick"
-  (closeDateTimePicker)="onCloseDateTimePicker()"
-  (setDate)="onSetDate($event)"
-  class="appointment-create-edit--datetime-picker"
->
-</app-date-time-picker>
+<div *ngIf="statePick" class="modal">
+  <div (click)="onCloseDateTimePicker()" class="modal-background"></div>
+  <app-date-time-picker
+    [type]="statePick"
+    (closeDateTimePicker)="onCloseDateTimePicker()"
+    (setDate)="onSetDate($event)"
+    class="modal-content"
+  >
+  </app-date-time-picker>
+</div>
