@@ -30,12 +30,10 @@
           <div
             class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
           >
-            <div class="flex flex-align-center width-100">
-              <input
-                formControlName="dateStart"
-                placeholder="Choose a date"
-                class="input-form margin-right-8"
-              />
+            <div
+              class="flex flex-align-center input-form margin-right-8 width-100"
+            >
+              {{ formGroup.controls.dateStart.value }}
             </div>
             <mat-icon
               (click)="onClickDateTimePicker('dateStart')"
@@ -53,12 +51,10 @@
           <div
             class="flex flex-row flex-justify-between flex-align-center font-size-14 icon-button-primary"
           >
-            <div class="flex flex-align-center width-100">
-              <input
-                formControlName="dateEnd"
-                placeholder="Choose a date"
-                class="input-form margin-right-8"
-              />
+            <div
+              class="flex flex-align-center input-form margin-right-8 width-100"
+            >
+              {{ formGroup.controls.dateEnd.value }}
             </div>
             <mat-icon
               (click)="onClickDateTimePicker('dateEnd')"

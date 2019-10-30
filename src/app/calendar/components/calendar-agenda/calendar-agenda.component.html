@@ -125,10 +125,12 @@
   <!-- MONTH VIEW END -->
 </div>
 
-<app-calendar-day
-  *ngIf="selectedDate"
-  [selectedDate]="selectedDate"
-  [appointments]="appointments"
-  (closeCalendarDay)="onCloseCalendarDay()"
-  class="calendar-agenda--day z-index-10"
-></app-calendar-day>
+<div *ngIf="selectedDate" class="modal">
+  <div (click)="onCloseCalendarDay()" class="modal-background"></div>
+  <app-calendar-day
+    [selectedDate]="selectedDate"
+    [appointments]="appointments"
+    (closeCalendarDay)="onCloseCalendarDay()"
+    class="modal-content"
+  ></app-calendar-day>
+</div>
