@@ -1,6 +1,5 @@
 import {
   trigger,
-  state,
   style,
   transition,
   animate,
@@ -9,23 +8,39 @@ import {
   animateChild
 } from '@angular/animations';
 
+export const modalEnter = trigger('modalEnter', [
+  transition('* <=> *', [
+    group([
+      query('@modalEnterBackground', [animateChild()]),
+      query('@modalEnterContent', [animateChild()])
+    ])
+  ])
+]);
+
 export const modalEnterBackground = trigger('modalEnterBackground', [
-  state('false', style({ opacity: 0 })),
-  state('true', style({ opacity: 1 })),
-  transition('false => true', animate('200ms ease-in-out')),
-  transition('true => false', animate('200ms ease-in-out'))
+  transition(':enter', [
+    style({ opacity: 0 }),
+    animate('200ms ease-in-out', style({ opacity: 1 }))
+  ]),
+  transition('true => false', [
+    style({ opacity: 1 }),
+    animate('210ms ease-in-out', style({ opacity: 0 }))
+  ])
 ]);
 
 export const modalEnterContent = trigger('modalEnterContent', [
-  state('false', style({ opacity: 0, transform: 'translateY(-16px)' })),
-  state('true', style({ opacity: 1, transform: 'translateY(0)' })),
-  transition('false => true', animate('200ms ease-in-out')),
-  transition('true => false', animate('200ms ease-in-out'))
-]);
-
-export const modalEnterContent2 = trigger('modalEnterContent2', [
-  state('hideStart', style({ opacity: 0, transform: 'translateY(-16px)' })),
-  state('show', style({ opacity: 1, transform: 'translateY(0)' })),
-  state('hideEnd', style({ opacity: 0, transform: 'translateY(16px)' })),
-  transition('* <=> *', animate('200ms ease-in-out'))
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(-16px)' }),
+    animate(
+      '200ms ease-in-out',
+      style({ opacity: 1, transform: 'translateY(0)' })
+    )
+  ]),
+  transition('true => false', [
+    style({ opacity: 1, transform: 'translateY(0)' }),
+    animate(
+      '210ms ease-in-out',
+      style({ opacity: 0, transform: 'translateY(16px)' })
+    )
+  ])
 ]);

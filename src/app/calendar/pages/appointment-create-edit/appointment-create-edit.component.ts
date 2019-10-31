@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Appointment } from '../../models/appointment';
 import { CalendarService } from '../../services/calendar.service';
 import {
+  modalEnter,
   modalEnterBackground,
   modalEnterContent
 } from 'src/app/shared/services/animations/animations';
@@ -16,7 +17,7 @@ import {
   selector: 'app-appointment-create-edit',
   templateUrl: './appointment-create-edit.component.html',
   styleUrls: ['./appointment-create-edit.component.scss'],
-  animations: [modalEnterBackground, modalEnterContent]
+  animations: [modalEnter, modalEnterBackground, modalEnterContent]
 })
 export class AppointmentCreateEditComponent implements OnInit {
   appointment?: Appointment;
@@ -89,10 +90,7 @@ export class AppointmentCreateEditComponent implements OnInit {
     this.calendarService.setMonthDifference(monthDifference);
     this.calendarService.setDate(this.stateDate);
     this.statePick = type;
-    // Timeout for animation
-    setTimeout(() => {
-      this.stateAnim = true;
-    }, 1);
+    this.stateAnim = true;
   }
 
   /**
