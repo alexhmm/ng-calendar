@@ -110,12 +110,17 @@
 </div>
 
 <div *ngIf="statePick" class="modal">
-  <div (click)="onCloseDateTimePicker()" class="modal-background"></div>
+  <div
+    (click)="onCloseDateTimePicker()"
+    class="modal-background"
+    [@modalEnterBackground]="stateAnim ? true : false"
+  ></div>
   <app-date-time-picker
     [type]="statePick"
     (closeDateTimePicker)="onCloseDateTimePicker()"
     (setDate)="onSetDate($event)"
     class="modal-content"
+    [@modalEnterContent]="stateAnim ? true : false"
   >
   </app-date-time-picker>
 </div>

@@ -7,11 +7,16 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Appointment } from '../../models/appointment';
 import { CalendarService } from '../../services/calendar.service';
+import {
+  modalEnterBackground,
+  modalEnterContent
+} from 'src/app/shared/services/animations/animations';
 
 @Component({
   selector: 'app-appointment-create-edit',
   templateUrl: './appointment-create-edit.component.html',
-  styleUrls: ['./appointment-create-edit.component.scss']
+  styleUrls: ['./appointment-create-edit.component.scss'],
+  animations: [modalEnterBackground, modalEnterContent]
 })
 export class AppointmentCreateEditComponent implements OnInit {
   appointment?: Appointment;
@@ -34,6 +39,7 @@ export class AppointmentCreateEditComponent implements OnInit {
   stateDate: string;
   stateEdit: boolean;
   statePick: string;
+  stateAnim = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,13 +89,20 @@ export class AppointmentCreateEditComponent implements OnInit {
     this.calendarService.setMonthDifference(monthDifference);
     this.calendarService.setDate(this.stateDate);
     this.statePick = type;
+    // Timeout for animation
+    setTimeout(() => {
+      this.stateAnim = true;
+    }, 1);
   }
 
   /**
    * Handler for closing date time picker
    */
   onCloseDateTimePicker(): void {
-    this.statePick = null;
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.statePick = null;
+    }, 200);
   }
 
   /**
@@ -108,7 +121,10 @@ export class AppointmentCreateEditComponent implements OnInit {
         dateEnd: moment(this.dateEnd).format('Do MMMM YYYY, LT')
       });
     }
-    this.statePick = null;
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.statePick = null;
+    }, 200);
   }
 
   /**

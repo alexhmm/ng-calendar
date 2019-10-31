@@ -9,34 +9,23 @@ import {
   animateChild
 } from '@angular/animations';
 
-export const modalEnterContainer = trigger('modalEnterContainer', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-    animate('200ms ease-in-out', style({ opacity: 1 }))
-  ]),
-  transition(':leave', [
-    style({ opacity: 1 }),
-    animate('200ms ease-in-out', style({ opacity: 0 }))
-  ])
+export const modalEnterBackground = trigger('modalEnterBackground', [
+  state('false', style({ opacity: 0 })),
+  state('true', style({ opacity: 1 })),
+  transition('false => true', animate('200ms ease-in-out')),
+  transition('true => false', animate('200ms ease-in-out'))
 ]);
 
 export const modalEnterContent = trigger('modalEnterContent', [
-  // state('none', style({ opacity: 0, transform: 'translateY(-16px)' })),
-  // state('selected', style({ opacity: 1, transform: 'translateY(0)' })),
-  // transition('void => selected', animate('200ms ease-in')),
-  // transition('selected => void', animate('200ms ease-out'))
-  transition(':enter', [
-    style({ opacity: 0, transform: 'translateY(16px)' }),
-    animate(
-      '200ms ease-in-out',
-      style({ opacity: 1, transform: 'translateY(0)' })
-    )
-  ]),
-  transition(':leave', [
-    style({ opacity: 1, transform: 'translateY(0)' }),
-    animate(
-      '200ms ease-in-out',
-      style({ opacity: 0, transform: 'translateY(-16px)' })
-    )
-  ])
+  state('false', style({ opacity: 0, transform: 'translateY(-16px)' })),
+  state('true', style({ opacity: 1, transform: 'translateY(0)' })),
+  transition('false => true', animate('200ms ease-in-out')),
+  transition('true => false', animate('200ms ease-in-out'))
+]);
+
+export const modalEnterContent2 = trigger('modalEnterContent2', [
+  state('hideStart', style({ opacity: 0, transform: 'translateY(-16px)' })),
+  state('show', style({ opacity: 1, transform: 'translateY(0)' })),
+  state('hideEnd', style({ opacity: 0, transform: 'translateY(16px)' })),
+  transition('* <=> *', animate('200ms ease-in-out'))
 ]);

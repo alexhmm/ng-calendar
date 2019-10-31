@@ -6,15 +6,16 @@ import { Appointment } from '../../models/appointment';
 import { AppService } from 'src/app/shared/services/app/app.service';
 import { CalendarService } from '../../services/calendar.service';
 import {
-  modalEnterContainer,
-  modalEnterContent
+  modalEnterBackground,
+  modalEnterContent,
+  modalEnterContent2
 } from 'src/app/shared/services/animations/animations';
 
 @Component({
   selector: 'app-calendar-agenda',
   templateUrl: './calendar-agenda.component.html',
   styleUrls: ['./calendar-agenda.component.scss'],
-  animations: [modalEnterContainer, modalEnterContent]
+  animations: [modalEnterBackground, modalEnterContent, modalEnterContent2]
 })
 export class CalendarAgendaComponent implements OnInit {
   @Input() currentDay: number;
@@ -35,6 +36,8 @@ export class CalendarAgendaComponent implements OnInit {
   selectedMonth: number;
   selectedMonthLength: number;
   selectedYear: number;
+  stateAnim = 'hideStart';
+  stateDate = false;
   stateScreen: string;
   stateView: string;
   viewMonthRowHeight = '40px';
@@ -160,13 +163,24 @@ export class CalendarAgendaComponent implements OnInit {
       this.selectedMonth,
       this.selectedYear
     );
+    // Timeout for animation
+    setTimeout(() => {
+      this.stateDate = true;
+      this.stateAnim = 'show';
+    }, 1);
   }
 
   /**
    * Closes CalendarDayComponent dialog
    */
   onCloseCalendarDay() {
-    this.selectedDate = null;
+    this.stateDate = false;
+    this.stateAnim = 'hideEnd';
+    // Timeout for animation
+    setTimeout(() => {
+      this.selectedDate = null;
+      this.stateAnim = 'hideStart';
+    }, 200);
   }
 
   /**

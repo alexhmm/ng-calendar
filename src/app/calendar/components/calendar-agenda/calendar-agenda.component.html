@@ -125,13 +125,17 @@
   <!-- MONTH VIEW END -->
 </div>
 
-<div *ngIf="selectedDate" class="modal" [@modalEnterContainer]>
-  <div (click)="onCloseCalendarDay()" class="modal-background"></div>
+<div *ngIf="selectedDate" class="modal">
+  <div
+    (click)="onCloseCalendarDay()"
+    class="modal-background"
+    [@modalEnterBackground]="stateDate ? true : false"
+  ></div>
   <app-calendar-day
     [selectedDate]="selectedDate"
     [appointments]="appointments"
     (closeCalendarDay)="onCloseCalendarDay()"
     class="modal-content"
-    [@modalEnterContent]
+    [@modalEnterContent2]="stateAnim"
   ></app-calendar-day>
 </div>

@@ -170,7 +170,6 @@ $xl: 1200px;
 
 .modal {
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.25);
   display: flex;
   height: 100%;
   justify-content: center;
@@ -180,6 +179,7 @@ $xl: 1200px;
   width: 100%;
   z-index: 10;
   &-background {
+    background-color: rgba(0, 0, 0, 0.25);
     height: 100%;
     left: 0;
     position: fixed;
