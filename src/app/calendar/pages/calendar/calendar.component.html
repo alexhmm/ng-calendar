@@ -91,17 +91,21 @@
 <div class="flex flex-justify-center">
   <div class="calendar--content">
     <app-calendar-agenda
-      *ngIf="stateView === 'agenda'"
+      *ngIf="stateView === 'agenda' && stateAnim"
       [currentDay]="currentDay"
       [currentMonth]="currentMonth"
       [currentYear]="currentYear"
       (setMonthByClick)="onSetMonthByClick($event)"
+      class="display-block"
+      [@zoom]="stateAnim"
     ></app-calendar-agenda>
     <app-calendar-list
-      *ngIf="stateView === 'list'"
+      *ngIf="stateView === 'list' && stateAnim"
       [currentDay]="currentDay"
       [currentMonth]="currentMonth"
       [currentYear]="currentYear"
+      class="display-block"
+      [@slideBottomToTop]="stateAnim"
     >
     </app-calendar-list>
   </div>

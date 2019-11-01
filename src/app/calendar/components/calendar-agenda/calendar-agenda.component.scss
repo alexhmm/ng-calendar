@@ -114,6 +114,21 @@
           background-color: $color-primary;
           border-radius: 4px;
         }
+        &--text {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $lg) {
+  .calendar-agenda {
+    &--tile {
+      &-preview {
+        &--text {
+          margin-left: 16px;
+        }
       }
     }
   }

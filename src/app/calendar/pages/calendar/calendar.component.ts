@@ -6,11 +6,16 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Appointment } from '../../models/appointment';
 import { CalendarService } from '../../services/calendar.service';
+import {
+  slideBottomToTop,
+  zoom
+} from 'src/app/shared/services/animations/animations';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  animations: [slideBottomToTop, zoom]
 })
 export class CalendarComponent implements OnInit {
   appointments: { appointments: Appointment[] };
@@ -23,8 +28,10 @@ export class CalendarComponent implements OnInit {
   monthDifference: number;
   monthText: string;
   ngUnsubscribe: Subject<object> = new Subject();
+  stateAnim = false;
   stateCreateEdit = false;
   stateAgenda: string;
+  stateSlide = 'slideNext';
   stateView = 'agenda';
 
   constructor(
@@ -47,6 +54,8 @@ export class CalendarComponent implements OnInit {
     this.appointments$.subscribe(appointments => {
       this.appointments = appointments;
     });
+    this.stateAnim = true;
+    this.stateSlide = 'show';
   }
 
   /**
@@ -66,15 +75,23 @@ export class CalendarComponent implements OnInit {
    * Handler for setting next month
    */
   nextMonth(): void {
-    this.calendarService.setMonthDifference(this.monthDifference + 1);
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.calendarService.setMonthDifference(this.monthDifference + 1);
+      this.stateAnim = true;
+    }, 105);
   }
 
   /**
    * Handler for setting next year
    */
   nextYear(): void {
-    this.activeYear++;
-    this.calendarService.setActiveYear(this.activeYear);
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.activeYear++;
+      this.calendarService.setActiveYear(this.activeYear);
+      this.stateAnim = true;
+    }, 105);
   }
 
   onCloseAppointmentCreateEdit(): void {
@@ -103,15 +120,23 @@ export class CalendarComponent implements OnInit {
    * Handler for setting previous month
    */
   prevMonth(): void {
-    this.calendarService.setMonthDifference(this.monthDifference - 1);
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.calendarService.setMonthDifference(this.monthDifference - 1);
+      this.stateAnim = true;
+    }, 105);
   }
 
   /**
    * Handler for setting previous year
    */
   prevYear(): void {
-    this.activeYear--;
-    this.calendarService.setActiveYear(this.activeYear);
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.activeYear--;
+      this.calendarService.setActiveYear(this.activeYear);
+      this.stateAnim = true;
+    }, 105);
   }
 
   /**
@@ -119,21 +144,29 @@ export class CalendarComponent implements OnInit {
    * @param state Agenda state
    */
   setStateAgenda(state: string): void {
-    this.calendarService.setStateAgenda(state);
-    if (state === 'year' && this.stateView === 'list') {
-      this.stateView = 'agenda';
-    }
+    this.stateAnim = false;
+    setTimeout(() => {
+      this.calendarService.setStateAgenda(state);
+      if (state === 'year' && this.stateView === 'list') {
+        this.stateView = 'agenda';
+      }
+      this.stateAnim = true;
+    }, 105);
   }
 
   /**
    * Sets view state
    */
   setStateView(): void {
-    if (this.stateView === 'list') {
-      this.stateView = 'agenda';
-    } else {
-      this.calendarService.setStateAgenda('month');
-      this.stateView = 'list';
-    }
+    this.stateAnim = false;
+    setTimeout(() => {
+      if (this.stateView === 'list') {
+        this.stateView = 'agenda';
+      } else {
+        this.calendarService.setStateAgenda('month');
+        this.stateView = 'list';
+      }
+      this.stateAnim = true;
+    }, 105);
   }
 }
