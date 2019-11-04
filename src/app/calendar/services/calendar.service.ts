@@ -36,103 +36,163 @@ export class CalendarService {
    * TEST: Returns fake appointments
    */
   getAppointments(): { appointments: Appointment[] } {
+    const currentYear = this.getCurrentYear();
+    const currentMonth = this.getCurrentMonth() + 1;
+    const nextMonthYear = this.getYearByMonthDifference(1);
+    const nextMonthMonth = this.getMonthByMonthDifference(1) + 1;
     return {
       appointments: [
         {
           id: 'isu11',
-          dateStart: moment('2018-12-02 09:00').toISOString(),
-          dateEnd: moment('2018-12-02 09:30').toISOString(),
+          dateStart: moment(
+            currentYear - 1 + '-' + '12-02 09:00'
+          ).toISOString(),
+          dateEnd: moment(currentYear - 1 + '-' + '12-02 09:30').toISOString(),
           desc: 'Im Konfi. Alle möglichen Dinge.',
           place: 'Konferenzraum 1',
           title: 'Besprechnung'
         },
         {
           id: 'isu12',
-          dateStart: moment('2019-11-15 09:00').toISOString(),
-          dateEnd: moment('2019-11-15 09:30').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-15 09:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-15 09:30'
+          ).toISOString(),
           desc: 'Planning Sprint 14',
           place: 'Konferenzraum 1',
           title: 'Planning'
         },
         {
           id: '1241u',
-          dateStart: moment('2019-11-15 11:00').toISOString(),
-          dateEnd: moment('2019-11-15 12:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-15 11:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-15 12:45'
+          ).toISOString(),
           desc: 'Tische in den Keller bringen.',
           place: 'Haus 2',
           title: 'Aufräumen'
         },
         {
           id: '1241f',
-          dateStart: moment('2019-11-16 08:00').toISOString(),
-          dateEnd: moment('2019-11-16 09:00').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-16 08:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-16 09:00'
+          ).toISOString(),
           desc: 'Bewerbungsgespräch mit Frau Mustermann',
           place: 'Konferenzraum 2',
           title: 'Bewerbungsgespräch'
         },
         {
           id: '1241g',
-          dateStart: moment('2019-11-16 09:00').toISOString(),
-          dateEnd: moment('2019-11-16 10:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-16 09:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-16 10:45'
+          ).toISOString(),
           desc: 'Grooming Woche 14',
           place: 'Loft',
           title: 'Grooming'
         },
         {
           id: '1241u',
-          dateStart: moment('2019-11-16 11:00').toISOString(),
-          dateEnd: moment('2019-11-16 12:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-16 11:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-16 12:45'
+          ).toISOString(),
           desc: 'Planning Woche 15',
           place: 'Konferenzraum 2',
           title: 'Planning'
         },
         {
           id: '12482',
-          dateStart: moment('2019-11-16 13:00').toISOString(),
-          dateEnd: moment('2019-11-16 15:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-16 13:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-16 15:45'
+          ).toISOString(),
           desc: 'Nachbesprechnung',
           place: 'Konferenzraum 2',
           title: 'Review'
         },
         {
           id: '1241g',
-          dateStart: moment('2019-11-16 09:00').toISOString(),
-          dateEnd: moment('2019-11-16 10:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-16 09:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-16 10:45'
+          ).toISOString(),
           desc: 'Retroperspektive Projekt.',
           place: 'Konferenzraum 1',
           title: 'Retro'
         },
         {
           id: '12482',
-          dateStart: moment('2019-11-17 13:00').toISOString(),
-          dateEnd: moment('2019-11-17 15:45').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-17 13:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-17 15:45'
+          ).toISOString(),
           desc: 'Team Meeting',
           place: 'Loft',
           title: 'Team Meeting'
         },
         {
           id: 'fsfqf',
-          dateStart: moment('2019-11-19 10:30').toISOString(),
-          dateEnd: moment('2019-11-20 11:00').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-19 10:30'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-20 11:00'
+          ).toISOString(),
           desc: 'Workshop 2 Tage',
           place: 'Loft',
           title: 'Workshop'
         },
         {
           id: '121lf',
-          dateStart: moment('2019-11-24 09:00').toISOString(),
-          dateEnd: moment('2019-11-24 09:30').toISOString(),
+          dateStart: moment(
+            currentYear + '-' + currentMonth + '-24 09:00'
+          ).toISOString(),
+          dateEnd: moment(
+            currentYear + '-' + currentMonth + '-24 09:30'
+          ).toISOString(),
           desc: 'Standup',
           place: 'Konferenzraum 1',
           title: 'Termin'
         },
         {
           id: '1t512',
-          dateStart: moment('2019-12-11 11:00').toISOString(),
-          dateEnd: moment('2019-12-11 11:30').toISOString(),
+          dateStart: moment(
+            nextMonthYear + '-' + nextMonthMonth + '-11 11:00'
+          ).toISOString(),
+          dateEnd: moment(
+            nextMonthYear + '-' + nextMonthMonth + '-11 11:30'
+          ).toISOString(),
           desc: 'Review',
           place: 'Konferenzraum 2',
           title: 'Review'
+        },
+        {
+          id: 'isu11',
+          dateStart: moment(
+            currentYear + 1 + '-' + '12-03 09:00'
+          ).toISOString(),
+          dateEnd: moment(currentYear + 1 + '-' + '12-03 10:30').toISOString(),
+          desc: 'Team Meeting',
+          place: 'Konferenzraum 1',
+          title: 'Team Meeting'
         }
       ]
     };

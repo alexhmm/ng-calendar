@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -19,7 +19,7 @@ import {
   styleUrls: ['./appointment-create-edit.component.scss'],
   animations: [modalEnter, modalEnterBackground, modalEnterContent]
 })
-export class AppointmentCreateEditComponent implements OnInit {
+export class AppointmentCreateEditComponent implements OnInit, OnDestroy {
   appointment?: Appointment;
   dateEnd = new Date().toISOString();
   dateStart = new Date().toISOString();
@@ -68,6 +68,11 @@ export class AppointmentCreateEditComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   /**
