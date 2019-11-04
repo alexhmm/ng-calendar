@@ -9,8 +9,6 @@ import { AppointmentView } from '../models/appointment-view';
   providedIn: 'root'
 })
 export class CalendarService {
-  activeMonthSrc = new BehaviorSubject(null);
-  activeMonth = this.activeMonthSrc.asObservable();
   activeYearSrc = new BehaviorSubject(null);
   activeYear = this.activeYearSrc.asObservable();
   dateSrc = new BehaviorSubject(null);
@@ -21,13 +19,17 @@ export class CalendarService {
   minute = this.minuteSrc.asObservable();
   monthDifferenceSrc = new BehaviorSubject(null);
   monthDifference = this.monthDifferenceSrc.asObservable();
+  selectedYearMonthSrc = new BehaviorSubject(null);
+  selectedYearMonth = this.selectedYearMonthSrc.asObservable();
   stateAgendaSrc = new BehaviorSubject('month');
   stateAgenda = this.stateAgendaSrc.asObservable();
   statePickerSrc = new BehaviorSubject('date');
   statePicker = this.statePickerSrc.asObservable();
 
   constructor() {
+    this.setActiveYear(this.getCurrentYear());
     this.setMonthDifference(0);
+    this.setSelectedYearMonth(0);
   }
 
   /**
@@ -575,14 +577,6 @@ export class CalendarService {
   }
 
   /**
-   * Sets active month
-   * @param month Month
-   */
-  setActiveMonth(month: number) {
-    this.activeMonthSrc.next(month);
-  }
-
-  /**
    * Sets active year
    * @param year Year
    */
@@ -620,6 +614,16 @@ export class CalendarService {
    */
   setMinute(minute: string): void {
     this.minuteSrc.next(minute);
+  }
+
+  /**
+   * Sets selected year and month by month difference
+   * @param monthDifference Month difference
+   */
+  setSelectedYearMonth(monthDifference: number) {
+    const year = this.getYearByMonthDifference(monthDifference);
+    const month = this.getMonthByMonthDifference(monthDifference);
+    this.selectedYearMonthSrc.next({ year, month });
   }
 
   /**
