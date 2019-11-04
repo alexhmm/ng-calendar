@@ -8,6 +8,27 @@ import {
   animateChild
 } from '@angular/animations';
 
+export const routeAnimation = trigger('routeAnimation', [
+  transition('CalendarPage <=> AppointmentCreateEditPage', [
+    style({ position: 'relative', opacity: 1 }),
+    query(':enter, :leave', [
+      style({
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%'
+      })
+    ]),
+    query(':enter', [style({ opacity: 0 })]),
+    query(':leave', animateChild()),
+    group([
+      query(':leave', [animate('250ms ease-in-out', style({ opacity: 0 }))]),
+      query(':enter', [animate('250ms ease-in-out', style({ opacity: 1 }))])
+    ]),
+    query(':enter', animateChild())
+  ])
+]);
+
 export const fade = trigger('fade', [
   transition(':enter', [
     style({ opacity: 0 }),

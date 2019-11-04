@@ -49,6 +49,7 @@ export class CalendarAgendaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getMonthData();
     this.appService.stateScreen
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(stateScreen => {
@@ -75,16 +76,16 @@ export class CalendarAgendaComponent implements OnInit {
             'px';
         }
       });
+    this.calendarService.stateAgenda
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(stateAgenda => {
+        this.stateView = stateAgenda;
+      });
     this.calendarService.monthDifference
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(monthDifference => {
         this.monthDifference = monthDifference;
         this.getMonthData();
-      });
-    this.calendarService.stateAgenda
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(stateAgenda => {
-        this.stateView = stateAgenda;
       });
     this.calendarService.activeMonth
       .pipe(takeUntil(this.ngUnsubscribe))

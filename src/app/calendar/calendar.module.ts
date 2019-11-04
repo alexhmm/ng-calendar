@@ -20,15 +20,18 @@ import { CalendarService } from './services/calendar.service';
 export const ROUTES: Routes = [
   {
     path: '',
-    component: CalendarComponent
+    component: CalendarComponent,
+    data: { animation: 'CalendarPage' }
   },
   {
     path: 'create',
-    component: AppointmentCreateEditComponent
+    component: AppointmentCreateEditComponent,
+    data: { animation: 'AppointmentCreateEditPage' }
   },
   {
     path: 'edit/:appointmentId',
-    component: AppointmentCreateEditComponent
+    component: AppointmentCreateEditComponent,
+    data: { animation: 'AppointmentCreateEditPage' }
   }
 ];
 
